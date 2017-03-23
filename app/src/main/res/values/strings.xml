@@ -3,6 +3,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_incomes">Incomes</string>
+    <string name="nav_expenses">Expenses</string>
+    <string name="nav_assets">Assets</string>
+    <string name="nav_liabilities">Liabilities</string>
 
     <string name="action_settings">Settings</string>
 </resources>
