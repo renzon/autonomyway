@@ -65,9 +65,10 @@ public class InstrumentedFacadeTests {
         facade.createInitialData();
         incomeList=facade.getIncomeList();
         assertEquals(2, incomeList.size());
-        assertEquals(ctx.getString(R.string.init_salary), incomeList.get(0).getName());
-        assertEquals(ctx.getString(R.string.init_stocks_income), incomeList.get(1).getName());
-
+        String[] init_income_names=ctx.getResources().getStringArray(R.array.incomes);
+        for (int i =0; i<2; ++i){
+            assertEquals(init_income_names[i], incomeList.get(i).getName());
+        }
         facade.createInitialData();
         incomeList=facade.getIncomeList();
         assertEquals("Nothing must happen after first call",2, incomeList.size());

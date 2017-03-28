@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="incomes">
+        <!-- Default Income Data-->
+        <item>Salary</item>
+        <item>Stock Interest</item>
+    </array>
+    <array name="expenses">
+        <!-- Default Expense Data-->
+        <item>Taxes</item>
+        <item>House Expenses</item>
+        <item>Car Expenses</item>
+        <item>Leisure</item>
+        <item>Credit Card Expenses</item>
+        <item>Black Hole</item>
+    </array>
+    <array name="assets">
+        <!-- Default Wealth Data-->
+        <item>Bank Account</item>
+        <item>Wallet</item>
+        <item>Car</item>
+        <item>House</item>
+        <item>Credit Card</item>
+        <item>Stocks</item>
+    </array>
+
+</resources>

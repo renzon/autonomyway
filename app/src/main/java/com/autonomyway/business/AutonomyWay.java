@@ -49,10 +49,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     @Override
     public void createInitialData() {
         if (getIncomeList().size() == 0) {
-            String[] incomeNames = {
-                    ctx.getString(R.string.init_salary),
-                    ctx.getString(R.string.init_stocks_income)
-            };
+            String[] incomeNames = ctx.getResources().getStringArray(R.array.incomes);
             List<Income> incomes = new ArrayList<>();
             for (String name : incomeNames) {
                 incomes.add(new Income(name, 0, 0));

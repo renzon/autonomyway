@@ -6,25 +6,4 @@
     <string name="nav_incomes">Incomes</string>
     <string name="nav_expenses">Expenses</string>
     <string name="nav_wealth">Wealth</string>
-
-
-    <!-- Default Income Data-->
-    <string name="init_salary">Salary</string>
-    <string name="init_stocks_income">Stock Interest</string>
-
-    <!-- Default Expense Data-->
-    <string name="init_taxes">Taxes</string>
-    <string name="init_house_expenses">House Expenses</string>
-    <string name="init_car_expenses">Car Expenses</string>
-    <string name="init_leisure">Leisure</string>
-    <string name="init_credit_card_expenses">Credit Card Expenses</string>
-    <string name="init_black_hole">Black Hole</string>
-
-    <!-- Default Wealth Data-->
-    <string name="init_bank_account">Bank Account</string>
-    <string name="init_wallet">Wallet</string>
-    <string name="init_car">Car</string>
-    <string name="init_house">House</string>
-    <string name="init_credit_card">Credit Card</string>
-    <string name="init_stocks">Stocks</string>
 </resources>
