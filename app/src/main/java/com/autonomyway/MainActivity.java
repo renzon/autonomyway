@@ -13,12 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.autonomyway.business.AutonomyWay;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    AutonomyWayFacade autonomy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        autonomy = AutonomyWay.getInstance(getApplicationContext());
+        autonomy.createInitialData();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.nav_incomes) {
             return true;
         }
 
@@ -79,13 +85,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-            setContentView(R.layout.incomes_content);
+
         if (id == R.id.nav_incomes) {
         } else if (id == R.id.nav_expenses) {
 
-        } else if (id == R.id.nav_assets) {
-
-        } else if (id == R.id.nav_liabilities) {
+        } else if (id == R.id.nav_wealth) {
 
         }
 

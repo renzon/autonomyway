@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_incomes"
@@ -11,12 +10,8 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/nav_expenses" />
         <item
-            android:id="@+id/nav_assets"
+            android:id="@+id/nav_wealth"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/nav_assets" />
-        <item
-            android:id="@+id/nav_liabilities"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/nav_liabilities" />
+            android:title="@string/nav_wealth" />
     </group>
 </menu>
