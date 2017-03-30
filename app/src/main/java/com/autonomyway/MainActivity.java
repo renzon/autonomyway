@@ -1,5 +1,7 @@
 package com.autonomyway;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,15 +17,15 @@ import android.view.MenuItem;
 
 import com.autonomyway.business.AutonomyWay;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.HashMap;
+import java.util.Map;
 
-    AutonomyWayFacade autonomy;
+public class MainActivity extends ActivityWithFacadeAccess
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        autonomy = AutonomyWay.getInstance(getApplicationContext());
         autonomy.createInitialData();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -83,16 +85,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_incomes) {
-        } else if (id == R.id.nav_expenses) {
-
-        } else if (id == R.id.nav_wealth) {
-
-        }
-
+        Map<Integer, Class<? extends Activity>> activityMap=new HashMap<>();
+        activityMap.put(R.id.nav_incomes, IncomeListActivity.class);
+        Intent intent = new Intent(this, activityMap.get(id));
+        startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
