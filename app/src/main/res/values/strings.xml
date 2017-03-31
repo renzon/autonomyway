@@ -7,4 +7,10 @@
     <string name="nav_expenses">Expenses</string>
     <string name="nav_wealth">Wealth</string>
     <string name="title_activity_income_list">Incomes</string>
+    <string name="income_rate">Year Income Rate:</string>
+    <string name="income_type_business">Business</string>
+    <string name="income_type_work">Work</string>
+    <string name="income_init_salary">Salary</string>
+    <string name="income_init_stocks">Stock Interest</string>
+
 </resources>

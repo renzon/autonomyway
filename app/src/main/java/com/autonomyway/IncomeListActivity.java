@@ -27,8 +27,7 @@ public class IncomeListActivity extends ActivityWithFacadeAccess {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(new IncomeListAdapter(autonomy.getIncomeList()));
-
+        mRecyclerView.setAdapter(new IncomeListAdapter(autonomy.getIncomeList(), getResources()));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

@@ -22,7 +22,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "autonomy-db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "autonomy.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
     }
@@ -35,8 +35,8 @@ public class AutonomyWay implements AutonomyWayFacade {
     }
 
     @Override
-    public Income createIncome(String name, int recurrentTime, int recurrentCash) {
-        Income income = new Income(name, recurrentTime, recurrentCash);
+    public Income createIncome(String name, int recurrentTime, int recurrentCash, Income.Type type) {
+        Income income = new Income(name, recurrentTime, recurrentCash, type);
         session.getIncomeDao().insert(income);
         return income;
     }
@@ -49,11 +49,9 @@ public class AutonomyWay implements AutonomyWayFacade {
     @Override
     public void createInitialData() {
         if (getIncomeList().size() == 0) {
-            String[] incomeNames = ctx.getResources().getStringArray(R.array.incomes);
             List<Income> incomes = new ArrayList<>();
-            for (String name : incomeNames) {
-                incomes.add(new Income(name, 0, 0));
-            }
+            incomes.add(new Income(ctx.getString(R.string.income_init_salary), 0, 0, Income.Type.WORK));
+            incomes.add(new Income(ctx.getString(R.string.income_init_stocks), 0, 0, Income.Type.BUSINESS));
             session.getIncomeDao().insertInTx(incomes);
         }
     }

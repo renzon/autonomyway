@@ -31,12 +31,11 @@ public class InstrumentedFacadeTests {
 
     @Test
     public void testCreateIncome() throws Exception {
-        Income income=facade.createIncome("Salary",1,2);
+        Income income=facade.createIncome("Salary",1,2, Income.Type.WORK);
         assertEquals("Salary", income.getName());
         assertEquals(1, income.getRecurrentTime());
         assertEquals(2, income.getRecurrentCash());
-        assertEquals(0, income.getTotalCash());
-        assertEquals(0, income.getTotalTime());
+        assertEquals(Income.Type.WORK, income.getType());
         assertTrue(income.getId()>0);
     }
     @Test
@@ -44,12 +43,12 @@ public class InstrumentedFacadeTests {
         List<Income> incomeList=facade.getIncomeList();
         assertEquals(0, incomeList.size());
 
-        facade.createIncome("Stocks",1,2);
+        facade.createIncome("Stocks",1,2,Income.Type.WORK);
         incomeList=facade.getIncomeList();
         assertEquals(1, incomeList.size());
         assertEquals("Stocks", incomeList.get(0).getName());
 
-        facade.createIncome("Salary",1,2);
+        facade.createIncome("Salary",1,2, Income.Type.BUSINESS);
         incomeList=facade.getIncomeList();
         assertEquals(2, incomeList.size());
         // Incomes are ordered by name
@@ -65,7 +64,10 @@ public class InstrumentedFacadeTests {
         facade.createInitialData();
         incomeList=facade.getIncomeList();
         assertEquals(2, incomeList.size());
-        String[] init_income_names=ctx.getResources().getStringArray(R.array.incomes);
+        String[] init_income_names={
+                ctx.getString(R.string.income_init_salary),
+                ctx.getString(R.string.income_init_stocks)
+        };
         for (int i =0; i<2; ++i){
             assertEquals(init_income_names[i], incomeList.get(i).getName());
         }

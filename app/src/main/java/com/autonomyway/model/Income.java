@@ -1,10 +1,20 @@
 package com.autonomyway.model;
 
 
+import android.content.res.Resources;
+
+import com.autonomyway.R;
+
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.converter.PropertyConverter;
+
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class Income {
@@ -12,8 +22,6 @@ public class Income {
     private Long id;
     @Index
     private String name;
-    private long totalTime; // minutes
-    private long totalCash; // cents
     // Value of income time each time it happens. Ex: if it's a salary work,
     // and you receive monthly, it can be 160 (hours) * 60 minutes
     private long recurrentTime;
@@ -21,23 +29,69 @@ public class Income {
     // You can put this value here
     private long recurrentCash;
 
-    public Income(String name, long recurrentTime, long recurrentCash) {
+
+    @Convert(converter = TypeConverter.class, columnType = String.class)
+    private Type type;
+
+    public String getNameDashType(Resources resources) {
+        String typeString = resources.getString(typeToResourceId.get(type));
+        return name+" - "+typeString;
+    }
+
+    public enum Type {
+        WORK("WORK"),
+        BUSINESS("BUSINESS");
+
+        private final String dbValue;
+
+        Type(String dbValue) {
+            this.dbValue = dbValue;
+        }
+
+        String getDbValue() {
+            return dbValue;
+        }
+    }
+
+    private static final Map<Type, Integer> typeToResourceId;
+
+    static {
+        typeToResourceId = new HashMap<>();
+        typeToResourceId.put(Type.BUSINESS, R.string.income_type_business);
+        typeToResourceId.put(Type.WORK, R.string.income_type_work);
+    }
+
+    public static class TypeConverter implements PropertyConverter<Type, String> {
+        @Override
+        public String convertToDatabaseValue(Type entityProperty) {
+            return entityProperty.getDbValue();
+        }
+
+        @Override
+        public Type convertToEntityProperty(String databaseValue) {
+            if (Type.WORK.getDbValue().equals(databaseValue)) {
+                return Type.WORK;
+            }
+            return Type.BUSINESS;
+        }
+    }
+
+
+    public Income(String name, long recurrentTime, long recurrentCash, Type type) {
         this.name = name;
-        this.totalTime = 0;
-        this.totalCash = 0;
+        this.type = type;
         this.recurrentTime = recurrentTime;
         this.recurrentCash = recurrentCash;
     }
 
-    @Generated(hash = 468178786)
-    public Income(Long id, String name, long totalTime, long totalCash,
-            long recurrentTime, long recurrentCash) {
+    @Generated(hash = 331086111)
+    public Income(Long id, String name, long recurrentTime, long recurrentCash,
+            Type type) {
         this.id = id;
         this.name = name;
-        this.totalTime = totalTime;
-        this.totalCash = totalCash;
         this.recurrentTime = recurrentTime;
         this.recurrentCash = recurrentCash;
+        this.type = type;
     }
 
     @Generated(hash = 1009272208)
@@ -56,24 +110,9 @@ public class Income {
         return this.name;
     }
 
+
     public void setName(String name) {
         this.name = name;
-    }
-
-    public long getTotalTime() {
-        return this.totalTime;
-    }
-
-    public void setTotalTime(long totalTime) {
-        this.totalTime = totalTime;
-    }
-
-    public long getTotalCash() {
-        return this.totalCash;
-    }
-
-    public void setTotalCash(long totalCash) {
-        this.totalCash = totalCash;
     }
 
     public long getRecurrentTime() {
@@ -90,6 +129,14 @@ public class Income {
 
     public void setRecurrentCash(long recurrentCash) {
         this.recurrentCash = recurrentCash;
+    }
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
 }
