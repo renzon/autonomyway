@@ -11,9 +11,7 @@
         <LinearLayout style="@style/ListRowDetail">
             <TextView
                 android:text="@string/income_rate"
-                style="@style/ListRowDetailTitle"
-                 />
-
+                style="@style/ListRowDetailTitle" />
             <TextView
                 android:id="@+id/income_rate"
                 android:layout_width="wrap_content"

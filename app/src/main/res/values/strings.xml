@@ -1,16 +1,27 @@
 <resources>
     <string name="app_name">AutonomyWay</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_incomes">Incomes</string>
     <string name="nav_expenses">Expenses</string>
     <string name="nav_wealth">Wealth</string>
     <string name="title_activity_income_list">Incomes</string>
-    <string name="income_rate">Year Income Rate:</string>
+    <string name="income_rate">Rate:</string>
     <string name="income_type_business">Business</string>
     <string name="income_type_work">Work</string>
     <string name="income_init_salary">Salary</string>
     <string name="income_init_stocks">Stock Interest</string>
+    <string name="title_activity_income_form">Income Form</string>
+    <string name="label_name">Name</string>
+    <string name="input_name_hint">Ex: Salary, Stocks, Real State</string>
+    <string name="label_cash">Recurrent Cash</string>
+    <string name="input_cash_hint">Fill if you receive same value for this work</string>
+    <string name="label_time">Recurrent Time</string>
+    <string name="input_time_hint">Fill if you spent same time on this work</string>
+    <string name="label_income_type">Type of Income</string>
+
+    <string name="work_explanation">Work - Need to spent time to make money. Ex: working in a company, running a business.</string>
+    <string name="business_explanation">Business - Little or no work to make money. Ex: Stocks, rent from real state, business ran by managers</string>
+    <string name="button_save">Save</string>
 
 </resources>

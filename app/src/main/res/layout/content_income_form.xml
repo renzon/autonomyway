@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Form"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.autonomyway.IncomeFormActivity"
+    tools:showIn="@layout/activity_income_form">
+
+    <TextView
+        android:text="@string/label_name"
+        style="@style/FormLabel"/>
+    <EditText
+        android:id="@+id/income_name_input"
+        android:inputType="textAutoCorrect"
+        android:hint="@string/input_name_hint"
+        style="@style/FormTextInput"/>
+
+    <TextView
+        android:text="@string/label_cash"
+        style="@style/FormLabel"/>
+    <EditText
+        android:id="@+id/income_cash_input"
+        android:inputType="textAutoCorrect"
+        android:hint="@string/input_cash_hint"
+        style="@style/FormTextInput"/>
+
+    <TextView
+        android:text="@string/label_time"
+        style="@style/FormLabel"/>
+    <include layout="@layout/duration_input"/>
+    <TextView
+        android:text="@string/label_income_type"
+        style="@style/FormLabel"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/work_explanation"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/business_explanation" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/save_button"
+        android:text="@string/button_save"
+        style="@style/FormButton.Income"/>
+
+
+</LinearLayout>

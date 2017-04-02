@@ -28,6 +28,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.autonomyway.MainActivity" />
         </activity>
+        <activity
+            android:name=".IncomeFormActivity"
+            android:label="@string/title_activity_income_form"
+            android:parentActivityName=".IncomeListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.IncomeListActivity" />
+        </activity>
     </application>
 
 </manifest>

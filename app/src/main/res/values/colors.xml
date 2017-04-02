@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#b740fff5</color>
     <color name="colorIncome">#135e0a</color>
+    <color name="formButtonTextColor">#FFFFFF</color>
 </resources>
