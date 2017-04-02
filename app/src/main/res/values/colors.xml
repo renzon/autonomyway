@@ -5,4 +5,5 @@
     <color name="colorAccent">#b740fff5</color>
     <color name="colorIncome">#135e0a</color>
     <color name="formButtonTextColor">#FFFFFF</color>
+    <color name="formError">#b90000</color>
 </resources>

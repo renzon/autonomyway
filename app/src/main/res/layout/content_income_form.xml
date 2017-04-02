@@ -7,31 +7,42 @@
     tools:context="com.autonomyway.IncomeFormActivity"
     tools:showIn="@layout/activity_income_form">
 
-    <TextView
-        android:text="@string/label_name"
-        style="@style/FormLabel"/>
-    <EditText
-        android:id="@+id/income_name_input"
-        android:inputType="textAutoCorrect"
-        android:hint="@string/input_name_hint"
-        style="@style/FormTextInput"/>
+    <!--<TextView-->
+    <!--android:text="@string/label_name"-->
+    <!--/>-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/income_name_layout"
+        style="@style/FormLabel"
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/income_name_input"
+            style="@style/FormTextInput"
+            android:hint="@string/income_input_name"
+            android:inputType="textAutoCorrect" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/FormLabel"
+        app:errorEnabled="false">
+
+        <com.autonomyway.component.CashInput
+            android:id="@+id/income_cash_input"
+            style="@style/FormTextInput"
+            android:hint="@string/income_input_cash" />
+    </android.support.design.widget.TextInputLayout>
+
 
     <TextView
-        android:text="@string/label_cash"
-        style="@style/FormLabel"/>
-    <EditText
-        android:id="@+id/income_cash_input"
-        android:inputType="textAutoCorrect"
-        android:hint="@string/input_cash_hint"
-        style="@style/FormTextInput"/>
+        style="@style/FormLabel"
+        android:text="@string/label_time" />
+
+    <include layout="@layout/duration_input" />
 
     <TextView
-        android:text="@string/label_time"
-        style="@style/FormLabel"/>
-    <include layout="@layout/duration_input"/>
-    <TextView
-        android:text="@string/label_income_type"
-        style="@style/FormLabel"/>
+        style="@style/FormLabel"
+        android:text="@string/label_income_type" />
+
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -40,21 +51,23 @@
             android:id="@+id/radio_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/work_explanation"
-            />
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="@string/work_explanation" />
 
         <RadioButton
             android:id="@+id/radio_business"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
             android:text="@string/business_explanation" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/save_button"
-        android:text="@string/button_save"
-        style="@style/FormButton.Income"/>
+        android:id="@+id/income_save_button"
+        style="@style/FormButton.Income"
+        android:text="@string/button_save" />
 
 
 </LinearLayout>
