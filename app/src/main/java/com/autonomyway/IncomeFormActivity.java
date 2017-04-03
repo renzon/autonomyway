@@ -9,16 +9,21 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.autonomyway.business.GUIValidationException;
 import com.autonomyway.component.CashInput;
+import com.autonomyway.component.DurationInput;
+import com.autonomyway.model.Income;
 
 public class IncomeFormActivity extends ActivityWithFacadeAccess {
 
     private EditText nameInput;
     private TextInputLayout nameLayout;
     private CashInput cashInput;
-
+    private DurationInput durationInput;
+    private RadioGroup typeGroup;
+    private boolean clearFlag=false;
 
 
     private String getName() {
@@ -30,16 +35,20 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
     }
 
     public void cleanForm() {
+        clearFlag=true;
         setName("");
-        cashInput.setCash(null);
+        cashInput.clear();
+        durationInput.clear();
+
     }
 
     private boolean validateName() {
-        if ("".equals(getName())) {
+        if (!clearFlag && "".equals(getName())) {
             nameLayout.setError(getString(R.string.income_name_error));
             return false;
         }
         nameLayout.setError(null);
+        clearFlag=false;
         return true;
     }
 
@@ -48,6 +57,14 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
         if (!isValid) {
             throw new GUIValidationException();
         }
+    }
+
+    public Income.Type getIncomeType() {
+
+        if (typeGroup.getCheckedRadioButtonId() == R.id.radio_work) {
+            return Income.Type.WORK;
+        }
+        return Income.Type.BUSINESS;
     }
 
     @Override
@@ -59,7 +76,9 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nameInput = (EditText) findViewById(R.id.income_name_input);
+        durationInput = (DurationInput) findViewById(R.id.income_duration_input);
         cashInput = (CashInput) findViewById(R.id.income_cash_input);
+        typeGroup = (RadioGroup) findViewById(R.id.income_type_group);
         nameLayout = (TextInputLayout) findViewById(R.id.income_name_layout);
         Button saveButton = (Button) findViewById(R.id.income_save_button);
         final IncomeFormActivity that = this;
@@ -72,7 +91,10 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
                     showMsg(v, R.string.income_error_msg);
                     return;
                 }
-//                autonomy.createIncome(getName())
+                that.autonomy.createIncome(
+                        getName(), durationInput.getDuration(),
+                        cashInput.getCash(), getIncomeType()
+                );
                 that.cleanForm();
                 showMsg(v, R.string.income_save_msg);
             }

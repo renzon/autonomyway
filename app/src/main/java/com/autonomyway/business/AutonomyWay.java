@@ -22,7 +22,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "autonomy.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
     }
@@ -35,7 +35,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     }
 
     @Override
-    public Income createIncome(String name, int recurrentTime, int recurrentCash, Income.Type type) {
+    public Income createIncome(String name, long recurrentTime, long recurrentCash, Income.Type type) {
         Income income = new Income(name, recurrentTime, recurrentCash, type);
         session.getIncomeDao().insert(income);
         return income;

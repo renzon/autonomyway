@@ -4,12 +4,12 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 
 public class Transformation {
-    private static final NumberFormat CURRENTY_FORMAT = NumberFormat.getCurrencyInstance();
+    private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getCurrencyInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance();
     private static final long CENTS_MULTIPLIER=100;
 
     public static String cashToCurrency(long cashInCents) {
-        return transform(cashInCents, CURRENTY_FORMAT);
+        return transform(cashInCents, CURRENCY_FORMAT);
     }
 
     public static String cashToNumber(long cashInCents) {
@@ -22,7 +22,7 @@ public class Transformation {
         }
         Number n =null;
         try {
-            n = CURRENTY_FORMAT.parse(number);
+            n = NUMBER_FORMAT.parse(number);
         } catch (ParseException e) {
 
         }

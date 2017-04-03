@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
     <EditText
-        android:id="@+id/input_hours"
+        android:id="@+id/hour_input"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
-        android:inputType="number"/>
+        android:inputType="number" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=":"/>
+        android:text=":" />
+
     <EditText
-        android:id="@+id/input_minutes"
+        android:id="@+id/minute_input"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
-        android:inputType="number"/>
-</LinearLayout>
+        android:inputType="number" />
+</merge>

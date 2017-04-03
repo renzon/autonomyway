@@ -11,18 +11,22 @@ import com.autonomyway.model.Transformation;
 public class CashInput extends AppCompatEditText {
     public CashInput(Context context) {
         super(context);
-        setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        
+        init();
+
+    }
+
+    private void init() {
+        setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
     }
 
     public CashInput(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        init();
     }
 
     public CashInput(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        init();
     }
 
     public void setCash(Long cashInCents) {
@@ -35,5 +39,9 @@ public class CashInput extends AppCompatEditText {
 
     public Long getCash(){
         return Transformation.numberTocash(getText().toString().trim());
+    }
+
+    public void clear() {
+        setCash(null);
     }
 }

@@ -37,13 +37,17 @@
         style="@style/FormLabel"
         android:text="@string/label_time" />
 
-    <include layout="@layout/duration_input" />
+    <com.autonomyway.component.DurationInput
+        android:id="@+id/income_duration_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.autonomyway.component.DurationInput>
 
     <TextView
         style="@style/FormLabel"
         android:text="@string/label_income_type" />
 
     <RadioGroup
+        android:id="@+id/income_type_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
