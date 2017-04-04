@@ -54,6 +54,9 @@
     <style name="ListRowTitle.Income">
         <item name="android:textColor">@color/colorIncome</item>
     </style>
+    <style name="ListRowTitle.Wealth">
+        <item name="android:textColor">@color/colorWealth</item>
+    </style>
 
     <style name="Form">
         <item name="android:layout_height">match_parent</item>
@@ -81,6 +84,10 @@
 
     <style name="FormButton.Income">
         <item name="android:backgroundTint">@color/colorIncome</item>
+    </style>
+
+    <style name="FormButton.Wealth">
+        <item name="android:backgroundTint">@color/colorWealth</item>
     </style>
 
     <style name="Separator">

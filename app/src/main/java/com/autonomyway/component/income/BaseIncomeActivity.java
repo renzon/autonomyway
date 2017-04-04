@@ -26,9 +26,10 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
     private CashInput cashInput;
     private DurationInput durationInput;
     private RadioGroup typeGroup;
-    private boolean clearFlag=false;
+    private boolean clearFlag = false;
     private RadioButton radioWork;
     private RadioButton radioBusiness;
+    private TextInputLayout cashLayout;
 
 
     private String getName() {
@@ -39,7 +40,7 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         nameInput.setText(name);
     }
 
-    protected void populateForm(Income income){
+    protected void populateForm(Income income) {
         setName(income.getName());
         durationInput.setDuration(income.getRecurrentTime());
         cashInput.setCash(income.getRecurrentCash());
@@ -47,7 +48,7 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
     }
 
     protected void cleanForm() {
-        clearFlag=true;
+        clearFlag = true;
         setName("");
         cashInput.clear();
         durationInput.clear();
@@ -60,15 +61,27 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
             return false;
         }
         nameLayout.setError(null);
-        clearFlag=false;
+        clearFlag = false;
         return true;
     }
 
     protected void validateForm() {
         boolean isValid = validateName();
+        isValid = validateCash(isValid) && isValid;
+
         if (!isValid) {
             throw new GUIValidationException();
         }
+    }
+
+    private boolean validateCash(boolean isValid) {
+        if (cashInput.validate()) {
+            cashLayout.setError(null);
+            return true;
+
+        }
+        cashLayout.setError(getString(R.string.cash_error));
+        return false;
     }
 
     protected Income.Type getIncomeType() {
@@ -78,6 +91,7 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         }
         return Income.Type.BUSINESS;
     }
+
     protected void setIncomeType(Income.Type type) {
 
         if (Income.Type.WORK.equals(type)) {
@@ -101,6 +115,7 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         cashInput = (CashInput) findViewById(R.id.income_cash_input);
         typeGroup = (RadioGroup) findViewById(R.id.income_type_group);
         nameLayout = (TextInputLayout) findViewById(R.id.income_name_layout);
+        cashLayout = (TextInputLayout) findViewById(R.id.income_cash_layout);
         Button saveButton = (Button) findViewById(R.id.income_save_button);
         final BaseIncomeActivity that = this;
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +160,6 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
                 }
             }
         });
-
 
 
     }

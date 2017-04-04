@@ -46,6 +46,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.autonomyway.component.income.IncomeListActivity" />
         </activity>
+        <activity
+            android:name=".component.wealth.WealthListActivity"
+            android:label="@string/title_activity_wealth_list"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.MainActivity" />
+        </activity>
+        <activity
+            android:name=".component.wealth.NewWealthActivity"
+            android:label="@string/title_new_wealth_activity"
+            android:parentActivityName=".component.income.IncomeListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.wealth.WealthListActivity" />
+        </activity>
+        <activity
+            android:name=".component.wealth.EditWealthActivity"
+            android:label="@string/title_edit_wealth_activity"
+            android:parentActivityName=".component.wealth.WealthListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.wealth.WealthListActivity" />
+        </activity>
     </application>
 
 </manifest>

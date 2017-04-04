@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Form"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.autonomyway.component.wealth.NewWealthActivity"
+    tools:showIn="@layout/activity_wealth_form">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/wealth_name_layout"
+        style="@style/FormLabel"
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/wealth_name_input"
+            style="@style/FormTextInput"
+            android:hint="@string/wealth_input_name"
+            android:inputType="textAutoCorrect" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/FormLabel"
+        app:errorEnabled="false">
+
+        <com.autonomyway.component.CashInput
+            android:id="@+id/wealth_initial_balance_input"
+            style="@style/FormTextInput"
+            android:hint="@string/wealth_initial_balance_input" />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/wealth_save_button"
+        style="@style/FormButton.Wealth"
+        android:text="@string/button_save" />
+</LinearLayout>

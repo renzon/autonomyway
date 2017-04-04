@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.autonomyway.component.wealth.WealthRow xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ListCardView">
+
+    <LinearLayout style="@style/ListRow">
+
+        <TextView
+            android:id="@+id/wealth_row_title"
+            style="@style/ListRowTitle.Wealth" />
+
+        <LinearLayout style="@style/ListRowDetail">
+            <TextView
+                android:text="@string/wealth_balance"
+                style="@style/ListRowDetailTitle" />
+            <TextView
+                android:id="@+id/wealth_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</com.autonomyway.component.wealth.WealthRow>

@@ -53,6 +53,37 @@ public class Income {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Income)) return false;
+
+        Income income = (Income) o;
+
+        if (recurrentTime != income.recurrentTime) return false;
+        if (recurrentCash != income.recurrentCash) return false;
+        if (id != null ? !id.equals(income.id) : income.id != null) return false;
+        if (name != null ? !name.equals(income.name) : income.name != null) return false;
+        return type == income.type;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Income{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", recurrentTime=" + recurrentTime +
+                ", recurrentCash=" + recurrentCash +
+                ", type=" + type +
+                '}';
+    }
+
     private static final Map<Type, Integer> typeToResourceId;
 
     static {

@@ -24,7 +24,8 @@
 
     <android.support.design.widget.TextInputLayout
         style="@style/FormLabel"
-        app:errorEnabled="false">
+        app:errorEnabled="true"
+        android:id="@+id/income_cash_layout">
 
         <com.autonomyway.component.CashInput
             android:id="@+id/income_cash_input"
@@ -40,7 +41,7 @@
     <com.autonomyway.component.DurationInput
         android:id="@+id/income_duration_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.autonomyway.component.DurationInput>
+        android:layout_height="wrap_content" />
 
     <TextView
         style="@style/FormLabel"

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.autonomyway.component.income.IncomeListActivity;
+import com.autonomyway.component.wealth.WealthListActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +88,7 @@ public class MainActivity extends ActivityWithFacadeAccess
         int id = item.getItemId();
         Map<Integer, Class<? extends Activity>> activityMap=new HashMap<>();
         activityMap.put(R.id.nav_incomes, IncomeListActivity.class);
+        activityMap.put(R.id.nav_wealth, WealthListActivity.class);
         Intent intent = new Intent(this, activityMap.get(id));
         startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
