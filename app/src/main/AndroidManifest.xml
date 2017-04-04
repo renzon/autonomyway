@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".IncomeListActivity"
+            android:name=".component.income.IncomeListActivity"
             android:label="@string/title_activity_income_list"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
@@ -29,13 +29,13 @@
                 android:value="com.autonomyway.MainActivity" />
         </activity>
         <activity
-            android:name=".IncomeFormActivity"
+            android:name=".component.income.IncomeFormActivity"
             android:label="@string/title_activity_income_form"
-            android:parentActivityName=".IncomeListActivity"
+            android:parentActivityName=".component.income.IncomeListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.autonomyway.IncomeListActivity" />
+                android:value="com.autonomyway.component.income.IncomeListActivity" />
         </activity>
     </application>
 

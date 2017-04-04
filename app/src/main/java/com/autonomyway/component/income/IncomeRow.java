@@ -1,4 +1,4 @@
-package com.autonomyway.component;
+package com.autonomyway.component.income;
 
 import android.content.Context;
 import android.content.res.Resources;

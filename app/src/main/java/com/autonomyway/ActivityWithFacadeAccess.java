@@ -7,7 +7,7 @@ import com.autonomyway.business.AutonomyWay;
 
 
 public class ActivityWithFacadeAccess extends AppCompatActivity {
-    AutonomyWayFacade autonomy;
+    protected AutonomyWayFacade autonomy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

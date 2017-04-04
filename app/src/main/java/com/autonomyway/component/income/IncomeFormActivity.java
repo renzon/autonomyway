@@ -1,4 +1,4 @@
-package com.autonomyway;
+package com.autonomyway.component.income;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.autonomyway.ActivityWithFacadeAccess;
+import com.autonomyway.R;
 import com.autonomyway.business.GUIValidationException;
 import com.autonomyway.component.CashInput;
 import com.autonomyway.component.DurationInput;

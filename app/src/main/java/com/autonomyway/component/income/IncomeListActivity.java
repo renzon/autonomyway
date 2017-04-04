@@ -1,4 +1,4 @@
-package com.autonomyway;
+package com.autonomyway.component.income;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.autonomyway.ActivityWithFacadeAccess;
+import com.autonomyway.R;
 
 public class IncomeListActivity extends ActivityWithFacadeAccess {
     private RecyclerView mRecyclerView;

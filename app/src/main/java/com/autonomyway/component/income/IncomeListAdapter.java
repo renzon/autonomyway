@@ -1,13 +1,11 @@
-package com.autonomyway;
+package com.autonomyway.component.income;
 
 import android.content.res.Resources;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.autonomyway.component.IncomeRow;
+import com.autonomyway.R;
 import com.autonomyway.model.Income;
 
 import java.util.List;
