@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.autonomyway.component.IncomeRow;
 import com.autonomyway.model.Income;
 
 import java.util.List;
@@ -17,26 +18,16 @@ public class IncomeListAdapter extends RecyclerView.Adapter<IncomeListAdapter.Vi
     private final Resources resources;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView titleTextView;
-        public TextView incomeRateTextView;
-        private final Resources resources;
+        private IncomeRow incomeRow;
 
-        public ViewHolder(CardView v, Resources resources) {
+        public ViewHolder(IncomeRow v) {
             super(v);
-            titleTextView = (TextView) v.findViewById(R.id.income_row_title);
-            incomeRateTextView = (TextView) v.findViewById(R.id.income_rate);
-            this.resources = resources;
+            incomeRow = v;
         }
 
         public void populate(List<Income> dataSet, int position) {
             Income income = dataSet.get(position);
-
-
-            this.titleTextView.setText(income.getNameDashType(resources));
-
-            this.incomeRateTextView.setText("R$13,43/hora");
-
+            incomeRow.populate(income);
         }
     }
 
@@ -50,10 +41,11 @@ public class IncomeListAdapter extends RecyclerView.Adapter<IncomeListAdapter.Vi
     public IncomeListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                            int viewType) {
         // create a new view
-        CardView v = (CardView) LayoutInflater.from(parent.getContext())
+        IncomeRow v = (IncomeRow) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.income_row, parent, false);
+        v.setResources(resources);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v, resources);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
@@ -63,8 +55,6 @@ public class IncomeListAdapter extends RecyclerView.Adapter<IncomeListAdapter.Vi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.populate(dataSet, position);
-
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
