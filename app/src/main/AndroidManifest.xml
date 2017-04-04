@@ -29,7 +29,7 @@
                 android:value="com.autonomyway.MainActivity" />
         </activity>
         <activity
-            android:name=".component.income.IncomeFormActivity"
+            android:name=".component.income.NewIncomeActivity"
             android:label="@string/title_activity_income_form"
             android:parentActivityName=".component.income.IncomeListActivity"
             android:theme="@style/AppTheme">

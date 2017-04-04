@@ -37,7 +37,7 @@ public class IncomeListActivity extends ActivityWithFacadeAccess {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(that, IncomeFormActivity.class);
+                Intent intent = new Intent(that, NewIncomeActivity.class);
                 startActivity(intent);
             }
         });

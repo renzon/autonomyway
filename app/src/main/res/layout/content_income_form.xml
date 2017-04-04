@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Form"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.autonomyway.component.income.IncomeFormActivity"
+    tools:context="com.autonomyway.component.income.NewIncomeActivity"
     tools:showIn="@layout/activity_income_form">
 
     <!--<TextView-->

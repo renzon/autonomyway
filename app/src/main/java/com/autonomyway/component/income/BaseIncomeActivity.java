@@ -18,7 +18,7 @@ import com.autonomyway.component.CashInput;
 import com.autonomyway.component.DurationInput;
 import com.autonomyway.model.Income;
 
-public class IncomeFormActivity extends ActivityWithFacadeAccess {
+public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
 
     private EditText nameInput;
     private TextInputLayout nameLayout;
@@ -32,11 +32,11 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
         return nameInput.getText().toString().trim();
     }
 
-    private void setName(String name) {
+    protected void setName(String name) {
         nameInput.setText(name);
     }
 
-    public void cleanForm() {
+    protected void cleanForm() {
         clearFlag=true;
         setName("");
         cashInput.clear();
@@ -54,14 +54,14 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
         return true;
     }
 
-    public void validateForm() {
+    protected void validateForm() {
         boolean isValid = validateName();
         if (!isValid) {
             throw new GUIValidationException();
         }
     }
 
-    public Income.Type getIncomeType() {
+    protected Income.Type getIncomeType() {
 
         if (typeGroup.getCheckedRadioButtonId() == R.id.radio_work) {
             return Income.Type.WORK;
@@ -83,28 +83,22 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
         typeGroup = (RadioGroup) findViewById(R.id.income_type_group);
         nameLayout = (TextInputLayout) findViewById(R.id.income_name_layout);
         Button saveButton = (Button) findViewById(R.id.income_save_button);
-        final IncomeFormActivity that = this;
+        final BaseIncomeActivity that = this;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     that.validateForm();
                 } catch (GUIValidationException e) {
-                    showMsg(v, R.string.income_error_msg);
+                    that.showMsg(v, R.string.income_error_msg);
                     return;
                 }
-                that.autonomy.createIncome(
-                        getName(), durationInput.getDuration(),
-                        cashInput.getCash(), getIncomeType()
-                );
-                that.cleanForm();
-                showMsg(v, R.string.income_save_msg);
+                that.saveIncome(v, getName(), durationInput.getDuration(),
+                        cashInput.getCash(), getIncomeType());
+
             }
 
-            private void showMsg(View v, int id) {
-                Snackbar.make(v, getString(id), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+
         });
 
         nameInput.addTextChangedListener(new TextWatcher() {
@@ -133,6 +127,15 @@ public class IncomeFormActivity extends ActivityWithFacadeAccess {
             }
         });
 
+
+
+    }
+
+    protected abstract void saveIncome(View v, String name, long duration, Long cash, Income.Type incomeType);
+
+    protected void showMsg(View v, int id) {
+        Snackbar.make(v, getString(id), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
 }
