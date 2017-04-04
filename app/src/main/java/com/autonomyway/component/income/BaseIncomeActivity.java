@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.autonomyway.ActivityWithFacadeAccess;
@@ -26,6 +27,8 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
     private DurationInput durationInput;
     private RadioGroup typeGroup;
     private boolean clearFlag=false;
+    private RadioButton radioWork;
+    private RadioButton radioBusiness;
 
 
     private String getName() {
@@ -34,6 +37,13 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
 
     protected void setName(String name) {
         nameInput.setText(name);
+    }
+
+    protected void populateForm(Income income){
+        setName(income.getName());
+        durationInput.setDuration(income.getRecurrentTime());
+        cashInput.setCash(income.getRecurrentCash());
+        setIncomeType(income.getType());
     }
 
     protected void cleanForm() {
@@ -68,6 +78,14 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         }
         return Income.Type.BUSINESS;
     }
+    protected void setIncomeType(Income.Type type) {
+
+        if (Income.Type.WORK.equals(type)) {
+            radioWork.setChecked(true);
+            return;
+        }
+        radioBusiness.setChecked(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +94,8 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        radioWork = (RadioButton) findViewById(R.id.radio_work);
+        radioBusiness = (RadioButton) findViewById(R.id.radio_business);
         nameInput = (EditText) findViewById(R.id.income_name_input);
         durationInput = (DurationInput) findViewById(R.id.income_duration_input);
         cashInput = (CashInput) findViewById(R.id.income_cash_input);

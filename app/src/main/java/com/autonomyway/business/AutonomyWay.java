@@ -35,6 +35,16 @@ public class AutonomyWay implements AutonomyWayFacade {
     }
 
     @Override
+    public void editIncome(Income income) {
+        session.getIncomeDao().save(income);
+    }
+
+    @Override
+    public Income getIncome(long id) {
+        return session.getIncomeDao().load(id);
+    }
+
+    @Override
     public Income createIncome(String name, long recurrentTime, long recurrentCash, Income.Type type) {
         Income income = new Income(name, recurrentTime, recurrentCash, type);
         session.getIncomeDao().insert(income);

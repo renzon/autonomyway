@@ -1,6 +1,7 @@
 package com.autonomyway.component.income;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
@@ -51,7 +52,9 @@ public class IncomeRow extends CardView {
 
         @Override
         public void onClick(View v) {
-            income.getId();
+            Intent intent = new Intent(getContext(), EditIncomeActivity.class);
+            intent.putExtra(EditIncomeActivity.INCOME_ID,income.getId());
+            getContext().startActivity(intent);
         }
     }
 }

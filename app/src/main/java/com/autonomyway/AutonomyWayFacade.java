@@ -10,4 +10,8 @@ public interface AutonomyWayFacade {
     List<Income> getIncomeList();
 
     void createInitialData();
+
+    Income getIncome(long id);
+
+    void editIncome(Income income);
 }

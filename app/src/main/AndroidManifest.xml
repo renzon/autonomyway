@@ -30,7 +30,16 @@
         </activity>
         <activity
             android:name=".component.income.NewIncomeActivity"
-            android:label="@string/title_activity_income_form"
+            android:label="@string/title_new_income_activity"
+            android:parentActivityName=".component.income.IncomeListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.income.IncomeListActivity" />
+        </activity>
+        <activity
+            android:name=".component.income.EditIncomeActivity"
+            android:label="@string/title_edit_income_activity"
             android:parentActivityName=".component.income.IncomeListActivity"
             android:theme="@style/AppTheme">
             <meta-data

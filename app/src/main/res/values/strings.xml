@@ -11,7 +11,8 @@
     <string name="income_type_work">Work</string>
     <string name="income_init_salary">Salary</string>
     <string name="income_init_stocks">Stock Interest</string>
-    <string name="title_activity_income_form">Income Form</string>
+    <string name="title_new_income_activity">New Income Form</string>
+    <string name="title_edit_income_activity">Edit Income Form</string>
     <string name="income_input_name">Name *</string>
     <string name="income_name_error">Name is required</string>
     <string name="income_input_cash">Recurrent Cash: Fill if you receive same value for this work</string>
