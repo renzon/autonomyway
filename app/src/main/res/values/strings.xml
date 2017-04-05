@@ -49,4 +49,13 @@
     <string name="wealth_init_stocks">Stocks</string>
     <string name="wealth_init_wallet">Wallet</string>
     <!--<string name="wealth_"></string>-->
+
+    <!-- Expenses -->
+    <string name="expense_init_house_expenses">House Expenses</string>
+    <string name="expense_init_car_expenses">Car Expenses</string>
+    <string name="expense_init_taxes">Taxes</string>
+    <string name="expense_init_leisure">Leisure</string>
+    <string name="expense_init_health">Health</string>
+    <string name="expense_init_children">Children</string>
+    <!--<string name="expense_init_"></string>-->
 </resources>

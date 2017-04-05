@@ -23,11 +23,11 @@ public class Income {
     @Index
     private String name;
     // Value of income time each time it happens. Ex: if it's a salary work,
-    // and you receive monthly, it can be 160 (hours) * 60 minutes
-    private long recurrentTime;
-    // Value of income time each time it happens. Ex: if it's a salary work,
     // You can put this value here
     private long recurrentCash;
+    // Value of income time each time it happens. Ex: if it's a salary work,
+    // and you receive monthly, it can be 160 (hours) * 60 minutes
+    private long recurrentTime;
 
 
     @Convert(converter = TypeConverter.class, columnType = String.class)
@@ -115,13 +115,12 @@ public class Income {
         this.recurrentCash = recurrentCash;
     }
 
-    @Generated(hash = 331086111)
-    public Income(Long id, String name, long recurrentTime, long recurrentCash,
-            Type type) {
+    @Generated(hash = 98319486)
+    public Income(Long id, String name, long recurrentCash, long recurrentTime, Type type) {
         this.id = id;
         this.name = name;
-        this.recurrentTime = recurrentTime;
         this.recurrentCash = recurrentCash;
+        this.recurrentTime = recurrentTime;
         this.type = type;
     }
 

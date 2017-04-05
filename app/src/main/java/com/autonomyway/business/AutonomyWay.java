@@ -6,6 +6,8 @@ import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.R;
 import com.autonomyway.model.DaoMaster;
 import com.autonomyway.model.DaoSession;
+import com.autonomyway.model.Expense;
+import com.autonomyway.model.ExpenseDao;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.IncomeDao;
 import com.autonomyway.model.Wealth;
@@ -25,7 +27,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake2.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake3.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
     }
@@ -42,14 +44,14 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public void editWealth(Wealth wealth) {
-        session.getWealthDao().save(wealth);
+        session.getWealthDao().saveInTx(wealth);
 
     }
 
     @Override
     public Wealth createWealth(String name, long initialCash) {
         Wealth wealth = new Wealth(name, initialCash);
-        session.getWealthDao().save(wealth);
+        session.getWealthDao().saveInTx(wealth);
         return wealth;
     }
 
@@ -62,7 +64,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public void editIncome(Income income) {
-        session.getIncomeDao().save(income);
+        session.getIncomeDao().saveInTx(income);
     }
 
     @Override
@@ -73,13 +75,35 @@ public class AutonomyWay implements AutonomyWayFacade {
     @Override
     public Income createIncome(String name, long recurrentTime, long recurrentCash, Income.Type type) {
         Income income = new Income(name, recurrentTime, recurrentCash, type);
-        session.getIncomeDao().insert(income);
+        session.getIncomeDao().insertInTx(income);
         return income;
     }
 
     @Override
     public List<Income> getIncomeList() {
         return session.getIncomeDao().queryBuilder().orderAsc(IncomeDao.Properties.Name).list();
+    }
+
+    @Override
+    public Expense createExpense(String name, long recurrentCash) {
+        Expense expense=new Expense(name, recurrentCash);
+        session.getExpenseDao().insertInTx(expense);
+        return expense;
+    }
+
+    @Override
+    public Expense getExpense(Long id) {
+        return session.getExpenseDao().load(id);
+    }
+
+    @Override
+    public void editExpense(Expense expense) {
+        session.getExpenseDao().saveInTx(expense);
+    }
+
+    @Override
+    public List<Expense> getExpenseList() {
+        return session.getExpenseDao().queryBuilder().orderAsc(ExpenseDao.Properties.Name).list();
     }
 
     @Override
@@ -98,8 +122,17 @@ public class AutonomyWay implements AutonomyWayFacade {
                     new Wealth(ctx.getString(R.string.wealth_init_stocks),0),
                     new Wealth(ctx.getString(R.string.wealth_init_wallet),0)
             };
+            Expense[] expenses={
+                    new Expense(ctx.getString(R.string.expense_init_car_expenses),0),
+                    new Expense(ctx.getString(R.string.expense_init_children),0),
+                    new Expense(ctx.getString(R.string.expense_init_health),0),
+                    new Expense(ctx.getString(R.string.expense_init_house_expenses),0),
+                    new Expense(ctx.getString(R.string.expense_init_leisure),0),
+                    new Expense(ctx.getString(R.string.expense_init_taxes),0),
+            };
             session.getIncomeDao().insertInTx(incomes);
             session.getWealthDao().insertInTx(wealth);
+            session.getExpenseDao().insertInTx(expenses);
         }
     }
 

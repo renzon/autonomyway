@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.R;
 import com.autonomyway.model.DaoSession;
+import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.Wealth;
 
@@ -126,16 +127,62 @@ public class InstrumentedFacadeTests {
     }
 
     @Test
+    public void testCreateExpense() throws Exception {
+        Expense expense = facade.createExpense("Taxes", 2);
+        assertEquals("Taxes", expense.getName());
+        assertEquals(2, expense.getRecurrentCash());
+        assertTrue(expense.getId() > 0);
+    }
+
+    @Test
+    public void testGetExpense() throws Exception {
+        Expense expense = facade.createExpense("Taxes", 1);
+        Expense dbExpense = facade.getExpense(expense.getId());
+        assertEquals(expense, dbExpense);
+    }
+
+    @Test
+    public void testEditExpense() throws Exception {
+        Expense expense = facade.createExpense("Taxes", 1);
+        expense.setName("House Expenses");
+        expense.setRecurrentCash(2);
+        facade.editExpense(expense);
+        Expense dbExpense = facade.getExpense(expense.getId());
+        assertEquals(expense, dbExpense);
+    }
+
+
+    @Test
+    public void testGetExpenseList() throws Exception {
+        List<Expense> expenseList = facade.getExpenseList();
+        assertEquals(0, expenseList.size());
+
+        facade.createExpense("House Expenses", 1);
+        expenseList = facade.getExpenseList();
+        assertEquals(1, expenseList.size());
+        assertEquals("House Expenses", expenseList.get(0).getName());
+
+        facade.createExpense("Taxes", 2);
+        expenseList = facade.getExpenseList();
+        assertEquals(2, expenseList.size());
+        // Expenses are ordered by name
+        assertEquals("House Expenses", expenseList.get(0).getName());
+        assertEquals("Taxes", expenseList.get(1).getName());
+
+    }
+
+    @Test
     public void testDefaultInit() throws Exception {
         // Nothing on beginning
         List<Income> incomeList = facade.getIncomeList();
         List<Wealth> wealthList = facade.getWealthList();
-        
+        List<Expense> expenseList = facade.getExpenseList();
+
         assertEquals(0, incomeList.size());
         assertEquals(0, wealthList.size());
-        
+
         facade.createInitialData();
-        
+
         //Income
         incomeList = facade.getIncomeList();
         assertEquals(2, incomeList.size());
@@ -146,7 +193,7 @@ public class InstrumentedFacadeTests {
         for (int i = 0; i < init_income_names.length; ++i) {
             assertEquals(init_income_names[i], incomeList.get(i).getName());
         }
-        
+
         //Wealth
 
         wealthList = facade.getWealthList();
@@ -163,17 +210,32 @@ public class InstrumentedFacadeTests {
             assertEquals(init_wealth_names[i], wealthList.get(i).getName());
         }
         
+        //Expense
+        expenseList = facade.getExpenseList();
+        assertEquals(6, expenseList.size());
+        String[] init_expense_names = {
+                ctx.getString(R.string.expense_init_car_expenses),
+                ctx.getString(R.string.expense_init_children),
+                ctx.getString(R.string.expense_init_health),
+                ctx.getString(R.string.expense_init_house_expenses),
+                ctx.getString(R.string.expense_init_leisure),
+                ctx.getString(R.string.expense_init_taxes)
+        };
+        for (int i = 0; i < init_expense_names.length; ++i) {
+            assertEquals(init_expense_names[i], expenseList.get(i).getName());
+        }
+
         facade.createInitialData();
         incomeList = facade.getIncomeList();
         assertEquals("Nothing must happen after first call", init_income_names.length, incomeList.size());
-        
+
         wealthList = facade.getWealthList();
         assertEquals("Nothing must happen after first call", init_wealth_names.length, wealthList.size());
 
-    }
-    
-    
+        expenseList = facade.getExpenseList();
+        assertEquals("Nothing must happen after first call", init_expense_names.length, expenseList.size());
 
+    }
 
 
     @After
@@ -182,5 +244,6 @@ public class InstrumentedFacadeTests {
         DaoSession session = ((AutonomyWay) facade).session;
         session.getIncomeDao().deleteAll();
         session.getWealthDao().deleteAll();
+        session.getExpenseDao().deleteAll();
     }
 }

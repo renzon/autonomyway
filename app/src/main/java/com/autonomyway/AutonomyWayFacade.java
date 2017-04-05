@@ -1,5 +1,6 @@
 package com.autonomyway;
 
+import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.Wealth;
 
@@ -23,4 +24,12 @@ public interface AutonomyWayFacade {
     List<Wealth> getWealthList();
 
     void editWealth(Wealth wealth);
+
+    Expense createExpense(String name, long recurrentCash);
+
+    Expense getExpense(Long id);
+
+    void editExpense(Expense expense);
+
+    List<Expense> getExpenseList();
 }
