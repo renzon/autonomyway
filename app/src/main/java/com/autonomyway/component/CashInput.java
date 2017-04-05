@@ -5,7 +5,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.util.AttributeSet;
 
-import com.autonomyway.business.GUIValidationException;
 import com.autonomyway.model.Transformation;
 
 import java.text.ParseException;

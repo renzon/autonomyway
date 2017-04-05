@@ -5,11 +5,10 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.autonomyway.R;
-import com.autonomyway.business.GUIValidationException;
+import com.autonomyway.component.base.GUIValidationException;
 import com.autonomyway.component.CashInput;
 import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.model.Wealth;
