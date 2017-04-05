@@ -9,6 +9,6 @@
     tools:context="com.autonomyway.component.income.IncomeListActivity"
     tools:showIn="@layout/income_activity_list"
     android:scrollbars="vertical"
-    android:id="@+id/income_recycle_view">
+    android:id="@+id/recycle_view">
 
 </android.support.v7.widget.RecyclerView>

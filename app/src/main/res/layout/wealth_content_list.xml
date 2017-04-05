@@ -9,6 +9,6 @@
     tools:context="com.autonomyway.component.wealth.WealthListActivity"
     tools:showIn="@layout/wealth_activity_list"
     android:scrollbars="vertical"
-    android:id="@+id/wealth_recycle_view">
+    android:id="@+id/recycle_view">
 
 </android.support.v7.widget.RecyclerView>

@@ -6,7 +6,7 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class Wealth {
+public class Wealth implements Model{
     @Id
     private Long id;
     @Index

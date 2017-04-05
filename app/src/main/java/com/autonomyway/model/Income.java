@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Income {
+public class Income implements Model {
     @Id
     private Long id;
     @Index
