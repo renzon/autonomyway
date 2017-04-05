@@ -12,14 +12,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.autonomyway.ActivityWithFacadeAccess;
+import com.autonomyway.component.base.ActivityWithFacadeAccess;
 import com.autonomyway.R;
 import com.autonomyway.business.GUIValidationException;
 import com.autonomyway.component.CashInput;
 import com.autonomyway.component.DurationInput;
+import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.model.Income;
 
-public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
+public abstract class BaseIncomeActivity extends BaseFormActivity {
 
     private EditText nameInput;
     private TextInputLayout nameLayout;
@@ -47,6 +48,7 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         setIncomeType(income.getType());
     }
 
+    @Override
     protected void cleanForm() {
         clearFlag = true;
         setName("");
@@ -65,6 +67,7 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         return true;
     }
 
+    @Override
     protected void validateForm() {
         boolean isValid = validateName();
         isValid = validateCash(isValid) && isValid;
@@ -85,7 +88,6 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
     }
 
     protected Income.Type getIncomeType() {
-
         if (typeGroup.getCheckedRadioButtonId() == R.id.radio_work) {
             return Income.Type.WORK;
         }
@@ -104,10 +106,6 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.income_activity_form);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         radioWork = (RadioButton) findViewById(R.id.radio_work);
         radioBusiness = (RadioButton) findViewById(R.id.radio_business);
         nameInput = (EditText) findViewById(R.id.income_name_input);
@@ -116,24 +114,6 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
         typeGroup = (RadioGroup) findViewById(R.id.income_type_group);
         nameLayout = (TextInputLayout) findViewById(R.id.income_name_layout);
         cashLayout = (TextInputLayout) findViewById(R.id.income_cash_layout);
-        Button saveButton = (Button) findViewById(R.id.income_save_button);
-        final BaseIncomeActivity that = this;
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    that.validateForm();
-                } catch (GUIValidationException e) {
-                    that.showMsg(v, R.string.income_error_msg);
-                    return;
-                }
-                that.saveIncome(v, getName(), durationInput.getDuration(),
-                        cashInput.getCash(), getIncomeType());
-
-            }
-
-
-        });
 
         nameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -166,9 +146,13 @@ public abstract class BaseIncomeActivity extends ActivityWithFacadeAccess {
 
     protected abstract void saveIncome(View v, String name, long duration, Long cash, Income.Type incomeType);
 
-    protected void showMsg(View v, int id) {
-        Snackbar.make(v, getString(id), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+    @Override
+    protected int getContentViewId() {
+        return R.layout.income_activity_form;
     }
 
+    @Override
+    protected void save(View v) {
+        saveIncome(v, getName(), durationInput.getDuration(), cashInput.getCash(), getIncomeType());
+    }
 }

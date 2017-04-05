@@ -29,7 +29,7 @@
             android:hint="@string/wealth_initial_balance_input" />
     </android.support.design.widget.TextInputLayout>
     <Button
-        android:id="@+id/wealth_save_button"
+        android:id="@+id/save_button"
         style="@style/FormButton.Wealth"
         android:text="@string/button_save" />
 </LinearLayout>

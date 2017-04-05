@@ -1,8 +1,9 @@
-package com.autonomyway;
+package com.autonomyway.component.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.business.AutonomyWay;
 
 

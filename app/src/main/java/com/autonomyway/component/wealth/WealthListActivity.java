@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.autonomyway.ActivityWithFacadeAccess;
+import com.autonomyway.component.base.ActivityWithFacadeAccess;
 import com.autonomyway.R;
 import com.autonomyway.model.Wealth;
 

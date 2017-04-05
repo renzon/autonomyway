@@ -70,7 +70,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/income_save_button"
+        android:id="@+id/save_button"
         style="@style/FormButton.Income"
         android:text="@string/button_save" />
 

@@ -1,22 +1,20 @@
 package com.autonomyway.component.wealth;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.autonomyway.ActivityWithFacadeAccess;
 import com.autonomyway.R;
 import com.autonomyway.business.GUIValidationException;
 import com.autonomyway.component.CashInput;
+import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.model.Wealth;
 
-public abstract class BaseWealthActivity extends ActivityWithFacadeAccess {
+public abstract class BaseWealthActivity extends BaseFormActivity {
 
     private EditText nameInput;
     private TextInputLayout nameLayout;
@@ -36,7 +34,7 @@ public abstract class BaseWealthActivity extends ActivityWithFacadeAccess {
         setName(wealth.getName());
         initialBalanceInput.setCash(wealth.getInitialBalance());
     }
-
+    @Override
     protected void cleanForm() {
         clearFlag=true;
         setName("");
@@ -53,6 +51,7 @@ public abstract class BaseWealthActivity extends ActivityWithFacadeAccess {
         return true;
     }
 
+    @Override
     protected void validateForm() {
         boolean isValid = validateName();
         if (!isValid) {
@@ -64,31 +63,10 @@ public abstract class BaseWealthActivity extends ActivityWithFacadeAccess {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wealth_activity_form);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         nameInput = (EditText) findViewById(R.id.wealth_name_input);
         initialBalanceInput = (CashInput) findViewById(R.id.wealth_initial_balance_input);
         nameLayout = (TextInputLayout) findViewById (R.id.wealth_name_layout);
-        Button saveButton = (Button) findViewById(R.id.wealth_save_button);
-        final BaseWealthActivity that = this;
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    that.validateForm();
-                } catch (GUIValidationException e) {
-                    that.showMsg(v, R.string.wealth_error_msg);
-                    return;
-                }
-                that.saveWealth(v, getName(), initialBalanceInput.getCash());
-
-            }
-
-
-        });
-
         nameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,17 +92,19 @@ public abstract class BaseWealthActivity extends ActivityWithFacadeAccess {
                 }
             }
         });
+    }
 
+    @Override
+    protected void save(View v) {
+        saveWealth(v, getName(), initialBalanceInput.getCash());
+    }
 
-
+    @Override
+    protected int getContentViewId() {
+        return R.layout.wealth_activity_form;
     }
 
     protected abstract void saveWealth(View v, String name, Long initialBalance);
 
-
-    protected void showMsg(View v, int id) {
-        Snackbar.make(v, getString(id), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
 
 }
