@@ -5,7 +5,7 @@
     style="@style/Form"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.autonomyway.component.income.NewIncomeActivity"
-    tools:showIn="@layout/activity_income_form">
+    tools:showIn="@layout/income_activity_form">
 
     <!--<TextView-->
     <!--android:text="@string/label_name"-->

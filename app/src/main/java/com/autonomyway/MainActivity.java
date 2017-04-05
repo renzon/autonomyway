@@ -27,7 +27,7 @@ public class MainActivity extends ActivityWithFacadeAccess
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         autonomy.createInitialData();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

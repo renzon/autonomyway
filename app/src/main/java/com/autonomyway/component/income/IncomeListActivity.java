@@ -19,7 +19,7 @@ public class IncomeListActivity extends ActivityWithFacadeAccess {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_income_list);
+        setContentView(R.layout.income_activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.income_recycle_view);

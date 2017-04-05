@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.autonomyway.component.income.IncomeListActivity"
-    tools:showIn="@layout/activity_income_list"
+    tools:showIn="@layout/income_activity_list"
     android:scrollbars="vertical"
     android:id="@+id/income_recycle_view">
 

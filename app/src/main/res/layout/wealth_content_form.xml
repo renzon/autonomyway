@@ -5,7 +5,7 @@
     style="@style/Form"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.autonomyway.component.wealth.NewWealthActivity"
-    tools:showIn="@layout/activity_wealth_form">
+    tools:showIn="@layout/wealth_activity_form">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/wealth_name_layout"

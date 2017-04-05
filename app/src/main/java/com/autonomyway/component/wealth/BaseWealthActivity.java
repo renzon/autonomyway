@@ -64,7 +64,7 @@ public abstract class BaseWealthActivity extends ActivityWithFacadeAccess {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wealth_form);
+        setContentView(R.layout.wealth_activity_form);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

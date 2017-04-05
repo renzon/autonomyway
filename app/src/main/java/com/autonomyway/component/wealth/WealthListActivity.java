@@ -16,7 +16,7 @@ public class WealthListActivity extends ActivityWithFacadeAccess {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wealth_list);
+        setContentView(R.layout.wealth_activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.wealth_recycle_view);
