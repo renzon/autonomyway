@@ -10,6 +10,9 @@ import android.view.View;
 
 import com.autonomyway.ActivityWithFacadeAccess;
 import com.autonomyway.R;
+import com.autonomyway.model.Income;
+
+import java.util.List;
 
 public class IncomeListActivity extends ActivityWithFacadeAccess {
     private RecyclerView mRecyclerView;
@@ -29,7 +32,7 @@ public class IncomeListActivity extends ActivityWithFacadeAccess {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(new IncomeListAdapter(autonomy.getIncomeList(), getResources()));
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -44,4 +47,10 @@ public class IncomeListActivity extends ActivityWithFacadeAccess {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Income> incomeList = autonomy.getIncomeList();
+        mRecyclerView.setAdapter(new IncomeListAdapter(incomeList, getResources()));
+    }
 }

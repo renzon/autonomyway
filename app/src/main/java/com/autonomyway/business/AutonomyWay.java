@@ -27,7 +27,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake3.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake4.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
     }
@@ -44,7 +44,11 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public void editWealth(Wealth wealth) {
-        session.getWealthDao().saveInTx(wealth);
+        WealthDao dao = session.getWealthDao();
+        Wealth dbWealth = dao.load(wealth.getId());
+        long delta=wealth.getInitialBalance()-dbWealth.getBalance();
+        wealth.increaseBalance(delta);
+        dao.saveInTx(wealth);
 
     }
 

@@ -13,8 +13,10 @@ public class Wealth {
     private String name;
     private long initialBalance;
 
+    private long balance;
+
     public Wealth(String name, long initialBalance) {
-        this(null, name, initialBalance);
+        this(null, name, initialBalance, initialBalance);
     }
 
     @Override
@@ -23,6 +25,7 @@ public class Wealth {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", initialBalance=" + initialBalance +
+                ", balance=" + balance +
                 '}';
     }
 
@@ -34,6 +37,7 @@ public class Wealth {
         Wealth wealth = (Wealth) o;
 
         if (initialBalance != wealth.initialBalance) return false;
+        if (balance != wealth.balance) return false;
         if (id != null ? !id.equals(wealth.id) : wealth.id != null) return false;
         return name != null ? name.equals(wealth.name) : wealth.name == null;
 
@@ -44,13 +48,17 @@ public class Wealth {
         return id != null ? id.hashCode() : 0;
     }
 
-    @Generated(hash = 304742747)
-    public Wealth(Long id, String name, long initialBalance) {
+    public void increaseBalance(long delta) {
+        balance+=delta;
+    }
+
+    @Generated(hash = 1773132447)
+    public Wealth(Long id, String name, long initialBalance, long balance) {
         this.id = id;
         this.name = name;
         this.initialBalance = initialBalance;
+        this.balance = balance;
     }
-
     @Generated(hash = 1762457066)
     public Wealth() {
     }
@@ -69,7 +77,17 @@ public class Wealth {
     public long getInitialBalance() {
         return this.initialBalance;
     }
+
     public void setInitialBalance(long initialBalance) {
         this.initialBalance = initialBalance;
+    }
+
+    public long getBalance() {
+        return this.balance;
+    }
+
+
+    public void setBalance(long balance) {
+        this.balance = balance;
     }
 }

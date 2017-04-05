@@ -38,7 +38,7 @@ public class WealthRow extends CardView {
         TextView titleTextView = (TextView) findViewById(R.id.wealth_row_title);
         TextView wealthBalanceTextView = (TextView) findViewById(R.id.wealth_balance);
         titleTextView.setText(wealth.getName());
-        wealthBalanceTextView.setText(Transformation.cashToCurrency(wealth.getInitialBalance()));
+        wealthBalanceTextView.setText(Transformation.cashToCurrency(wealth.getBalance()));
         setOnClickListener(new ClickListener(wealth));
     }
 

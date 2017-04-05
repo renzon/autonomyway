@@ -10,8 +10,13 @@ import android.view.View;
 
 import com.autonomyway.ActivityWithFacadeAccess;
 import com.autonomyway.R;
+import com.autonomyway.model.Wealth;
+
+import java.util.List;
 
 public class WealthListActivity extends ActivityWithFacadeAccess {
+
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +24,14 @@ public class WealthListActivity extends ActivityWithFacadeAccess {
         setContentView(R.layout.wealth_activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.wealth_recycle_view);
+        recyclerView = (RecyclerView) findViewById(R.id.wealth_recycle_view);
 
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(new WealthListAdapter(autonomy.getWealthList(), getResources()));
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -41,4 +46,10 @@ public class WealthListActivity extends ActivityWithFacadeAccess {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Wealth> wealthList = autonomy.getWealthList();
+        recyclerView.setAdapter(new WealthListAdapter(wealthList, getResources()));
+    }
 }

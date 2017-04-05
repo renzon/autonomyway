@@ -86,6 +86,7 @@ public class InstrumentedFacadeTests {
         Wealth wealth = facade.createWealth("Bank Account", 2);
         assertEquals("Bank Account", wealth.getName());
         assertEquals(2, wealth.getInitialBalance());
+        assertEquals(2, wealth.getBalance());
         assertTrue(wealth.getId() > 0);
     }
 
@@ -104,6 +105,7 @@ public class InstrumentedFacadeTests {
         facade.editWealth(wealth);
         Wealth dbWealth = facade.getWealth(wealth.getId());
         assertEquals(wealth, dbWealth);
+        assertEquals("Wealth initial balance must reflect on current balance",2, wealth.getBalance());
     }
 
 
