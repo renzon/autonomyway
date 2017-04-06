@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.autonomyway.R;
 
 
-public abstract class BaseNewFormActivity extends ActivityWithFacadeAccess {
+public abstract class BaseFormActivity extends ActivityWithFacadeAccess {
 
     protected abstract void cleanForm();
 
@@ -35,7 +35,7 @@ public abstract class BaseNewFormActivity extends ActivityWithFacadeAccess {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button saveButton = (Button) findViewById(getSaveButtonId());
-        final BaseNewFormActivity that = this;
+        final BaseFormActivity that = this;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -57,7 +57,7 @@ public abstract class BaseListActivity<M extends Model, BR extends BaseRow<M>,BL
     protected abstract BLA createListAdapter(List<M> modelList);
 
     @NonNull
-    protected abstract Class<? extends BaseNewFormActivity> getNewModelActivityClass();
+    protected abstract Class<? extends BaseFormActivity> getNewModelActivityClass();
 
     protected abstract int getContentViewId();
 

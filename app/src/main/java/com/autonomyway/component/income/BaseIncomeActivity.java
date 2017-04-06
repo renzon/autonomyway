@@ -13,10 +13,10 @@ import com.autonomyway.R;
 import com.autonomyway.component.base.GUIValidationException;
 import com.autonomyway.component.CashInput;
 import com.autonomyway.component.DurationInput;
-import com.autonomyway.component.base.BaseNewFormActivity;
+import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.model.Income;
 
-public abstract class BaseNewIncomeActivity extends BaseNewFormActivity {
+public abstract class BaseIncomeActivity extends BaseFormActivity {
 
     private EditText nameInput;
     private TextInputLayout nameLayout;

@@ -37,7 +37,7 @@ public abstract class BaseRow<M extends Model> extends CardView {
     protected abstract void populateRow(M model);
 
     @NonNull
-    protected abstract Class<? extends BaseNewFormActivity> getEditActivity();
+    protected abstract Class<? extends BaseFormActivity> getEditActivity();
 
     @NonNull
     protected abstract String getIntentId();
