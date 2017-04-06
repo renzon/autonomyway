@@ -14,7 +14,9 @@ import com.autonomyway.model.Model;
 
 import java.util.List;
 
-public abstract class BaseListActivity<M extends Model> extends ActivityWithFacadeAccess {
+public abstract class BaseListActivity<M extends Model, BR extends BaseRow<M>,BLVH extends
+        BaseListViewHolder<M, BR>, BLA extends BaseListAdapter<M,BR, BLVH>>
+        extends ActivityWithFacadeAccess {
     private RecyclerView recyclerView;
 
     protected RecyclerView getRecyclerView() {
@@ -43,6 +45,16 @@ public abstract class BaseListActivity<M extends Model> extends ActivityWithFaca
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BLA baseListAdapter=createListAdapter(getModelList());
+        getRecyclerView().setAdapter(baseListAdapter);
+    }
+
+    protected abstract BLA createListAdapter(List<M> modelList);
 
     @NonNull
     protected abstract Class<? extends BaseFormActivity> getNewModelActivityClass();
