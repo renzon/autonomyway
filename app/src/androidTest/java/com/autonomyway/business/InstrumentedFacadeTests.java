@@ -27,8 +27,8 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedFacadeTests {
-    static Context ctx = InstrumentationRegistry.getTargetContext();
-    static AutonomyWayFacade facade = AutonomyWay.getInstance(ctx);
+    Context ctx = InstrumentationRegistry.getTargetContext();
+    AutonomyWayFacade facade = AutonomyWay.getInstance(ctx);
 
 
     @Test
@@ -214,14 +214,16 @@ public class InstrumentedFacadeTests {
         
         //Expense
         expenseList = facade.getExpenseList();
-        assertEquals(6, expenseList.size());
+        assertEquals(7, expenseList.size());
         String[] init_expense_names = {
                 ctx.getString(R.string.expense_init_car_expenses),
                 ctx.getString(R.string.expense_init_children),
+                ctx.getString(R.string.expense_init_depreciation),
                 ctx.getString(R.string.expense_init_health),
                 ctx.getString(R.string.expense_init_house_expenses),
                 ctx.getString(R.string.expense_init_leisure),
                 ctx.getString(R.string.expense_init_taxes)
+
         };
         for (int i = 0; i < init_expense_names.length; ++i) {
             assertEquals(init_expense_names[i], expenseList.get(i).getName());
