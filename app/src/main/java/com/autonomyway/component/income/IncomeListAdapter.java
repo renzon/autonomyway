@@ -1,63 +1,27 @@
 package com.autonomyway.component.income;
 
 import android.content.res.Resources;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import com.autonomyway.R;
+import com.autonomyway.component.base.BaseListAdapter;
 import com.autonomyway.model.Income;
 
 import java.util.List;
 
 
-public class IncomeListAdapter extends RecyclerView.Adapter<IncomeListAdapter.ViewHolder> {
-    List<Income> dataSet;
-    private final Resources resources;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private IncomeRow incomeRow;
-
-        public ViewHolder(IncomeRow v) {
-            super(v);
-            incomeRow = v;
-        }
-
-        public void populate(List<Income> dataSet, int position) {
-            Income income = dataSet.get(position);
-            incomeRow.populate(income);
-        }
-    }
-
+public class IncomeListAdapter extends BaseListAdapter<Income, IncomeRow, IncomeListViewHolder> {
     public IncomeListAdapter(List<Income> dataSet, Resources resources) {
-        this.dataSet = dataSet;
-        this.resources = resources;
+        super(dataSet, resources);
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public IncomeListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                           int viewType) {
-        // create a new view
-        IncomeRow v = (IncomeRow) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.income_row, parent, false);
-        v.setResources(resources);
-        // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+    protected IncomeListViewHolder createViewHolder(IncomeRow incomeRow) {
+        return new IncomeListViewHolder(incomeRow);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.populate(dataSet, position);
+    protected int getRowLayoutId() {
+        return R.layout.income_row;
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return dataSet.size();
-    }
 }
