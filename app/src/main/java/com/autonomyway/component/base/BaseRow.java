@@ -2,6 +2,7 @@ package com.autonomyway.component.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
@@ -10,6 +11,8 @@ import android.view.View;
 import com.autonomyway.model.Model;
 
 public abstract class BaseRow<M extends Model> extends CardView {
+    protected Resources resources;
+
     public BaseRow(Context context) {
         super(context);
     }
@@ -23,11 +26,15 @@ public abstract class BaseRow<M extends Model> extends CardView {
     }
 
     public void populate(M model){
-        populateModel(model);
+        populateRow(model);
         setOnClickListener(new ClickListener(model));
     }
 
-    protected abstract void populateModel(M model);
+    public void setResources(Resources resources) {
+        this.resources = resources;
+    }
+
+    protected abstract void populateRow(M model);
 
     @NonNull
     protected abstract Class<? extends BaseFormActivity> getEditActivity();
