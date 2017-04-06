@@ -15,7 +15,6 @@ import com.autonomyway.model.WealthDao;
 
 import org.greenrobot.greendao.database.Database;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -129,6 +128,7 @@ public class AutonomyWay implements AutonomyWayFacade {
             Expense[] expenses={
                     new Expense(ctx.getString(R.string.expense_init_car_expenses),0),
                     new Expense(ctx.getString(R.string.expense_init_children),0),
+                    new Expense(ctx.getString(R.string.expense_init_depreciation),0),
                     new Expense(ctx.getString(R.string.expense_init_health),0),
                     new Expense(ctx.getString(R.string.expense_init_house_expenses),0),
                     new Expense(ctx.getString(R.string.expense_init_leisure),0),
