@@ -10,10 +10,10 @@ import android.widget.EditText;
 import com.autonomyway.R;
 import com.autonomyway.component.base.GUIValidationException;
 import com.autonomyway.component.CashInput;
-import com.autonomyway.component.base.BaseFormActivity;
+import com.autonomyway.component.base.BaseNewFormActivity;
 import com.autonomyway.model.Wealth;
 
-public abstract class BaseWealthActivity extends BaseFormActivity {
+public abstract class BaseNewWealthActivity extends BaseNewFormActivity {
 
     private EditText nameInput;
     private TextInputLayout nameLayout;

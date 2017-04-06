@@ -3,9 +3,8 @@ package com.autonomyway.component.wealth;
 import android.view.View;
 
 import com.autonomyway.R;
-import com.autonomyway.model.Income;
 
-public class NewWealthActivity extends BaseWealthActivity {
+public class NewWealthActivity extends BaseNewWealthActivity {
     @Override
     protected void saveWealth(View v, String name, Long initialBalance) {
         autonomy.createWealth(name, initialBalance);

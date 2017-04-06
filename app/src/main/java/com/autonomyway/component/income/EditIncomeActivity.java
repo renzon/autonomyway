@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.autonomyway.R;
 import com.autonomyway.model.Income;
 
-public class EditIncomeActivity extends BaseIncomeActivity {
+public class EditIncomeActivity extends BaseNewIncomeActivity {
     public static final String INCOME_ID="INCOME_ID";
     private Income incomeToEdit;
 
