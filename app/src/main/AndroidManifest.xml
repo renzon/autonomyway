@@ -58,7 +58,7 @@
         <activity
             android:name=".component.wealth.NewWealthActivity"
             android:label="@string/title_new_wealth_activity"
-            android:parentActivityName=".component.income.IncomeListActivity"
+            android:parentActivityName=".component.wealth.WealthListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -72,6 +72,33 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.autonomyway.component.wealth.WealthListActivity" />
+        </activity>
+<activity
+            android:name=".component.expense.ExpenseListActivity"
+            android:label="@string/title_activity_expense_list"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.MainActivity" />
+        </activity>
+        <activity
+            android:name=".component.expense.NewExpenseActivity"
+            android:label="@string/title_new_expense_activity"
+            android:parentActivityName=".component.expense.ExpenseListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.expense.ExpenseListActivity" />
+        </activity>
+        <activity
+            android:name=".component.expense.EditExpenseActivity"
+            android:label="@string/title_edit_expense_activity"
+            android:parentActivityName=".component.expense.ExpenseListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.expense.ExpenseListActivity" />
         </activity>
     </application>
 

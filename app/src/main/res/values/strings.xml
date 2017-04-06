@@ -7,7 +7,9 @@
     <string name="nav_wealth">Wealth</string>
     <string name="title_activity_income_list">Incomes</string>
     <string name="title_activity_wealth_list">Wealth</string>
+    <string name="title_activity_expense_list">Expenses</string>
     <string name="income_rate">Rate:</string>
+
     <string name="income_type_business">Business</string>
     <string name="income_type_work">Work</string>
     <string name="cash_error">Invalid Number</string>
@@ -29,12 +31,23 @@
 
     <string name="title_new_wealth_activity">New Wealth Form</string>
     <string name="title_edit_wealth_activity">Edit Wealth Form</string>
-    <string name="wealth_name_error">Name is required</string>
     <string name="wealth_input_name">Name *</string>
+    <string name="wealth_name_error">Name is required</string>
     <string name="wealth_initial_balance_input">Initial Cash</string>
     <string name="form_error_msg">There are errors, check red inputs</string>
     <string name="wealth_balance">Balance</string>
     <string name="wealth_save_msg">Wealth saved. Create another or press back to return to wealth list</string>
+
+    <string name="title_new_expense_activity">New Expense Form</string>
+    <string name="title_edit_expense_activity">Edit Expense Form</string>
+
+    <string name="expense_save_msg">Expense saved. Create another or press back to return to expense list</string>
+    <string name="expense_name_error">Name is required</string>
+    <string name="expense_input_name">Name *</string>
+    <string name="expense_recurrent_cash_input">Recurrent Expense: Fill if you expend same value
+        for this
+        work</string>
+    <string name="expense_rate">Rate:</string>
     <!-- Inital values when user first enter the app -->
     <!-- Income -->
     <string name="income_init_salary">Salary</string>

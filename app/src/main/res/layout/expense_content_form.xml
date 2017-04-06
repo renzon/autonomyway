@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Form"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.autonomyway.component.expense.NewExpenseActivity"
+    tools:showIn="@layout/expense_activity_form">
+
+    <!--<TextView-->
+    <!--android:text="@string/label_name"-->
+    <!--/>-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/expense_name_layout"
+        style="@style/FormLabel"
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/expense_name_input"
+            style="@style/FormTextInput"
+            android:hint="@string/expense_input_name"
+            android:inputType="textAutoCorrect" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        style="@style/FormLabel"
+        app:errorEnabled="true"
+        android:id="@+id/expense_recurrent_cash_layout">
+
+        <com.autonomyway.component.CashInput
+            android:id="@+id/expense_recurrent_cash_input"
+            style="@style/FormTextInput"
+            android:hint="@string/expense_recurrent_cash_input" />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/save_button"
+        style="@style/FormButton.Expense"
+        android:text="@string/button_save" />
+
+
+</LinearLayout>

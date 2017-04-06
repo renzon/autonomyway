@@ -37,6 +37,16 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="ListRowTitle.Income">
+        <item name="android:textColor">@color/colorIncome</item>
+    </style>
+    <style name="ListRowTitle.Wealth">
+        <item name="android:textColor">@color/colorWealth</item>
+    </style>
+    <style name="ListRowTitle.Expense">
+        <item name="android:textColor">@color/colorExpense</item>
+    </style>
+
     <style name="ListRowDetail">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -51,12 +61,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ListRowTitle.Income">
-        <item name="android:textColor">@color/colorIncome</item>
-    </style>
-    <style name="ListRowTitle.Wealth">
-        <item name="android:textColor">@color/colorWealth</item>
-    </style>
+
 
     <style name="Form">
         <item name="android:layout_height">match_parent</item>
@@ -84,6 +89,10 @@
 
     <style name="FormButton.Income">
         <item name="android:backgroundTint">@color/colorIncome</item>
+    </style>
+
+    <style name="FormButton.Expense">
+        <item name="android:backgroundTint">@color/colorExpense</item>
     </style>
 
     <style name="FormButton.Wealth">

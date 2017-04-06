@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.autonomyway.component.expense.ExpenseRow xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ListCardView">
+
+    <LinearLayout style="@style/ListRow">
+
+        <TextView
+            android:id="@+id/expense_row_title"
+            style="@style/ListRowTitle.Expense" />
+
+        <LinearLayout style="@style/ListRowDetail">
+            <TextView
+                android:text="@string/expense_rate"
+                style="@style/ListRowDetailTitle" />
+            <TextView
+                android:id="@+id/expense_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</com.autonomyway.component.expense.ExpenseRow>
