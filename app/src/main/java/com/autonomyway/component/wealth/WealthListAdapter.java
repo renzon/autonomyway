@@ -11,23 +11,9 @@ import com.autonomyway.model.Wealth;
 import java.util.List;
 
 
-public class WealthListAdapter extends RecyclerView.Adapter<WealthListAdapter.ViewHolder> {
+public class WealthListAdapter extends RecyclerView.Adapter<WealthListViewHolder> {
     List<Wealth> dataSet;
     private final Resources resources;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private WealthRow wealthRow;
-
-        public ViewHolder(WealthRow v) {
-            super(v);
-            wealthRow = v;
-        }
-
-        public void populate(List<Wealth> dataSet, int position) {
-            Wealth wealth = dataSet.get(position);
-            wealthRow.populate(wealth);
-        }
-    }
 
     public WealthListAdapter(List<Wealth> dataSet, Resources resources) {
         this.dataSet = dataSet;
@@ -36,20 +22,20 @@ public class WealthListAdapter extends RecyclerView.Adapter<WealthListAdapter.Vi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public WealthListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                           int viewType) {
+    public WealthListViewHolder onCreateViewHolder(ViewGroup parent,
+                                                   int viewType) {
         // create a new view
         WealthRow v = (WealthRow) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.wealth_row, parent, false);
         v.setResources(resources);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
+        WealthListViewHolder vh = new WealthListViewHolder(v);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(WealthListViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.populate(dataSet, position);
