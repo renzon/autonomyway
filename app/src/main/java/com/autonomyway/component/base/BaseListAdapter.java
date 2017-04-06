@@ -30,8 +30,7 @@ public abstract class BaseListAdapter<M extends Model, BR extends BaseRow<M>,
                 .inflate(getRowLayoutId(), parent, false);
         baseRow.setResources(resources);
         // set the view's size, margins, paddings and layout parameters
-        BLVH vh = createViewHolder(baseRow);
-        return vh;
+        return createViewHolder(baseRow);
     }
 
     protected abstract BLVH createViewHolder(BR baseRow);

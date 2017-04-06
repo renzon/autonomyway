@@ -25,7 +25,7 @@ public abstract class BaseExpenseActivity extends BaseFormActivity {
         return nameInput.getText().toString().trim();
     }
 
-    protected void setName(String name) {
+    private void setName(String name) {
         nameInput.setText(name);
     }
 

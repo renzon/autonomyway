@@ -46,6 +46,7 @@ public abstract class BaseFormActivity extends ActivityWithFacadeAccess {
                     return;
                 }
                 that.save(v);
+                cleanForm();
             }
 
 

@@ -9,7 +9,6 @@ public class NewIncomeActivity extends BaseIncomeActivity {
     @Override
     protected void saveIncome(View v, String name, long duration, Long cash, Income.Type incomeType) {
         autonomy.createIncome(name, duration, cash, incomeType);
-        cleanForm();
         showMsg(v, R.string.income_save_msg);
     }
 }

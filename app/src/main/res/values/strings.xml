@@ -20,7 +20,6 @@
     <string name="income_name_error">Name is required</string>
     <string name="income_input_cash">Recurrent Cash: Fill if you receive same value for this work</string>
     <string name="label_time">Recurrent Time</string>
-    <string name="input_time_hint">Fill if you spent same time on this work</string>
     <string name="label_income_type">Type of Income</string>
 
     <string name="work_explanation">Work - Need to spent time to make money. Ex: working in a company, running a business in person.</string>
