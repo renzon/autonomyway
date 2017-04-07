@@ -36,13 +36,17 @@
     <string name="form_error_msg">There are errors, check red inputs</string>
     <string name="wealth_balance">Balance</string>
     <string name="wealth_save_msg">Wealth saved. Create another or press back to return to wealth list</string>
+    <string name="transfer_save_msg">Transfer saved. Create another or press back to return to wealth list</string>
 
     <string name="title_new_expense_activity">New Expense Form</string>
+    <string name="title_new_transfer_activity">New Transfer Form</string>
     <string name="title_edit_expense_activity">Edit Expense Form</string>
 
     <string name="expense_save_msg">Expense saved. Create another or press back to return to expense list</string>
     <string name="expense_name_error">Name is required</string>
     <string name="expense_input_name">Name *</string>
+    <string name="transfer_cash_input">Cash Amount *</string>
+    <string name="transfer_input_detail">Detail. Ex: Month Salary, Groceries </string>
     <string name="expense_recurrent_cash_input">Recurrent Expense: Fill if you expend same value
         for this
         work</string>

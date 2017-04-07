@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.autonomyway.R;
-import com.autonomyway.component.CashInput;
+import com.autonomyway.component.common.CashInput;
 import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.component.base.GUIValidationException;
 import com.autonomyway.model.Expense;

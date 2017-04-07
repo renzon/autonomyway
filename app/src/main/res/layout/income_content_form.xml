@@ -27,7 +27,7 @@
         app:errorEnabled="true"
         android:id="@+id/income_cash_layout">
 
-        <com.autonomyway.component.CashInput
+        <com.autonomyway.component.common.CashInput
             android:id="@+id/income_cash_input"
             style="@style/FormTextInput"
             android:hint="@string/income_input_cash" />
@@ -38,7 +38,7 @@
         style="@style/FormLabel"
         android:text="@string/label_time" />
 
-    <com.autonomyway.component.DurationInput
+    <com.autonomyway.component.common.DurationInput
         android:id="@+id/income_duration_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

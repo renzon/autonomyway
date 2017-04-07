@@ -1,4 +1,4 @@
-package com.autonomyway.component;
+package com.autonomyway.component.common;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

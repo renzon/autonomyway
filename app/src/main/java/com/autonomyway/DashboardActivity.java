@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,10 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.autonomyway.component.base.ActivityWithFacadeAccess;
 import com.autonomyway.component.expense.ExpenseListActivity;
 import com.autonomyway.component.income.IncomeListActivity;
+import com.autonomyway.component.transfer.NewTransferActivity;
 import com.autonomyway.component.wealth.WealthListActivity;
 
 import java.util.HashMap;
@@ -34,11 +34,13 @@ public class DashboardActivity extends ActivityWithFacadeAccess
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        final DashboardActivity that = this;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(that, NewTransferActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -88,7 +90,7 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Map<Integer, Class<? extends Activity>> activityMap=new HashMap<>();
+        Map<Integer, Class<? extends Activity>> activityMap = new HashMap<>();
         activityMap.put(R.id.nav_incomes, IncomeListActivity.class);
         activityMap.put(R.id.nav_wealth, WealthListActivity.class);
         activityMap.put(R.id.nav_expenses, ExpenseListActivity.class);

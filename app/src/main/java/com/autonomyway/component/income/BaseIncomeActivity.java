@@ -11,8 +11,8 @@ import android.widget.RadioGroup;
 
 import com.autonomyway.R;
 import com.autonomyway.component.base.GUIValidationException;
-import com.autonomyway.component.CashInput;
-import com.autonomyway.component.DurationInput;
+import com.autonomyway.component.common.CashInput;
+import com.autonomyway.component.common.DurationInput;
 import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.model.Income;
 

@@ -13,9 +13,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="ListCardView">
         <item name="android:layout_width">match_parent</item>
@@ -40,9 +40,11 @@
     <style name="ListRowTitle.Income">
         <item name="android:textColor">@color/colorIncome</item>
     </style>
+
     <style name="ListRowTitle.Wealth">
         <item name="android:textColor">@color/colorWealth</item>
     </style>
+
     <style name="ListRowTitle.Expense">
         <item name="android:textColor">@color/colorExpense</item>
     </style>
@@ -60,7 +62,6 @@
         <item name="android:paddingEnd">3dp</item>
         <item name="android:textStyle">bold</item>
     </style>
-
 
 
     <style name="Form">
@@ -89,6 +90,10 @@
 
     <style name="FormButton.Income">
         <item name="android:backgroundTint">@color/colorIncome</item>
+    </style>
+
+    <style name="FormButton.Transfer">
+        <item name="android:backgroundTint">@color/colorTransfer</item>
     </style>
 
     <style name="FormButton.Expense">

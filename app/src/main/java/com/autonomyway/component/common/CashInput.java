@@ -1,4 +1,4 @@
-package com.autonomyway.component;
+package com.autonomyway.component.common;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
