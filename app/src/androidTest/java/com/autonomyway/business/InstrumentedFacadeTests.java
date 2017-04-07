@@ -9,6 +9,7 @@ import com.autonomyway.R;
 import com.autonomyway.model.DaoSession;
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
+import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 
 import org.junit.After;
@@ -16,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -105,7 +107,7 @@ public class InstrumentedFacadeTests {
         facade.editWealth(wealth);
         Wealth dbWealth = facade.getWealth(wealth.getId());
         assertEquals(wealth, dbWealth);
-        assertEquals("Wealth initial balance must reflect on current balance",2, wealth.getBalance());
+        assertEquals("Wealth initial balance must reflect on current balance", 2, wealth.getBalance());
     }
 
 
@@ -174,6 +176,40 @@ public class InstrumentedFacadeTests {
     }
 
     @Test
+    public void testTransferFromIncomeToWealth() {
+        Income salary = facade.createIncome("Salary", 0, 0, Income.Type.WORK);
+        Wealth account = facade.createWealth("Bank Account", 1);
+        Date dt = new Date();
+        Transfer firstSalary = facade.createTransfer(salary, account, dt, 6, 3, "First Salary");
+        assertEquals(6, firstSalary.getCash());
+        assertEquals(3, firstSalary.getDuration());
+        assertEquals(dt, firstSalary.getDate());
+        assertEquals("First Salary", firstSalary.getDetail());
+        assertEquals("Balance must be increased by transfer cash", 1 + 6, account.getBalance());
+    }
+
+
+    @Test
+    public void testTransferFromWealthToExpense() {
+        Expense taxes = facade.createExpense("Taxes", 0);
+        Wealth account = facade.createWealth("Bank Account", 1);
+        Date dt = new Date();
+        facade.createTransfer( account, taxes, dt, 6, 3, "IRS");
+        assertEquals("Balance must be decreased by transfer cash", 1 - 6, account.getBalance());
+    }
+    @Test
+    public void testTransferFromWealthToWealth() {
+        Wealth account = facade.createWealth("Bank Account", 20);
+        Wealth house = facade.createWealth("House", 1);
+        Date dt = new Date();
+        facade.createTransfer( account, house, dt, 6, 3, "Buying Home");
+        assertEquals("Account balance must be decreased by transfer cash",
+                20 - 6, account.getBalance());
+        assertEquals("Home balance must be increased by transfer cash",
+                1 + 6, house.getBalance());
+    }
+
+    @Test
     public void testDefaultInit() throws Exception {
         // Nothing on beginning
         List<Income> incomeList = facade.getIncomeList();
@@ -211,7 +247,7 @@ public class InstrumentedFacadeTests {
         for (int i = 0; i < init_wealth_names.length; ++i) {
             assertEquals(init_wealth_names[i], wealthList.get(i).getName());
         }
-        
+
         //Expense
         expenseList = facade.getExpenseList();
         assertEquals(7, expenseList.size());
@@ -249,5 +285,6 @@ public class InstrumentedFacadeTests {
         session.getIncomeDao().deleteAll();
         session.getWealthDao().deleteAll();
         session.getExpenseDao().deleteAll();
+        session.getTransferDao().deleteAll();
     }
 }

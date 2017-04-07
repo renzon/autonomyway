@@ -49,7 +49,7 @@ public class Wealth implements Nameable {
     }
 
     public void increaseBalance(long delta) {
-        balance+=delta;
+        balance += delta;
     }
 
     @Generated(hash = 1773132447)
@@ -59,21 +59,27 @@ public class Wealth implements Nameable {
         this.initialBalance = initialBalance;
         this.balance = balance;
     }
+
     @Generated(hash = 1762457066)
     public Wealth() {
     }
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public long getInitialBalance() {
         return this.initialBalance;
     }
@@ -90,4 +96,19 @@ public class Wealth implements Nameable {
     public void setBalance(long balance) {
         this.balance = balance;
     }
+
+    @Override
+    public void handleTransferCreationAsOrigin(Transfer transfer) {
+        decreaseBalance(transfer.getCash());
+    }
+
+    @Override
+    public void handleTransferCreationAsDestination(Transfer transfer) {
+        increaseBalance(transfer.getCash());
+    }
+
+    public void decreaseBalance(long cash) {
+        increaseBalance(-cash);
+    }
+
 }

@@ -2,8 +2,11 @@ package com.autonomyway;
 
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
+import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 
+import java.util.Date;
 import java.util.List;
 
 public interface AutonomyWayFacade {
@@ -32,4 +35,6 @@ public interface AutonomyWayFacade {
     void editExpense(Expense expense);
 
     List<Expense> getExpenseList();
+
+    Transfer createTransfer(Nameable origin, Nameable destination, Date date, long cash, long duration, String detail);
 }

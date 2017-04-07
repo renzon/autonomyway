@@ -91,7 +91,7 @@ public class Income implements Nameable {
         typeToResourceId.put(Type.WORK, R.string.income_type_work);
     }
 
-    public static class TypeConverter implements PropertyConverter<Type, String> {
+    static class TypeConverter implements PropertyConverter<Type, String> {
         @Override
         public String convertToDatabaseValue(Type entityProperty) {
             return entityProperty.getDbValue();
@@ -99,10 +99,13 @@ public class Income implements Nameable {
 
         @Override
         public Type convertToEntityProperty(String databaseValue) {
-            if (Type.WORK.getDbValue().equals(databaseValue)) {
-                return Type.WORK;
+            for (Type t:Type.values()){
+                if(t.getDbValue().equals(databaseValue)){
+                    return t;
+                }
             }
-            return Type.BUSINESS;
+            throw new RuntimeException("NameableClass not found for "+databaseValue);
+
         }
     }
 
@@ -137,6 +140,16 @@ public class Income implements Nameable {
 
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public void handleTransferCreationAsOrigin(Transfer transfer) {
+
+    }
+
+    @Override
+    public void handleTransferCreationAsDestination(Transfer transfer) {
+
     }
 
 

@@ -10,11 +10,14 @@ import com.autonomyway.model.Expense;
 import com.autonomyway.model.ExpenseDao;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.IncomeDao;
+import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 import com.autonomyway.model.WealthDao;
 
 import org.greenrobot.greendao.database.Database;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,9 +27,25 @@ public class AutonomyWay implements AutonomyWayFacade {
     DaoSession session;
     private Context ctx;
 
+    @Override
+    public Transfer createTransfer(Nameable origin, Nameable destination, Date date, long cash, long duration, String detail) {
+        final Transfer transfer=new Transfer(origin,destination,date,cash,duration,detail);
+        origin.handleTransferCreationAsOrigin(transfer);
+        destination.handleTransferCreationAsDestination(transfer);
+
+        session.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                session.getTransferDao().insert(transfer);
+            }
+        });
+
+        return transfer;
+    }
+
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake4.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake6.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
     }

@@ -80,4 +80,14 @@ public class Expense implements Nameable {
     public void setRecurrentCash(long recurrentCash) {
         this.recurrentCash = recurrentCash;
     }
+    @Override
+    public void handleTransferCreationAsOrigin(Transfer transfer) {
+
+    }
+
+    @Override
+    public void handleTransferCreationAsDestination(Transfer transfer) {
+
+    }
+
 }
