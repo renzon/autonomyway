@@ -73,5 +73,6 @@
     <string name="expense_init_house_expenses">House Expenses</string>
     <string name="expense_init_leisure">Leisure</string>
     <string name="expense_init_taxes">Taxes</string>
+    <string name="time_spent_to_get_income">Time spent to get income</string>
     <!--<string name="expense_init_"></string>-->
 </resources>
