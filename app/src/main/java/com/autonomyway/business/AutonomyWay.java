@@ -15,6 +15,7 @@ import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 import com.autonomyway.model.WealthDao;
 
+import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 
 import java.util.Date;
@@ -27,9 +28,10 @@ public class AutonomyWay implements AutonomyWayFacade {
     DaoSession session;
     private Context ctx;
 
+
     @Override
-    public Transfer createTransfer(Nameable origin, Nameable destination, Date date, long cash, long duration, String detail) {
-        final Transfer transfer=new Transfer(origin,destination,date,cash,duration,detail);
+    public Transfer createTransfer(final Nameable origin, final Nameable destination, Date date, long cash, long duration, String detail) {
+        final Transfer transfer = new Transfer(origin, destination, date, cash, duration, detail);
         origin.handleTransferCreationAsOrigin(transfer);
         destination.handleTransferCreationAsDestination(transfer);
 
@@ -37,10 +39,23 @@ public class AutonomyWay implements AutonomyWayFacade {
             @Override
             public void run() {
                 session.getTransferDao().insert(transfer);
+                getDao(origin).save(origin);
+                getDao(destination).save(destination);
             }
         });
 
         return transfer;
+    }
+
+    private AbstractDao getDao(Nameable nameable) {
+        if (nameable instanceof Expense) {
+            return session.getExpenseDao();
+        } else if (nameable instanceof Income) {
+            return session.getIncomeDao();
+        } else if (nameable instanceof Wealth) {
+            return session.getWealthDao();
+        }
+        throw new RuntimeException("No Dao found for " + nameable);
     }
 
     private AutonomyWay(Context ctx) {
@@ -64,7 +79,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     public void editWealth(Wealth wealth) {
         WealthDao dao = session.getWealthDao();
         Wealth dbWealth = dao.load(wealth.getId());
-        long delta=wealth.getInitialBalance()-dbWealth.getBalance();
+        long delta = wealth.getInitialBalance() - dbWealth.getBalance();
         wealth.increaseBalance(delta);
         dao.saveInTx(wealth);
 
@@ -108,7 +123,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public Expense createExpense(String name, long recurrentCash) {
-        Expense expense=new Expense(name, recurrentCash);
+        Expense expense = new Expense(name, recurrentCash);
         session.getExpenseDao().insertInTx(expense);
         return expense;
     }
@@ -136,22 +151,22 @@ public class AutonomyWay implements AutonomyWayFacade {
                     new Income(ctx.getString(R.string.income_init_stocks), 0, 0, Income.Type.BUSINESS)
             };
 
-            Wealth[] wealth={
-                    new Wealth(ctx.getString(R.string.wealth_init_bank_account),0),
-                    new Wealth(ctx.getString(R.string.wealth_init_car),0),
-                    new Wealth(ctx.getString(R.string.wealth_init_credit_card),0),
-                    new Wealth(ctx.getString(R.string.wealth_init_house),0),
-                    new Wealth(ctx.getString(R.string.wealth_init_stocks),0),
-                    new Wealth(ctx.getString(R.string.wealth_init_wallet),0)
+            Wealth[] wealth = {
+                    new Wealth(ctx.getString(R.string.wealth_init_bank_account), 0),
+                    new Wealth(ctx.getString(R.string.wealth_init_car), 0),
+                    new Wealth(ctx.getString(R.string.wealth_init_credit_card), 0),
+                    new Wealth(ctx.getString(R.string.wealth_init_house), 0),
+                    new Wealth(ctx.getString(R.string.wealth_init_stocks), 0),
+                    new Wealth(ctx.getString(R.string.wealth_init_wallet), 0)
             };
-            Expense[] expenses={
-                    new Expense(ctx.getString(R.string.expense_init_car_expenses),0),
-                    new Expense(ctx.getString(R.string.expense_init_children),0),
-                    new Expense(ctx.getString(R.string.expense_init_depreciation),0),
-                    new Expense(ctx.getString(R.string.expense_init_health),0),
-                    new Expense(ctx.getString(R.string.expense_init_house_expenses),0),
-                    new Expense(ctx.getString(R.string.expense_init_leisure),0),
-                    new Expense(ctx.getString(R.string.expense_init_taxes),0),
+            Expense[] expenses = {
+                    new Expense(ctx.getString(R.string.expense_init_car_expenses), 0),
+                    new Expense(ctx.getString(R.string.expense_init_children), 0),
+                    new Expense(ctx.getString(R.string.expense_init_depreciation), 0),
+                    new Expense(ctx.getString(R.string.expense_init_health), 0),
+                    new Expense(ctx.getString(R.string.expense_init_house_expenses), 0),
+                    new Expense(ctx.getString(R.string.expense_init_leisure), 0),
+                    new Expense(ctx.getString(R.string.expense_init_taxes), 0),
             };
             session.getIncomeDao().insertInTx(incomes);
             session.getWealthDao().insertInTx(wealth);

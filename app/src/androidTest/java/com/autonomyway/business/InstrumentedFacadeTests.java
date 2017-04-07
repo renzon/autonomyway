@@ -181,11 +181,18 @@ public class InstrumentedFacadeTests {
         Wealth account = facade.createWealth("Bank Account", 1);
         Date dt = new Date();
         Transfer firstSalary = facade.createTransfer(salary, account, dt, 6, 3, "First Salary");
+        assertNotNull(firstSalary.getId());
         assertEquals(6, firstSalary.getCash());
         assertEquals(3, firstSalary.getDuration());
         assertEquals(dt, firstSalary.getDate());
         assertEquals("First Salary", firstSalary.getDetail());
+        assertEquals(Transfer.NameableClass.INCOME, firstSalary.getOriginClass());
+        assertEquals(Transfer.NameableClass.WEALTH, firstSalary.getDestinationClass());
+        assertEquals(salary.getId(), (Long) firstSalary.getOriginId());
+        assertEquals(account.getId(), (Long) firstSalary.getDestinationId());
+        account = facade.getWealth(account.getId());
         assertEquals("Balance must be increased by transfer cash", 1 + 6, account.getBalance());
+
     }
 
 
@@ -194,15 +201,21 @@ public class InstrumentedFacadeTests {
         Expense taxes = facade.createExpense("Taxes", 0);
         Wealth account = facade.createWealth("Bank Account", 1);
         Date dt = new Date();
-        facade.createTransfer( account, taxes, dt, 6, 3, "IRS");
+        Transfer irs = facade.createTransfer(account, taxes, dt, 6, 3, "IRS");
+        assertEquals(Transfer.NameableClass.WEALTH, irs.getOriginClass());
+        assertEquals(Transfer.NameableClass.EXPENSE, irs.getDestinationClass());
+        account = facade.getWealth(account.getId());
         assertEquals("Balance must be decreased by transfer cash", 1 - 6, account.getBalance());
     }
+
     @Test
     public void testTransferFromWealthToWealth() {
         Wealth account = facade.createWealth("Bank Account", 20);
         Wealth house = facade.createWealth("House", 1);
         Date dt = new Date();
-        facade.createTransfer( account, house, dt, 6, 3, "Buying Home");
+        facade.createTransfer(account, house, dt, 6, 3, "Buying Home");
+        account = facade.getWealth(account.getId());
+        house = facade.getWealth(house.getId());
         assertEquals("Account balance must be decreased by transfer cash",
                 20 - 6, account.getBalance());
         assertEquals("Home balance must be increased by transfer cash",
