@@ -22,14 +22,14 @@ import com.autonomyway.component.wealth.WealthListActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends ActivityWithFacadeAccess
+public class DashboardActivity extends ActivityWithFacadeAccess
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         autonomy.createInitialData();
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.dashboard_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
