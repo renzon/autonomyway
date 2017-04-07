@@ -5,12 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.autonomyway.model.Model;
+import com.autonomyway.model.Nameable;
 
 import java.util.List;
 
 
-public abstract class BaseListAdapter<M extends Model, BR extends BaseRow<M>,
+public abstract class BaseListAdapter<M extends Nameable, BR extends BaseRow<M>,
         BLVH extends BaseListViewHolder<M, BR>>
         extends RecyclerView.Adapter<BLVH> {
 

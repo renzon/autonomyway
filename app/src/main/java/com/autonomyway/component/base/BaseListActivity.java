@@ -10,11 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.autonomyway.R;
-import com.autonomyway.model.Model;
+import com.autonomyway.model.Nameable;
 
 import java.util.List;
 
-public abstract class BaseListActivity<M extends Model, BR extends BaseRow<M>,BLVH extends
+public abstract class BaseListActivity<M extends Nameable, BR extends BaseRow<M>,BLVH extends
         BaseListViewHolder<M, BR>, BLA extends BaseListAdapter<M,BR, BLVH>>
         extends ActivityWithFacadeAccess {
     private RecyclerView recyclerView;

@@ -12,12 +12,11 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.converter.PropertyConverter;
 
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Income implements Model {
+public class Income implements Nameable {
     @Id
     private Long id;
     @Index
