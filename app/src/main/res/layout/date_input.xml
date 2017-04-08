@@ -11,13 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10/30/17"
-        android:textSize="20sp"/>
+        style="@style/ValueTextView"/>
 
     <ImageButton
         android:id="@+id/change_date_button"
+        style="@style/ChangeValueImageButton"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:src="@android:drawable/ic_menu_month"/>
+        android:src="@android:drawable/ic_menu_today"/>
 
 </LinearLayout>

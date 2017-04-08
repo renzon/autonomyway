@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Form"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.autonomyway.component.transfer.NewTransferActivity"
-    tools:showIn="@layout/transfer_activity_form">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              style="@style/Form"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:context="com.autonomyway.component.transfer.NewTransferActivity"
+              tools:showIn="@layout/transfer_activity_form">
 
-    <!--<TextView-->
-    <!--android:text="@string/label_name"-->
-    <!--/>-->
+    <com.autonomyway.component.transfer.direction.DirectionInput
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/transfer_recurrent_cash_layout"
+        style="@style/FormLabel"
+        app:errorEnabled="true">
+
+        <com.autonomyway.component.common.CashInput
+            android:id="@+id/cash_input"
+            style="@style/FormTextInput"
+            android:hint="@string/transfer_cash_input"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_spent_to_get_income"/>
+
+    <com.autonomyway.component.common.DateInput
+        android:id="@+id/date_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.autonomyway.component.common.DurationInput
+        android:id="@+id/duration_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/transfer_detail_layout"
         style="@style/FormLabel"
@@ -19,34 +48,11 @@
             android:id="@+id/name_input"
             style="@style/FormTextInput"
             android:hint="@string/transfer_input_detail"
-            android:inputType="textAutoCorrect" />
+            android:inputType="textAutoCorrect"/>
     </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        style="@style/FormLabel"
-        app:errorEnabled="true"
-        android:id="@+id/transfer_recurrent_cash_layout">
-
-        <com.autonomyway.component.common.CashInput
-            android:id="@+id/cash_input"
-            style="@style/FormTextInput"
-            android:hint="@string/transfer_cash_input" />
-
-    </android.support.design.widget.TextInputLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_spent_to_get_income"/>
-    <com.autonomyway.component.common.DurationInput
-        android:id="@+id/duration_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <com.autonomyway.component.common.DateInput
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date_input"/>
 
     <Button
         android:id="@+id/save_button"
         style="@style/FormButton.Transfer"
-        android:text="@string/button_save" />
+        android:text="@string/button_save"/>
 </LinearLayout>

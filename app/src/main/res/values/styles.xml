@@ -103,4 +103,10 @@
     <style name="FormButton.Wealth">
         <item name="android:backgroundTint">@color/colorWealth</item>
     </style>
+    <style name="ValueTextView">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="ChangeValueImageButton">
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
 </resources>

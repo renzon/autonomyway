@@ -8,6 +8,7 @@ import com.autonomyway.R;
 import com.autonomyway.component.common.CashInput;
 import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.component.base.GUIValidationException;
+import com.autonomyway.component.common.DurationInput;
 import com.autonomyway.model.Nameable;
 import com.autonomyway.model.Transfer;
 
@@ -18,6 +19,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     private EditText detailInput;
     private CashInput cashInput;
     private boolean clearFlag=false;
+    private DurationInput durationInput;
 
 
     private String getDetail() {
@@ -37,6 +39,9 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         clearFlag=true;
         setDetail("");
         cashInput.clear();
+        detailInput.setText("");
+        durationInput.clear();
+        durationInput.clear();
     }
 
     private boolean validateName() {
@@ -59,6 +64,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         super.onCreate(savedInstanceState);
         detailInput = (EditText) findViewById(R.id.name_input);
         cashInput = (CashInput) findViewById(R.id.cash_input);
+        durationInput = (DurationInput) findViewById(R.id.duration_input);
 
     }
 

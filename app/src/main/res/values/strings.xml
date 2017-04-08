@@ -74,5 +74,7 @@
     <string name="expense_init_leisure">Leisure</string>
     <string name="expense_init_taxes">Taxes</string>
     <string name="time_spent_to_get_income">Time spent to get income</string>
+    <string name="transfer_origin">Origem</string>
+    <string name="transfer_destination">Destination</string>
     <!--<string name="expense_init_"></string>-->
 </resources>
