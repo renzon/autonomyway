@@ -1,6 +1,6 @@
 package com.autonomyway.model;
 
-public interface Nameable extends Identifiable {
+public interface Node extends Identifiable {
 
     String getName();
 

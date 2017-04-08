@@ -2,12 +2,12 @@ package com.autonomyway.component.base;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Node;
 
 import java.util.List;
 
 
-public abstract class BaseListViewHolder<M extends Nameable, BR extends BaseRow<M>> extends
+public abstract class BaseListViewHolder<M extends Node, BR extends BaseRow<M>> extends
         RecyclerView.ViewHolder {
 
     private BR baseRow;

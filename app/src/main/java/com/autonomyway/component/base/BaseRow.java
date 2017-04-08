@@ -8,9 +8,9 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Node;
 
-public abstract class BaseRow<M extends Nameable> extends CardView {
+public abstract class BaseRow<M extends Node> extends CardView {
     protected Resources resources;
 
     public BaseRow(Context context) {

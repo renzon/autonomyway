@@ -2,7 +2,7 @@ package com.autonomyway;
 
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
-import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 
@@ -36,5 +36,5 @@ public interface AutonomyWayFacade {
 
     List<Expense> getExpenseList();
 
-    Transfer createTransfer(Nameable origin, Nameable destination, Date date, long cash, long duration, String detail);
+    Transfer createTransfer(Node origin, Node destination, Date date, long cash, long duration, String detail);
 }

@@ -9,7 +9,7 @@ import com.autonomyway.component.common.CashInput;
 import com.autonomyway.component.base.BaseFormActivity;
 import com.autonomyway.component.base.GUIValidationException;
 import com.autonomyway.component.common.DurationInput;
-import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 
 import java.util.Date;
@@ -78,7 +78,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         return R.layout.transfer_activity_form;
     }
 
-    protected abstract void saveTransfer(View v, Nameable origin, Nameable destination, Date date, long
+    protected abstract void saveTransfer(View v, Node origin, Node destination, Date date, long
             cash, long duration, String detail);
 
 

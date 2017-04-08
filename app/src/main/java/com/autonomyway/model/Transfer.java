@@ -33,7 +33,7 @@ public class Transfer implements Identifiable {
     private NameableClass destinationClass;
 
     @Keep
-    public Transfer(@NotNull Nameable origin, @NotNull Nameable destination, @NotNull Date date,
+    public Transfer(@NotNull Node origin, @NotNull Node destination, @NotNull Date date,
                     long cash, long duration, String detail) {
         this.date = date;
         this.cash = cash;
@@ -63,12 +63,12 @@ public class Transfer implements Identifiable {
     public Transfer() {
     }
 
-    public void setOrigin(Nameable origin) {
+    public void setOrigin(Node origin) {
         this.originId = origin.getId();
         this.originClass = NameableClass.toEnum(origin.getClass());
     }
 
-    public void setDestination(Nameable destination) {
+    public void setDestination(Node destination) {
         this.destinationId = destination.getId();
         this.destinationClass = NameableClass.toEnum(destination.getClass());
     }
@@ -79,10 +79,10 @@ public class Transfer implements Identifiable {
         INCOME("Income", Income.class),
         WEALTH("Wealth", Wealth.class);
         private final String dbValue;
-        private final Class<? extends Nameable> nameable;
+        private final Class<? extends Node> nameable;
 
 
-        NameableClass(String dbValue, Class<? extends Nameable> nameable) {
+        NameableClass(String dbValue, Class<? extends Node> nameable) {
             this.nameable = nameable;
             this.dbValue = dbValue;
         }
@@ -91,7 +91,7 @@ public class Transfer implements Identifiable {
             return dbValue;
         }
 
-        public static NameableClass toEnum(Class<? extends Nameable> nameable) {
+        public static NameableClass toEnum(Class<? extends Node> nameable) {
             for (NameableClass t : NameableClass.values()) {
                 if (t.nameable.equals(nameable)) {
                     return t;

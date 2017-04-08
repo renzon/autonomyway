@@ -10,7 +10,7 @@ import com.autonomyway.model.Expense;
 import com.autonomyway.model.ExpenseDao;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.IncomeDao;
-import com.autonomyway.model.Nameable;
+import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 import com.autonomyway.model.WealthDao;
@@ -30,7 +30,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
 
     @Override
-    public Transfer createTransfer(final Nameable origin, final Nameable destination, Date date, long cash, long duration, String detail) {
+    public Transfer createTransfer(final Node origin, final Node destination, Date date, long cash, long duration, String detail) {
         final Transfer transfer = new Transfer(origin, destination, date, cash, duration, detail);
         origin.handleTransferCreationAsOrigin(transfer);
         destination.handleTransferCreationAsDestination(transfer);
@@ -47,15 +47,15 @@ public class AutonomyWay implements AutonomyWayFacade {
         return transfer;
     }
 
-    private AbstractDao getDao(Nameable nameable) {
-        if (nameable instanceof Expense) {
+    private AbstractDao getDao(Node node) {
+        if (node instanceof Expense) {
             return session.getExpenseDao();
-        } else if (nameable instanceof Income) {
+        } else if (node instanceof Income) {
             return session.getIncomeDao();
-        } else if (nameable instanceof Wealth) {
+        } else if (node instanceof Wealth) {
             return session.getWealthDao();
         }
-        throw new RuntimeException("No Dao found for " + nameable);
+        throw new RuntimeException("No Dao found for " + node);
     }
 
     private AutonomyWay(Context ctx) {

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Income implements Nameable {
+public class Income implements Node {
     @Id
     private Long id;
     @Index
