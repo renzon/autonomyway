@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.autonomyway.R;
 import com.autonomyway.component.common.DateInput;
+import com.autonomyway.component.transfer.direction.DirectionInput;
 import com.autonomyway.model.Node;
 
 import java.util.Date;
@@ -17,6 +18,10 @@ public class NewTransferActivity extends BaseTransferActivity {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         ((DateInput)findViewById(R.id.date_input)).
                 setSupportFragmentManager(supportFragmentManager);
+        DirectionInput directionInput = (DirectionInput) findViewById(R.id.direction_input);
+        directionInput.
+                setDependencies(supportFragmentManager, autonomy);
+
     }
 
     @Override

@@ -8,5 +8,7 @@
     <color name="colorWealth">#c2af00</color>
     <color name="colorExpense">#a40300</color>
     <color name="formButtonTextColor">#FFFFFF</color>
+    <color name="nodeRowBackgroudGray">#ECECEC</color>
+    <color name="nodeRowBackgroudWhite">#FFFFFF</color>
     <color name="formError">#b90000</color>
 </resources>

@@ -32,6 +32,18 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="NodeRow">
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="NodeRowTitle" parent="@style/Base.TextAppearance.AppCompat.Headline">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="ListRowTitle" parent="@style/Base.TextAppearance.AppCompat.Medium">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -108,5 +120,15 @@
     </style>
     <style name="ChangeValueImageButton">
         <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="NodePickerTitle" parent="@style/Base.TextAppearance.AppCompat.Large">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:elevation">4dp</item>
     </style>
 </resources>

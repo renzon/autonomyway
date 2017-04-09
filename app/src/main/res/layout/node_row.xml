@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.autonomyway.component.transfer.direction.NodeRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/NodeRow">
+    <TextView
+        android:id="@+id/title"
+        style="@style/NodeRowTitle"/>
+
+</com.autonomyway.component.transfer.direction.NodeRow>

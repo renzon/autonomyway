@@ -1,6 +1,8 @@
 package com.autonomyway.model;
 
-public interface Node extends Identifiable {
+import java.io.Serializable;
+
+public interface Node extends Identifiable, Serializable {
 
     String getName();
 

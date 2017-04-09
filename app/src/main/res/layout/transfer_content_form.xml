@@ -8,6 +8,7 @@
               tools:showIn="@layout/transfer_activity_form">
 
     <com.autonomyway.component.transfer.direction.DirectionInput
+        android:id="@+id/direction_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
