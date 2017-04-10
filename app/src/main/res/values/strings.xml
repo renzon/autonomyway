@@ -42,6 +42,7 @@
     <string name="title_new_expense_activity">New Expense Form</string>
     <string name="title_new_transfer_activity">New Transfer Form</string>
     <string name="title_edit_expense_activity">Edit Expense Form</string>
+    <string name="positive_amount_err_msg">Must be a positive amount</string>
 
     <string name="expense_save_msg">Expense saved. Create another or press back to return to expense list</string>
     <string name="expense_name_error">Name is required</string>

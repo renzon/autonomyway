@@ -1,7 +1,10 @@
 package com.autonomyway.component.transfer;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,6 +30,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     private DurationInput durationInput;
     private DirectionInput directionInput;
     private DateInput dateInput;
+    private TextInputLayout cashInputLayout;
 
 
     private String getDetail() {
@@ -56,9 +60,19 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     @Override
     protected void validateForm() {
         boolean isValid = validateDirection();
+        isValid = validateCash() && isValid;
         if (!isValid) {
             throw new GUIValidationException();
         }
+    }
+
+    private boolean validateCash() {
+        if (cashInput.getCash()<=0){
+            cashInputLayout.setError(getResources().getString(R.string.positive_amount_err_msg));
+            return false;
+        }
+        cashInputLayout.setError(null);
+        return true;
     }
 
     private boolean validateDirection() {
@@ -71,6 +85,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         super.onCreate(savedInstanceState);
         detailInput = (EditText) findViewById(R.id.name_input);
         cashInput = (CashInput) findViewById(R.id.cash_input);
+        cashInputLayout = (TextInputLayout) findViewById(R.id.cash_input_layout);
         durationInput = (DurationInput) findViewById(R.id.duration_input);
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         dateInput = (DateInput) findViewById(R.id.date_input);
@@ -94,7 +109,22 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         });
         directionInput.
                 setDependencies(supportFragmentManager, autonomy, getResources());
+        cashInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateCash();
+            }
+        });
 
     }
 

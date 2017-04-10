@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"/>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/transfer_recurrent_cash_layout"
+        android:id="@+id/cash_input_layout"
         style="@style/FormLabel"
         app:errorEnabled="true">
 
