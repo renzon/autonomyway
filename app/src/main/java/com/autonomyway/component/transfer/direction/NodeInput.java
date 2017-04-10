@@ -50,7 +50,19 @@ public class NodeInput extends LinearLayout {
         findViewById(R.id.button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new NodeDialogFragment(buildAvailableNodes(), listener).show(supportFragmentManager);
+                new NodeDialogFragment(buildAvailableNodes(), new NodeRow.OnNodeSelectionListener() {
+                    @Override
+                    public void selected(Node node) {
+                        if (node==null){
+                            addErrorState();
+                        }else{
+                            removeErrorState();
+                        }
+                        if (listener!=null){
+                            listener.selected(node);
+                        }
+                    }
+                }).show(supportFragmentManager);
             }
         });
     }
@@ -61,5 +73,14 @@ public class NodeInput extends LinearLayout {
 
     public void setNodeMediator(NodeMediator nodeMediator) {
         this.nodeMediator = nodeMediator;
+    }
+
+    public void addErrorState(){
+        label.setError("Required Field");
+
+    }
+
+    public void removeErrorState(){
+        label.setError(null);
     }
 }

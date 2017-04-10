@@ -25,6 +25,8 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     private CashInput cashInput;
     private boolean clearFlag = false;
     private DurationInput durationInput;
+    private DirectionInput directionInput;
+    private DateInput dateInput;
 
 
     private String getDetail() {
@@ -45,23 +47,22 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         clearFlag = true;
         setDetail("");
         cashInput.clear();
-        detailInput.setText("");
         durationInput.clear();
         durationInput.clear();
     }
 
-    private boolean validateName() {
 
-        clearFlag = false;
-        return true;
-    }
 
     @Override
     protected void validateForm() {
-        boolean isValid = validateName();
+        boolean isValid = validateDirection();
         if (!isValid) {
             throw new GUIValidationException();
         }
+    }
+
+    private boolean validateDirection() {
+        return directionInput.validate();
     }
 
 
@@ -72,9 +73,9 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         cashInput = (CashInput) findViewById(R.id.cash_input);
         durationInput = (DurationInput) findViewById(R.id.duration_input);
         FragmentManager supportFragmentManager = getSupportFragmentManager();
-        ((DateInput) findViewById(R.id.date_input)).
-                setSupportFragmentManager(supportFragmentManager);
-        DirectionInput directionInput = (DirectionInput) findViewById(R.id.direction_input);
+        dateInput = (DateInput) findViewById(R.id.date_input);
+        dateInput.setSupportFragmentManager(supportFragmentManager);
+        directionInput = (DirectionInput) findViewById(R.id.direction_input);
         final View[] durationViews = {
                 findViewById(R.id.duration_input_label),
                 findViewById(R.id.duration_input)
@@ -99,7 +100,9 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
 
     @Override
     protected void save(View v) {
-//        saveTransfer(v, getDetail(), cashInput.getCash());
+        saveTransfer(v, directionInput.getOrigin(), directionInput.getDestination(),
+                dateInput.getDate(), cashInput.getCash(), durationInput.getDuration(),
+                detailInput.getText().toString());
     }
 
     @Override

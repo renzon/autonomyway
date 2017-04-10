@@ -15,6 +15,8 @@ import com.autonomyway.model.Node;
 public class DirectionInput extends LinearLayout {
     private NodeMediator nodeMediator;
     private NodeMediator.OnOriginSelectionListener listener;
+    private NodeInput originInput;
+    private NodeInput destinationInput;
 
     public DirectionInput(Context context) {
         this(context, null);
@@ -38,8 +40,8 @@ public class DirectionInput extends LinearLayout {
 
     public void setDependencies(FragmentManager supportFragmentManager, AutonomyWayFacade autonomyFacade, Resources resources) {
 
-        NodeInput originInput = (NodeInput) findViewById(R.id.origin_input);
-        NodeInput destinationInput = (NodeInput) findViewById(R.id.destination_input);
+        originInput = (NodeInput) findViewById(R.id.origin_input);
+         destinationInput = (NodeInput) findViewById(R.id.destination_input);
         nodeMediator = new NodeMediator(autonomyFacade, originInput, destinationInput, resources);
         nodeMediator.setOnOriginSelectionListener(listener);
         originInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
@@ -61,5 +63,37 @@ public class DirectionInput extends LinearLayout {
 
     public void setOriginSelectionListener(NodeMediator.OnOriginSelectionListener listener) {
         this.listener = listener;
+    }
+
+    public Node getOrigin() {
+        return nodeMediator.getOrigin();
+    }
+
+
+    public Node getDestination() {
+        return nodeMediator.getDestination();
+    }
+
+    public boolean validate() {
+        
+        return validateDestination() & validateOrigin();
+    }
+
+    protected boolean validateOrigin() {
+        if (nodeMediator.getOrigin()==null){
+            originInput.addErrorState();
+            return false;
+        }
+        originInput.removeErrorState();
+        return true;
+    }
+
+    protected boolean validateDestination() {
+        if (nodeMediator.getDestination()==null){
+            destinationInput.addErrorState();
+            return false;
+        }
+        destinationInput.removeErrorState();
+        return true;
     }
 }

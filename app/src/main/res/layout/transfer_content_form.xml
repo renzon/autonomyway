@@ -49,7 +49,7 @@
         />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/transfer_detail_layout"
+         android:id="@+id/transfer_detail_layout"
         style="@style/FormLabel"
         app:errorEnabled="false">
 

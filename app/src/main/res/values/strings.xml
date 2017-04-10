@@ -36,7 +36,8 @@
     <string name="form_error_msg">There are errors, check red inputs</string>
     <string name="wealth_balance">Balance</string>
     <string name="wealth_save_msg">Wealth saved. Create another or press back to return to wealth list</string>
-    <string name="transfer_save_msg">Transfer saved. Create another or press back to return to wealth list</string>
+    <string name="transfer_save_msg">Transfer saved. Create another or press back to return to
+        Dashboard</string>
 
     <string name="title_new_expense_activity">New Expense Form</string>
     <string name="title_new_transfer_activity">New Transfer Form</string>
