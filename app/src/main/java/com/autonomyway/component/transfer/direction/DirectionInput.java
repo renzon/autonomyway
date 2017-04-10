@@ -13,8 +13,8 @@ import com.autonomyway.model.Node;
 
 
 public class DirectionInput extends LinearLayout {
-
     private NodeMediator nodeMediator;
+    private NodeMediator.OnOriginSelectionListener listener;
 
     public DirectionInput(Context context) {
         this(context, null);
@@ -31,12 +31,17 @@ public class DirectionInput extends LinearLayout {
     public DirectionInput(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         inflate(getContext(), R.layout.transfer_direction_input, this);
+
     }
 
+
+
     public void setDependencies(FragmentManager supportFragmentManager, AutonomyWayFacade autonomyFacade, Resources resources) {
+
         NodeInput originInput = (NodeInput) findViewById(R.id.origin_input);
         NodeInput destinationInput = (NodeInput) findViewById(R.id.destination_input);
         nodeMediator = new NodeMediator(autonomyFacade, originInput, destinationInput, resources);
+        nodeMediator.setOnOriginSelectionListener(listener);
         originInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
@@ -54,4 +59,7 @@ public class DirectionInput extends LinearLayout {
     }
 
 
+    public void setOriginSelectionListener(NodeMediator.OnOriginSelectionListener listener) {
+        this.listener = listener;
+    }
 }

@@ -16,6 +16,8 @@ public class NodeMediator {
     private Resources resources;
     private Node selectedOrigin=null;
     private Node selectedDestination=null;
+    private OnOriginSelectionListener listener;
+
 
     public NodeMediator(AutonomyWayFacade facade, NodeInput originInput, NodeInput destinationInput, Resources resources) {
         this.facade = facade;
@@ -39,7 +41,9 @@ public class NodeMediator {
         }else{
             originInput.setText(selectedOrigin.getName());
         }
-
+        if (listener!=null){
+            listener.selected(selectedOrigin);
+        }
     }
 
     public Node getSelectedDestination() {
@@ -62,5 +66,14 @@ public class NodeMediator {
         nodes.addAll(facade.getWealthList());
         nodes.addAll(facade.getExpenseList());
         return nodes;
+    }
+
+    public void setOnOriginSelectionListener(OnOriginSelectionListener listener){
+
+        this.listener = listener;
+    }
+
+    public interface OnOriginSelectionListener{
+        void selected(Node node);
     }
 }

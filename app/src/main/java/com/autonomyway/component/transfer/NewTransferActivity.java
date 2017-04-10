@@ -1,28 +1,13 @@
 package com.autonomyway.component.transfer;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.autonomyway.R;
-import com.autonomyway.component.common.DateInput;
-import com.autonomyway.component.transfer.direction.DirectionInput;
 import com.autonomyway.model.Node;
 
 import java.util.Date;
 
 public class NewTransferActivity extends BaseTransferActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        ((DateInput)findViewById(R.id.date_input)).
-                setSupportFragmentManager(supportFragmentManager);
-        DirectionInput directionInput = (DirectionInput) findViewById(R.id.direction_input);
-        directionInput.
-                setDependencies(supportFragmentManager, autonomy, getResources());
-
-    }
 
     @Override
     protected void saveTransfer(View v, Node origin, Node destination, Date date, long
