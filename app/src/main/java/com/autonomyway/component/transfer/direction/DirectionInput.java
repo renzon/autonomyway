@@ -45,13 +45,13 @@ public class DirectionInput extends LinearLayout {
         originInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
-                nodeMediator.setSelectedOrigin(node);
+                nodeMediator.setOrigin(node);
             }
         });
         destinationInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
-                nodeMediator.setSelectedDestination(node);
+                nodeMediator.setDestination(node);
             }
         });
         originInput.setSupportFragmentManager(supportFragmentManager);
