@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.R;
+import com.autonomyway.model.Node;
 
 
 public class DirectionInput extends LinearLayout {
@@ -29,13 +30,24 @@ public class DirectionInput extends LinearLayout {
     public DirectionInput(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         inflate(getContext(), R.layout.transfer_direction_input, this);
-
     }
 
     public void setDependencies(FragmentManager supportFragmentManager, AutonomyWayFacade autonomyFacade) {
         NodeInput originInput = (NodeInput) findViewById(R.id.origin_input);
         NodeInput destinationInput = (NodeInput) findViewById(R.id.destination_input);
         nodeMediator = new NodeMediator(autonomyFacade, originInput, destinationInput);
+        originInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
+            @Override
+            public void selected(Node node) {
+                nodeMediator.setSelectedOrigin(node);
+            }
+        });
+        destinationInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
+            @Override
+            public void selected(Node node) {
+                nodeMediator.setSelectedDestination(node);
+            }
+        });
         originInput.setSupportFragmentManager(supportFragmentManager);
         destinationInput.setSupportFragmentManager(supportFragmentManager);
     }

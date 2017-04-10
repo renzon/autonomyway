@@ -12,15 +12,18 @@ import java.util.List;
 
 public class NodeAdapter extends RecyclerView.Adapter<NodeViewHolder> {
     private List<Node> nodeList;
+    private NodeRow.OnNodeSelectionListener listener;
 
-    public NodeAdapter(List<Node> nodeList) {
+    public NodeAdapter(List<Node> nodeList, NodeRow.OnNodeSelectionListener listener) {
         this.nodeList = nodeList;
+        this.listener = listener;
     }
 
     @Override
     public NodeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         NodeRow row= (NodeRow) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.node_row, parent, false);
+        row.setOnOnNodeSelectionLister(listener);
         return new NodeViewHolder(row);
     }
 

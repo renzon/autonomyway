@@ -76,5 +76,6 @@
     <string name="time_spent_to_get_income">Time spent to get income</string>
     <string name="transfer_origin">Origem</string>
     <string name="transfer_destination">Destination</string>
+    <string name="node_not_yet_selected">Not yet selected</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

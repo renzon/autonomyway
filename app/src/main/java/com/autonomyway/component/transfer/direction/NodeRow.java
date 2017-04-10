@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class NodeRow extends LinearLayout {
         classToColorId.put(Expense.class, R.color.colorExpense);
     }
 
+    private  OnNodeSelectionListener listener;
+
 
     public NodeRow(Context context) {
         this(context, null);
@@ -46,13 +49,31 @@ public class NodeRow extends LinearLayout {
     }
 
 
-    public void populate(Node node, int position) {
+    public void populate(final Node node, int position) {
         TextView title = (TextView) findViewById(R.id.title);
         title.setTextColor(ContextCompat.getColor(getContext(), classToColorId.get(node.getClass())));
         title.setText(node.getName());
-        int backgroundColor=position%2==0?R.color.nodeRowBackgroudGray:R.color
+        int backgroundColor = position % 2 == 0 ? R.color.nodeRowBackgroudGray : R.color
                 .nodeRowBackgroudWhite;
         setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
 
+        if (listener!=null){
+            this.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.selected(node);
+
+                }
+            });
+        }
+
+    }
+
+    public void setOnOnNodeSelectionLister(OnNodeSelectionListener listener) {
+        this.listener = listener;
+    }
+
+    public static interface OnNodeSelectionListener {
+        public void selected(Node node);
     }
 }

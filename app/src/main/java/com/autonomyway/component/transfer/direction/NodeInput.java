@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.autonomyway.R;
 import com.autonomyway.model.Node;
@@ -15,7 +16,9 @@ import java.util.List;
 
 public class NodeInput extends LinearLayout {
 
+    private final TextView label;
     private NodeMediator nodeMediator;
+    private NodeRow.OnNodeSelectionListener listener;
 
     public NodeInput(Context context) {
         this(context, null);
@@ -29,18 +32,30 @@ public class NodeInput extends LinearLayout {
         this(context, attrs, defStyleAttr,0);
     }
 
+    public void setOnNodeSelectionListener(NodeRow.OnNodeSelectionListener listener){
+
+        this.listener = listener;
+    }
+
     public NodeInput(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         inflate(getContext(), R.layout.transfer_node_input,this);
-
+        label= (TextView) findViewById(R.id.label);
     }
 
     public void setSupportFragmentManager(final FragmentManager supportFragmentManager) {
         findViewById(R.id.button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new NodeDialogFragment(buildAvailableNodes()).show(supportFragmentManager,
-                        "nodeSelection");
+                new NodeDialogFragment(buildAvailableNodes(), new NodeRow.OnNodeSelectionListener() {
+                    @Override
+                    public void selected(Node node) {
+                        label.setText(node.getName());
+                        if (listener!=null){
+                            listener.selected(node);
+                        }
+                    }
+                }).show(supportFragmentManager);
             }
         });
     }
