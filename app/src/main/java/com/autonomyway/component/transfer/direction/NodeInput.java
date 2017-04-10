@@ -28,12 +28,15 @@ public class NodeInput extends LinearLayout {
         this(context, attrs, 0);
     }
 
+    public void setText(String text){
+        label.setText(text);
+    }
+
     public NodeInput(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr,0);
     }
 
     public void setOnNodeSelectionListener(NodeRow.OnNodeSelectionListener listener){
-
         this.listener = listener;
     }
 
@@ -47,15 +50,7 @@ public class NodeInput extends LinearLayout {
         findViewById(R.id.button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new NodeDialogFragment(buildAvailableNodes(), new NodeRow.OnNodeSelectionListener() {
-                    @Override
-                    public void selected(Node node) {
-                        label.setText(node.getName());
-                        if (listener!=null){
-                            listener.selected(node);
-                        }
-                    }
-                }).show(supportFragmentManager);
+                new NodeDialogFragment(buildAvailableNodes(), listener).show(supportFragmentManager);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.autonomyway.component.transfer.direction;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
@@ -32,10 +33,10 @@ public class DirectionInput extends LinearLayout {
         inflate(getContext(), R.layout.transfer_direction_input, this);
     }
 
-    public void setDependencies(FragmentManager supportFragmentManager, AutonomyWayFacade autonomyFacade) {
+    public void setDependencies(FragmentManager supportFragmentManager, AutonomyWayFacade autonomyFacade, Resources resources) {
         NodeInput originInput = (NodeInput) findViewById(R.id.origin_input);
         NodeInput destinationInput = (NodeInput) findViewById(R.id.destination_input);
-        nodeMediator = new NodeMediator(autonomyFacade, originInput, destinationInput);
+        nodeMediator = new NodeMediator(autonomyFacade, originInput, destinationInput, resources);
         originInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {

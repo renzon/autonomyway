@@ -20,7 +20,7 @@ public class NewTransferActivity extends BaseTransferActivity {
                 setSupportFragmentManager(supportFragmentManager);
         DirectionInput directionInput = (DirectionInput) findViewById(R.id.direction_input);
         directionInput.
-                setDependencies(supportFragmentManager, autonomy);
+                setDependencies(supportFragmentManager, autonomy, getResources());
 
     }
 

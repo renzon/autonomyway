@@ -4,6 +4,12 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/change_date_button"
+        style="@style/EditImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_today"/>
 
 
     <TextView
@@ -13,12 +19,5 @@
         android:text="10/30/17"
         style="@style/ValueTextView"/>
 
-    <ImageButton
-        android:id="@+id/change_date_button"
-        style="@style/ChangeValueImageButton"
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_today"/>
 
 </LinearLayout>
