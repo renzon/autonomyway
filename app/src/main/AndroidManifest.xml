@@ -92,6 +92,15 @@
                 android:value="com.autonomyway.component.expense.ExpenseListActivity" />
         </activity>
         <activity
+            android:name=".component.expense.EditExpenseActivity"
+            android:label="@string/title_edit_expense_activity"
+            android:parentActivityName=".component.expense.ExpenseListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.expense.ExpenseListActivity" />
+        </activity>
+        <activity
             android:name=".component.transfer.NewTransferActivity"
             android:label="@string/title_new_transfer_activity"
             android:parentActivityName=".DashboardActivity"
@@ -101,14 +110,25 @@
                 android:value=".DashboardActivity" />
         </activity>
         <activity
-            android:name=".component.expense.EditExpenseActivity"
-            android:label="@string/title_edit_expense_activity"
-            android:parentActivityName=".component.expense.ExpenseListActivity"
+            android:name=".component.transfer.TransferListActivity"
+            android:label="@string/title_activity_transfer_list"
+            android:parentActivityName=".DashboardActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.autonomyway.component.expense.ExpenseListActivity" />
+                android:value="com.autonomyway.DashboardActivity" />
         </activity>
+        
+        <activity
+            android:name=".component.transfer.EditTransferActivity"
+            android:label="@string/title_edit_transfer_activity"
+            android:parentActivityName=".component.transfer.TransferListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.autonomyway.component.transfer.TransferListActivity" />
+        </activity>
+        
     </application>
 
 </manifest>

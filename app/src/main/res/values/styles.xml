@@ -53,6 +53,10 @@
         <item name="android:textColor">@color/colorIncome</item>
     </style>
 
+    <style name="ListRowTitle.Transfer">
+        <item name="android:textColor">@color/colorTransfer</item>
+    </style>
+
     <style name="ListRowTitle.Wealth">
         <item name="android:textColor">@color/colorWealth</item>
     </style>
@@ -115,9 +119,11 @@
     <style name="FormButton.Wealth">
         <item name="android:backgroundTint">@color/colorWealth</item>
     </style>
+
     <style name="ValueTextView">
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="EditImageButton">
         <item name="android:layout_marginEnd">10dp</item>
     </style>

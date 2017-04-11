@@ -7,7 +7,7 @@ import android.view.View;
 import com.autonomyway.model.Wealth;
 
 public class EditWealthActivity extends BaseWealthActivity {
-    public static final String WEALTH_ID ="EXPENSE_ID";
+    public static final String WEALTH_ID ="TRANSFER_ID";
     private Wealth wealthToEdit;
 
     @Override

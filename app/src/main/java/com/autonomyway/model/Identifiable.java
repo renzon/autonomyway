@@ -1,5 +1,5 @@
 package com.autonomyway.model;
 
-interface Identifiable {
+public interface Identifiable {
     Long getId();
 }

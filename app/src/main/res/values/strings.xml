@@ -2,6 +2,7 @@
     <string name="app_name">AutonomyWay</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_transfers">Transfers</string>
     <string name="nav_incomes">Incomes</string>
     <string name="nav_expenses">Expenses</string>
     <string name="nav_wealth">Wealth</string>
@@ -41,6 +42,8 @@
 
     <string name="title_new_expense_activity">New Expense Form</string>
     <string name="title_new_transfer_activity">New Transfer Form</string>
+    <string name="title_activity_transfer_list">Transfers</string>
+    <string name="title_edit_transfer_activity">Edit Transfer Form</string>
     <string name="title_edit_expense_activity">Edit Expense Form</string>
     <string name="positive_amount_err_msg">Must be a positive amount</string>
 
@@ -81,5 +84,7 @@
     <string name="select_origin">Select origin</string>
     <string name="select_destination">Select destination</string>
     <string name="date_input_label">Date *</string>
+    <string name="transfer_cash">Cash</string>
+    <string name="transfer_duration">Duration</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

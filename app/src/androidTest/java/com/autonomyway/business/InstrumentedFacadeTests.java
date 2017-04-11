@@ -186,8 +186,8 @@ public class InstrumentedFacadeTests {
         assertEquals(3, firstSalary.getDuration());
         assertEquals(dt, firstSalary.getDate());
         assertEquals("First Salary", firstSalary.getDetail());
-        assertEquals(Transfer.NameableClass.INCOME, firstSalary.getOriginClass());
-        assertEquals(Transfer.NameableClass.WEALTH, firstSalary.getDestinationClass());
+        assertEquals(Transfer.NodeClassHolder.INCOME, firstSalary.getOriginClassHolder());
+        assertEquals(Transfer.NodeClassHolder.WEALTH, firstSalary.getDestinationClassHolder());
         assertEquals(salary.getId(), (Long) firstSalary.getOriginId());
         assertEquals(account.getId(), (Long) firstSalary.getDestinationId());
         account = facade.getWealth(account.getId());
@@ -202,8 +202,8 @@ public class InstrumentedFacadeTests {
         Wealth account = facade.createWealth("Bank Account", 1);
         Date dt = new Date();
         Transfer irs = facade.createTransfer(account, taxes, dt, 6, 3, "IRS");
-        assertEquals(Transfer.NameableClass.WEALTH, irs.getOriginClass());
-        assertEquals(Transfer.NameableClass.EXPENSE, irs.getDestinationClass());
+        assertEquals(Transfer.NodeClassHolder.WEALTH, irs.getOriginClassHolder());
+        assertEquals(Transfer.NodeClassHolder.EXPENSE, irs.getDestinationClassHolder());
         account = facade.getWealth(account.getId());
         assertEquals("Balance must be decreased by transfer cash", 1 - 6, account.getBalance());
     }
@@ -222,6 +222,19 @@ public class InstrumentedFacadeTests {
                 1 + 6, house.getBalance());
     }
 
+
+    @Test
+    public void testGetTransferList() {
+        Wealth account = facade.createWealth("Bank Account", 20);
+        Income salary = facade.createIncome("Salary", 1, 2, Income.Type.WORK);
+        Date dt = new Date();
+        facade.createTransfer(salary, account, dt, 6, 3, "First salary");
+        List<Transfer> transferList = facade.getTransferList();
+        assertEquals(1, transferList.size());
+        assertEquals(account, transferList.get(0).getDestination());
+        assertEquals(salary, transferList.get(0).getOrigin());
+    }
+
     @Test
     public void testDefaultInit() throws Exception {
         // Nothing on beginning
@@ -231,6 +244,7 @@ public class InstrumentedFacadeTests {
 
         assertEquals(0, incomeList.size());
         assertEquals(0, wealthList.size());
+        assertEquals(0, expenseList.size());
 
         facade.createInitialData();
 
@@ -294,7 +308,9 @@ public class InstrumentedFacadeTests {
     @After
     @Before
     public void cleanDB() {
-        DaoSession session = ((AutonomyWay) facade).session;
+        AutonomyWay facade = (AutonomyWay) this.facade;
+        facade.cleanAllCache();
+        DaoSession session = facade.session;
         session.getIncomeDao().deleteAll();
         session.getWealthDao().deleteAll();
         session.getExpenseDao().deleteAll();

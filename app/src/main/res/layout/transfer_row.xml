@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.autonomyway.component.transfer.TransferRow xmlns:android="http://schemas.android.com/apk/res/android"
+                                                style="@style/ListCardView">
+
+    <LinearLayout style="@style/ListRow">
+
+        <TextView
+            android:id="@+id/transfer_origin"
+            style="@style/ListRowTitle.Transfer"/>
+
+        <TextView
+            android:id="@+id/transfer_destination"
+            style="@style/ListRowTitle.Transfer"/>
+
+        <LinearLayout style="@style/ListRowDetail">
+
+            <TextView
+                style="@style/ListRowDetailTitle"
+                android:text="@string/transfer_cash"/>
+
+            <TextView
+                android:id="@+id/transfer_cash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+<LinearLayout style="@style/ListRowDetail">
+
+
+
+            <TextView
+                android:id="@+id/transfer_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/ListRowDetail">
+
+            <TextView
+                style="@style/ListRowDetailTitle"
+                android:text="@string/transfer_duration"/>
+
+            <TextView
+                android:id="@+id/transfer_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+</com.autonomyway.component.transfer.TransferRow>

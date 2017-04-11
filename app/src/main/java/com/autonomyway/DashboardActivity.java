@@ -17,6 +17,7 @@ import com.autonomyway.component.base.ActivityWithFacadeAccess;
 import com.autonomyway.component.expense.ExpenseListActivity;
 import com.autonomyway.component.income.IncomeListActivity;
 import com.autonomyway.component.transfer.NewTransferActivity;
+import com.autonomyway.component.transfer.TransferListActivity;
 import com.autonomyway.component.wealth.WealthListActivity;
 
 import java.util.HashMap;
@@ -94,6 +95,7 @@ public class DashboardActivity extends ActivityWithFacadeAccess
         activityMap.put(R.id.nav_incomes, IncomeListActivity.class);
         activityMap.put(R.id.nav_wealth, WealthListActivity.class);
         activityMap.put(R.id.nav_expenses, ExpenseListActivity.class);
+        activityMap.put(R.id.nav_transfers, TransferListActivity.class);
         Intent intent = new Intent(this, activityMap.get(id));
         startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

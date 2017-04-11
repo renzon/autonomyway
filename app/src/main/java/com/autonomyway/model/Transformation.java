@@ -1,7 +1,9 @@
 package com.autonomyway.model;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
 
 public class Transformation {
@@ -16,6 +18,11 @@ public class Transformation {
         NumberFormat instance = NumberFormat.getInstance(Locale.US);
         instance.setGroupingUsed(false);
         return transform(cashInCents, instance);
+    }
+
+    public static String dateToString(Date date) {
+        DateFormat fmt = DateFormat.getDateInstance(DateFormat.SHORT);
+        return fmt.format(date);
     }
 
     public static long numberTocash(String number) throws ParseException {
@@ -46,4 +53,14 @@ public class Transformation {
     }
 
 
+    public static String durationToString(long duration) {
+        Long hour = duration / 60;
+
+        Long minutes = duration % 60;
+        String minutesStr = minutes.toString();
+        if (minutesStr.length() == 1) {
+            minutesStr = "0" + minutesStr;
+        }
+        return hour + ":" + minutesStr;
+    }
 }

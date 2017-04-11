@@ -56,18 +56,15 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     }
 
 
-
     @Override
     protected void validateForm() {
-        boolean isValid = validateDirection();
-        isValid = validateCash() && isValid;
-        if (!isValid) {
+        if (!(validateDirection() & validateCash())) {
             throw new GUIValidationException();
         }
     }
 
     private boolean validateCash() {
-        if (cashInput.getCash()<=0){
+        if (cashInput.getCash() <= 0) {
             cashInputLayout.setError(getResources().getString(R.string.positive_amount_err_msg));
             return false;
         }

@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autonomyway.R;
+import com.autonomyway.model.Transformation;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -67,9 +67,8 @@ public class DateInput extends LinearLayout implements DatePickerDialog.OnDateSe
     }
 
     public void setDate(Date date) {
-        DateFormat fmt = DateFormat.getDateInstance(DateFormat.SHORT);
         this.date = date;
-        dateView.setText(fmt.format(date));
+        dateView.setText(Transformation.dateToString(date));
     }
 
     @Override

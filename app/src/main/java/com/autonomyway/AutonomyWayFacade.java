@@ -37,4 +37,10 @@ public interface AutonomyWayFacade {
     List<Expense> getExpenseList();
 
     Transfer createTransfer(Node origin, Node destination, Date date, long cash, long duration, String detail);
+
+    void editTransfer(Transfer transfer);
+
+    Transfer getTransfer(long id);
+
+    List<Transfer> getTransferList();
 }

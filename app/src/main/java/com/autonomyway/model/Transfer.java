@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.converter.PropertyConverter;
 
 import java.util.Date;
@@ -25,12 +26,16 @@ public class Transfer implements Identifiable {
     private long destinationId;
     private long cash; // in cents
     private long duration; // in minutes
+    @Transient
+    private Node origin;
+    @Transient
+    private Node destination;
     @NotNull
     @Convert(converter = TypeConverter.class, columnType = String.class)
-    private NameableClass originClass;
+    private NodeClassHolder originClassHolder;
     @NotNull
     @Convert(converter = TypeConverter.class, columnType = String.class)
-    private NameableClass destinationClass;
+    private NodeClassHolder destinationClassHolder;
 
     @Keep
     public Transfer(@NotNull Node origin, @NotNull Node destination, @NotNull Date date,
@@ -44,10 +49,19 @@ public class Transfer implements Identifiable {
 
     }
 
-    @Generated(hash = 1522367525)
+
+    public Node getOrigin() {
+        return origin;
+    }
+
+    public Node getDestination() {
+        return destination;
+    }
+
+    @Keep
     public Transfer(Long id, @NotNull Date date, String detail, long originId, long destinationId,
-                    long cash, long duration, @NotNull NameableClass originClass,
-                    @NotNull NameableClass destinationClass) {
+                    long cash, long duration, @NotNull NodeClassHolder originClass,
+                    @NotNull NodeClassHolder destinationClass) {
         this.id = id;
         this.date = date;
         this.detail = detail;
@@ -55,8 +69,8 @@ public class Transfer implements Identifiable {
         this.destinationId = destinationId;
         this.cash = cash;
         this.duration = duration;
-        this.originClass = originClass;
-        this.destinationClass = destinationClass;
+        this.originClassHolder = originClass;
+        this.destinationClassHolder = destinationClass;
     }
 
     @Generated(hash = 137042952)
@@ -65,25 +79,34 @@ public class Transfer implements Identifiable {
 
     public void setOrigin(Node origin) {
         this.originId = origin.getId();
-        this.originClass = NameableClass.toEnum(origin.getClass());
+        this.originClassHolder = NodeClassHolder.toEnum(origin.getClass());
+        this.origin = origin;
     }
 
     public void setDestination(Node destination) {
         this.destinationId = destination.getId();
-        this.destinationClass = NameableClass.toEnum(destination.getClass());
+        this.destinationClassHolder = NodeClassHolder.toEnum(destination.getClass());
+        this.destination = destination;
     }
 
 
-    public enum NameableClass {
+
+
+    public enum NodeClassHolder {
         EXPENSE("Expense", Expense.class),
         INCOME("Income", Income.class),
         WEALTH("Wealth", Wealth.class);
         private final String dbValue;
-        private final Class<? extends Node> nameable;
+
+        public Class<? extends Node> getNodeClass() {
+            return nodeClass;
+        }
+
+        private final Class<? extends Node> nodeClass;
 
 
-        NameableClass(String dbValue, Class<? extends Node> nameable) {
-            this.nameable = nameable;
+        NodeClassHolder(String dbValue, Class<? extends Node> nameable) {
+            this.nodeClass = nameable;
             this.dbValue = dbValue;
         }
 
@@ -91,9 +114,9 @@ public class Transfer implements Identifiable {
             return dbValue;
         }
 
-        public static NameableClass toEnum(Class<? extends Node> nameable) {
-            for (NameableClass t : NameableClass.values()) {
-                if (t.nameable.equals(nameable)) {
+        public static NodeClassHolder toEnum(Class<? extends Node> nameable) {
+            for (NodeClassHolder t : NodeClassHolder.values()) {
+                if (t.nodeClass.equals(nameable)) {
                     return t;
                 }
             }
@@ -102,15 +125,15 @@ public class Transfer implements Identifiable {
     }
 
 
-    static class TypeConverter implements PropertyConverter<NameableClass, String> {
+    static class TypeConverter implements PropertyConverter<NodeClassHolder, String> {
         @Override
-        public String convertToDatabaseValue(NameableClass entityProperty) {
+        public String convertToDatabaseValue(NodeClassHolder entityProperty) {
             return entityProperty.getDbValue();
         }
 
         @Override
-        public NameableClass convertToEntityProperty(String databaseValue) {
-            for (NameableClass t : NameableClass.values()) {
+        public NodeClassHolder convertToEntityProperty(String databaseValue) {
+            for (NodeClassHolder t : NodeClassHolder.values()) {
                 if (t.getDbValue().equals(databaseValue)) {
                     return t;
                 }
@@ -166,20 +189,20 @@ public class Transfer implements Identifiable {
         this.destinationId = destinationId;
     }
 
-    public NameableClass getOriginClass() {
-        return this.originClass;
+    public NodeClassHolder getOriginClassHolder() {
+        return this.originClassHolder;
     }
 
-    public void setOriginClass(NameableClass originClass) {
-        this.originClass = originClass;
+    public void setOriginClassHolder(NodeClassHolder originClassHolder) {
+        this.originClassHolder = originClassHolder;
     }
 
-    public NameableClass getDestinationClass() {
-        return this.destinationClass;
+    public NodeClassHolder getDestinationClassHolder() {
+        return this.destinationClassHolder;
     }
 
-    public void setDestinationClass(NameableClass destinationClass) {
-        this.destinationClass = destinationClass;
+    public void setDestinationClassHolder(NodeClassHolder destinationClassHolder) {
+        this.destinationClassHolder = destinationClassHolder;
     }
 
     public long getCash() {
