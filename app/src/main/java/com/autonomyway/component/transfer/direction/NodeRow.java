@@ -53,8 +53,8 @@ public class NodeRow extends LinearLayout {
         TextView title = (TextView) findViewById(R.id.title);
         title.setTextColor(ContextCompat.getColor(getContext(), classToColorId.get(node.getClass())));
         title.setText(node.getName());
-        int backgroundColor = position % 2 == 0 ? R.color.nodeRowBackgroudGray : R.color
-                .nodeRowBackgroudWhite;
+        int backgroundColor = position % 2 == 0 ? R.color.nodeRowBackgroundGray : R.color
+                .nodeRowBackgroundWhite;
         setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
 
         if (listener!=null){
