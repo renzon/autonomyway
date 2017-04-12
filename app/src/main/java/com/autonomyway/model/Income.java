@@ -167,6 +167,8 @@ public class Income implements Node {
         return this.recurrentDuration;
     }
 
+
+
     public void setRecurrentDuration(long recurrentDuration) {
         this.recurrentDuration = recurrentDuration;
     }

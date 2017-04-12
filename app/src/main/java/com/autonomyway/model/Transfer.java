@@ -220,4 +220,29 @@ public class Transfer implements Identifiable {
     public void setDuration(long duration) {
         this.duration = duration;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transfer)) return false;
+
+        Transfer transfer = (Transfer) o;
+
+        if (originId != transfer.originId) return false;
+        if (destinationId != transfer.destinationId) return false;
+        if (cash != transfer.cash) return false;
+        if (duration != transfer.duration) return false;
+        if (id != null ? !id.equals(transfer.id) : transfer.id != null) return false;
+        if (!date.equals(transfer.date)) return false;
+        if (detail != null ? !detail.equals(transfer.detail) : transfer.detail != null)
+            return false;
+        if (originClassHolder != transfer.originClassHolder) return false;
+        return destinationClassHolder == transfer.destinationClassHolder;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

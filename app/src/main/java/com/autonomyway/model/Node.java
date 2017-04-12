@@ -15,4 +15,5 @@ public interface Node extends Identifiable, Serializable {
     long getRecurrentCash();
 
     long getRecurrentDuration();
+
 }

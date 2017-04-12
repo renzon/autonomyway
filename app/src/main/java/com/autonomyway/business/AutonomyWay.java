@@ -21,8 +21,10 @@ import org.greenrobot.greendao.database.Database;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class AutonomyWay implements AutonomyWayFacade {
@@ -44,22 +46,73 @@ public class AutonomyWay implements AutonomyWayFacade {
             @Override
             public void run() {
                 session.getTransferDao().insert(transfer);
-                getDao(origin).save(origin);
-                getDao(destination).save(destination);
+                getDao(origin).update(origin);
+                getDao(destination).update(destination);
             }
         });
-
+        cleanCache(origin.getClass());
+        cleanCache(destination.getClass());
+        session.clear();
         return transfer;
     }
 
     @Override
-    public void editTransfer(Transfer transfer) {
+    public void editTransfer(final Transfer editedTransfer) {
+        Transfer originalTransfer = getTransfer(editedTransfer.getId());
+        Node editOrigin = editedTransfer.getOrigin();
+        Node editDestination = editedTransfer.getDestination();
+        Node originalOrigin = originalTransfer.getOrigin();
+        Node originalDestination = originalTransfer.getDestination();
+        final Set<Node> toSave = new HashSet<>();
+        toSave.add(editOrigin);
+        if (editOrigin.equals(editDestination)) {
+            editDestination = editOrigin;
+        }
+        if (editOrigin.equals(originalDestination)) {
+            originalDestination = editOrigin;
+        }
+        if (editOrigin.equals(originalOrigin)) {
+            originalOrigin = editOrigin;
+        }
+        toSave.add(editDestination);
+        if (editDestination.equals(originalDestination)) {
+            originalDestination = editDestination;
+        }
+        if (editDestination.equals(originalOrigin)) {
+            originalOrigin = editDestination;
+        }
+        toSave.add(originalDestination);
+        if (originalDestination.equals(originalOrigin)) {
+            originalOrigin = originalDestination;
+        }
+        toSave.add(originalOrigin);
 
+        // Undo original tranfer
+        originalOrigin.handleTransferCreationAsDestination(originalTransfer);
+        originalDestination.handleTransferCreationAsOrigin(originalTransfer);
+
+        // Do edited transfer
+        editOrigin.handleTransferCreationAsOrigin(editedTransfer);
+        editDestination.handleTransferCreationAsDestination(editedTransfer);
+
+        session.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                session.getTransferDao().update(editedTransfer);
+                for (Node n : toSave) {
+                    getDao(n).update(n);
+                }
+            }
+        });
+        session.clear();
+        cleanAllCache();
     }
 
     @Override
     public Transfer getTransfer(long id) {
-        return null;
+        Transfer transfer = session.getTransferDao().load(id);
+        injectNodes(transfer);
+        return transfer;
     }
 
     @Override
@@ -71,23 +124,24 @@ public class AutonomyWay implements AutonomyWayFacade {
         getIncomeList();
         getExpenseList();
         getWealthList();
-        for (Transfer t:list){
+        for (Transfer t : list) {
             injectNodes(t);
         }
+        session.clear();
         return list;
     }
 
     private void injectNodes(Transfer transfer) {
         Class<? extends Node> originClass = transfer.getOriginClassHolder().getNodeClass();
-        Node origin=getFromCache(originClass, transfer.getOriginId());
-        if (origin==null){
-            origin= (Node) getDao(originClass).load(transfer.getOriginId());
+        Node origin = getFromCache(originClass, transfer.getOriginId());
+        if (origin == null) {
+            origin = (Node) getDao(originClass).load(transfer.getOriginId());
         }
 
         Class<? extends Node> destinationClass = transfer.getDestinationClassHolder().getNodeClass();
-        Node destination=getFromCache(destinationClass, transfer.getDestinationId());
-        if (destination==null){
-            destination= (Node) getDao(destinationClass).load(transfer.getDestinationId());
+        Node destination = getFromCache(destinationClass, transfer.getDestinationId());
+        if (destination == null) {
+            destination = (Node) getDao(destinationClass).load(transfer.getDestinationId());
         }
         transfer.setOrigin(origin);
         transfer.setDestination(destination);
@@ -117,7 +171,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         this.session = new DaoMaster(db).newSession();
         nodeByIdCache = new HashMap<>();
         nodeListCache = new HashMap<>();
-
         cleanAllCache();
     }
 
@@ -126,6 +179,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         for (Class cls : nodeClasses) {
             cleanCache(cls);
         }
+        session.clear();
     }
 
 
@@ -153,6 +207,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         if (wealth != null) {
             return wealth;
         }
+        session.clear();
         return session.getWealthDao().load(id);
     }
 
@@ -164,6 +219,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         }
         list = session.getWealthDao().queryBuilder().orderAsc(WealthDao.Properties.Name).list();
         setCache(Wealth.class, list);
+        session.clear();
         return list;
     }
 
@@ -181,16 +237,19 @@ public class AutonomyWay implements AutonomyWayFacade {
         Wealth dbWealth = dao.load(wealth.getId());
         long delta = wealth.getInitialBalance() - dbWealth.getBalance();
         wealth.increaseBalance(delta);
-        dao.saveInTx(wealth);
-
+        dao.update(wealth);
+        session.clear();
     }
 
     @Override
     public Wealth createWealth(String name, long initialCash) {
         cleanCache(Wealth.class);
         Wealth wealth = new Wealth(name, initialCash);
-        session.getWealthDao().saveInTx(wealth);
+        WealthDao wealthDao = session.getWealthDao();
+        wealthDao.insert(wealth);
+        session.clear();
         return wealth;
+
     }
 
     public static AutonomyWayFacade getInstance(Context ctx) {
@@ -203,7 +262,8 @@ public class AutonomyWay implements AutonomyWayFacade {
     @Override
     public void editIncome(Income income) {
 
-        session.getIncomeDao().saveInTx(income);
+        session.getIncomeDao().update(income);
+        session.clear();
     }
 
     @Override
@@ -212,14 +272,17 @@ public class AutonomyWay implements AutonomyWayFacade {
         if (income != null) {
             return income;
         }
-        return session.getIncomeDao().load(id);
+        income = session.getIncomeDao().load(id);
+        session.clear();
+        return income;
     }
 
     @Override
     public Income createIncome(String name, long recurrentTime, long recurrentCash, Income.Type type) {
         cleanCache(Income.class);
         Income income = new Income(name, recurrentTime, recurrentCash, type);
-        session.getIncomeDao().insertInTx(income);
+        session.getIncomeDao().insert(income);
+        session.clear();
         return income;
     }
 
@@ -231,6 +294,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         }
         list = session.getIncomeDao().queryBuilder().orderAsc(IncomeDao.Properties.Name).list();
         setCache(Income.class, list);
+        session.clear();
         return list;
     }
 
@@ -238,7 +302,8 @@ public class AutonomyWay implements AutonomyWayFacade {
     public Expense createExpense(String name, long recurrentCash) {
         cleanCache(Expense.class);
         Expense expense = new Expense(name, recurrentCash);
-        session.getExpenseDao().insertInTx(expense);
+        session.getExpenseDao().insert(expense);
+        session.clear();
         return expense;
     }
 
@@ -248,12 +313,15 @@ public class AutonomyWay implements AutonomyWayFacade {
         if (expense != null) {
             return expense;
         }
-        return session.getExpenseDao().load(id);
+        expense = session.getExpenseDao().load(id);
+        session.clear();
+        return expense;
     }
 
     @Override
     public void editExpense(Expense expense) {
-        session.getExpenseDao().saveInTx(expense);
+        session.getExpenseDao().updateInTx(expense);
+        session.clear();
     }
 
     @Override
@@ -264,6 +332,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         }
         list = session.getExpenseDao().queryBuilder().orderAsc(ExpenseDao.Properties.Name).list();
         setCache(Expense.class, list);
+        session.clear();
         return list;
     }
 
@@ -303,6 +372,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
                 }
             });
+            session.clear();
 
         }
     }

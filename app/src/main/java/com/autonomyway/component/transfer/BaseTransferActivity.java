@@ -42,8 +42,14 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     }
 
     protected void populateForm(Transfer transfer) {
+        directionInput.setOrigin(transfer.getOrigin());
+        directionInput.setDestination(transfer.getDestination());
         setDetail(transfer.getDetail());
+        dateInput.setDate(transfer.getDate());
+        // bellow must be executed after direction methods
+        // otherelse they are filled with default values
         cashInput.setCash(transfer.getCash());
+        durationInput.setDuration(transfer.getDuration());
     }
 
     @Override
@@ -51,7 +57,6 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
         clearFlag = true;
         setDetail("");
         cashInput.clear();
-        durationInput.clear();
         durationInput.clear();
     }
 

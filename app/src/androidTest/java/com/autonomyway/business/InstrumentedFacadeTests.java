@@ -228,11 +228,82 @@ public class InstrumentedFacadeTests {
         Wealth account = facade.createWealth("Bank Account", 20);
         Income salary = facade.createIncome("Salary", 1, 2, Income.Type.WORK);
         Date dt = new Date();
-        facade.createTransfer(salary, account, dt, 6, 3, "First salary");
+        Transfer firstSalary = facade.createTransfer(salary, account, dt, 6, 3, "First salary");
         List<Transfer> transferList = facade.getTransferList();
         assertEquals(1, transferList.size());
         assertEquals(account, transferList.get(0).getDestination());
         assertEquals(salary, transferList.get(0).getOrigin());
+        Transfer secondSalary = facade.createTransfer(
+                salary, account, new Date(), 12, 3, "Second salary");
+        transferList = facade.getTransferList();
+        // Ordered by date Desc
+        assertEquals(secondSalary,transferList.get(0));
+        assertEquals(firstSalary,transferList.get(1));
+
+    }
+
+    @Test
+    public void testEditTransferCashIncomeToWealth() {
+        int initial = 20;
+        Wealth account = facade.createWealth("Bank Account", initial);
+        Income salary = facade.createIncome("Salary", 1, 2, Income.Type.WORK);
+        Date dt = new Date();
+        int firstSalaryAmount = 6;
+        facade.createTransfer(salary, account, dt, firstSalaryAmount, 3, "First salary");
+        int secondSalaryAmount = 8;
+        Transfer secondSalary = facade.createTransfer(salary, account, dt, secondSalaryAmount, 3, "First salary");
+        int expectedBalance = initial + firstSalaryAmount + secondSalaryAmount;
+        assertEquals(expectedBalance, account.getBalance());
+        int editedSecondSalaryAmount = 4;
+        secondSalary.setCash(editedSecondSalaryAmount);
+        facade.editTransfer(secondSalary);
+        expectedBalance = initial + firstSalaryAmount + editedSecondSalaryAmount;
+        assertEquals(expectedBalance, account.getBalance());
+    }
+
+    @Test
+    public void testEditTransferCashWealthToExpense() {
+        int initial = 20;
+        Wealth account = facade.createWealth("Bank Account", initial);
+        Expense rent = facade.createExpense("Rent", 1);
+        Date dt = new Date();
+        int firstRentAmount = 6;
+        facade.createTransfer(account, rent, dt, firstRentAmount, 3, "First Rent");
+        int secondRentAmount = 8;
+        Transfer secondRent = facade.createTransfer(account, rent, dt, secondRentAmount, 3,
+                "Second Rent ");
+        int expectedBalance = initial - firstRentAmount - secondRentAmount;
+        assertEquals(expectedBalance, account.getBalance());
+        int editedSecondRentAmount = 4;
+        secondRent.setCash(editedSecondRentAmount);
+        facade.editTransfer(secondRent);
+        expectedBalance = initial - firstRentAmount - editedSecondRentAmount;
+        assertEquals(expectedBalance, account.getBalance());
+    }
+
+    @Test
+    public void testEditTransferCashWealthToWealth() {
+        int initialBankAmount = 20;
+        Wealth account = facade.createWealth("Bank Account", initialBankAmount);
+        int initialHouseAmount = 1;
+        Wealth house = facade.createWealth("House", initialHouseAmount);
+        Date dt = new Date();
+        int firstHouseAmount = 6;
+        facade.createTransfer(account, house, dt, firstHouseAmount, 3, "First Mortgage");
+        int secondHouseAmount = 8;
+        Transfer secondPayment = facade.createTransfer(account, house, dt, secondHouseAmount, 3,
+                "Second Mortgage");
+        int expectedBankBalance = initialBankAmount - firstHouseAmount - secondHouseAmount;
+        assertEquals(expectedBankBalance, account.getBalance());
+        int expectedHouseBalance = initialHouseAmount + firstHouseAmount + secondHouseAmount;
+        assertEquals(expectedHouseBalance, house.getBalance());
+        int editedSecondHouseAmount = 4;
+        secondPayment.setCash(editedSecondHouseAmount);
+        facade.editTransfer(secondPayment);
+        expectedBankBalance = initialBankAmount - firstHouseAmount - editedSecondHouseAmount;
+        assertEquals(expectedBankBalance, account.getBalance());
+        expectedHouseBalance = initialHouseAmount + firstHouseAmount + editedSecondHouseAmount;
+        assertEquals(expectedHouseBalance, house.getBalance());
     }
 
     @Test

@@ -105,4 +105,12 @@ public class DirectionInput extends LinearLayout {
     public void setDestinationSelectionListener(OnNodeSelectionListener destinationSelectionListener) {
         this.destinationSelectionListener = destinationSelectionListener;
     }
+
+    public void setOrigin(Node origin) {
+        nodeMediator.setOrigin(origin);
+    }
+
+    public void setDestination(Node origin) {
+        nodeMediator.setDestination(origin);
+    }
 }

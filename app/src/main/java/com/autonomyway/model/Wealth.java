@@ -126,4 +126,5 @@ public class Wealth implements Node {
         increaseBalance(-cash);
     }
 
+
 }
