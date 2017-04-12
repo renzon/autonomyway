@@ -307,6 +307,51 @@ public class InstrumentedFacadeTests {
     }
 
     @Test
+    public void testEditTransferCashAndNode() {
+        Wealth account = facade.createWealth("Bank Account", 0);
+        Wealth house = facade.createWealth("House", 0);
+        Date dt = new Date();
+        Expense rent = facade.createExpense("Rent", 0);
+        Income salary = facade.createIncome("Salary", 0, 0, Income.Type.WORK);
+        final int TWENTY = 20;
+        Transfer transfer=facade.createTransfer(salary,account,dt, TWENTY,10, "");
+        assertEquals(transfer.getCash(), account.getBalance());
+        // Edit destination to other wealth
+        transfer.setDestination(house);
+        facade.editTransfer(transfer);
+        account=facade.getWealth(account.getId());
+        assertEquals(TWENTY, house.getBalance());
+        assertEquals(0, account.getBalance());
+        // Destination become origin
+        transfer.setOrigin(house);
+        transfer.setDestination(account);
+        facade.editTransfer(transfer);
+        account=facade.getWealth(account.getId());
+        house=facade.getWealth(house.getId());
+        assertEquals(TWENTY, account.getBalance());
+        assertEquals(-TWENTY, house.getBalance());
+        // destination become origin and vice versa
+        transfer.setOrigin(account);
+        transfer.setDestination(house);
+        facade.editTransfer(transfer);
+        account=facade.getWealth(account.getId());
+        house=facade.getWealth(house.getId());
+        assertEquals(-TWENTY, account.getBalance());
+        assertEquals(TWENTY, house.getBalance());
+        // destination become origin and vice versa, cash changed by half
+        transfer.setOrigin(house);
+        transfer.setDestination(account);
+        final int TWENTY_FIVE = TWENTY + 5;
+        transfer.setCash(TWENTY_FIVE);
+        facade.editTransfer(transfer);
+        account=facade.getWealth(account.getId());
+        house=facade.getWealth(house.getId());
+        assertEquals(TWENTY_FIVE, account.getBalance());
+        assertEquals(-TWENTY_FIVE, house.getBalance());
+
+    }
+
+    @Test
     public void testDefaultInit() throws Exception {
         // Nothing on beginning
         List<Income> incomeList = facade.getIncomeList();
