@@ -107,6 +107,21 @@ public class Wealth implements Node {
         increaseBalance(transfer.getCash());
     }
 
+    @Override
+    public boolean hasRecurrentValues() {
+        return false;
+    }
+
+    @Override
+    public long getRecurrentCash() {
+        return 0;
+    }
+
+    @Override
+    public long getRecurrentDuration() {
+        return 0;
+    }
+
     public void decreaseBalance(long cash) {
         increaseBalance(-cash);
     }

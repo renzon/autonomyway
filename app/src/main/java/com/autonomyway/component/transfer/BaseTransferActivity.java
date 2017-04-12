@@ -15,7 +15,7 @@ import com.autonomyway.component.common.CashInput;
 import com.autonomyway.component.common.DateInput;
 import com.autonomyway.component.common.DurationInput;
 import com.autonomyway.component.transfer.direction.DirectionInput;
-import com.autonomyway.component.transfer.direction.NodeMediator;
+import com.autonomyway.component.transfer.direction.OnNodeSelectionListener;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
@@ -64,10 +64,11 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     }
 
     private boolean validateCash() {
-        if (cashInput.getCash() <= 0) {
+        if (!clearFlag && cashInput.getCash() <= 0) {
             cashInputLayout.setError(getResources().getString(R.string.positive_amount_err_msg));
             return false;
         }
+        clearFlag=false;
         cashInputLayout.setError(null);
         return true;
     }
@@ -92,7 +93,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
                 findViewById(R.id.duration_input_label),
                 findViewById(R.id.duration_input)
         };
-        directionInput.setOriginSelectionListener(new NodeMediator.OnOriginSelectionListener() {
+        directionInput.setOriginSelectionListener(new OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
                 int visibility = View.GONE;
@@ -102,6 +103,15 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
                 for (View v : durationViews) {
                     v.setVisibility(visibility);
                 }
+
+                fillDefaultValues(node);
+            }
+        });
+
+        directionInput.setDestinationSelectionListener(new OnNodeSelectionListener() {
+            @Override
+            public void selected(Node node) {
+                fillDefaultValues(node);
             }
         });
         directionInput.
@@ -123,6 +133,13 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
             }
         });
 
+    }
+
+    protected void fillDefaultValues(Node node) {
+        if(node.hasRecurrentValues()){
+            cashInput.setCash(node.getRecurrentCash());
+            durationInput.setDuration(node.getRecurrentDuration());
+        }
     }
 
     @Override

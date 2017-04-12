@@ -9,11 +9,12 @@ import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.converter.PropertyConverter;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class Income implements Node {
@@ -26,7 +27,7 @@ public class Income implements Node {
     private long recurrentCash;
     // Value of income time each time it happens. Ex: if it's a salary work,
     // and you receive monthly, it can be 160 (hours) * 60 minutes
-    private long recurrentTime;
+    private long recurrentDuration;
 
 
     @Convert(converter = TypeConverter.class, columnType = String.class)
@@ -59,7 +60,7 @@ public class Income implements Node {
 
         Income income = (Income) o;
 
-        if (recurrentTime != income.recurrentTime) return false;
+        if (recurrentDuration != income.recurrentDuration) return false;
         if (recurrentCash != income.recurrentCash) return false;
         if (id != null ? !id.equals(income.id) : income.id != null) return false;
         if (name != null ? !name.equals(income.name) : income.name != null) return false;
@@ -77,7 +78,7 @@ public class Income implements Node {
         return "Income{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", recurrentTime=" + recurrentTime +
+                ", recurrentDuration=" + recurrentDuration +
                 ", recurrentCash=" + recurrentCash +
                 ", type=" + type +
                 '}';
@@ -110,23 +111,23 @@ public class Income implements Node {
     }
 
 
-    public Income(String name, long recurrentTime, long recurrentCash, Type type) {
+    public Income(String name, long recurrentDuration, long recurrentCash, Type type) {
         this.name = name;
         this.type = type;
-        this.recurrentTime = recurrentTime;
+        this.recurrentDuration = recurrentDuration;
         this.recurrentCash = recurrentCash;
     }
 
-    @Generated(hash = 98319486)
-    public Income(Long id, String name, long recurrentCash, long recurrentTime, Type type) {
+    @Keep
+    public Income(Long id, String name, long recurrentCash, long recurrentDuration, Type type) {
         this.id = id;
         this.name = name;
         this.recurrentCash = recurrentCash;
-        this.recurrentTime = recurrentTime;
+        this.recurrentDuration = recurrentDuration;
         this.type = type;
     }
 
-    @Generated(hash = 1009272208)
+    @Keep
     public Income() {
     }
 
@@ -152,19 +153,24 @@ public class Income implements Node {
 
     }
 
+    @Override
+    public boolean hasRecurrentValues() {
+        return true;
+    }
+
 
     public void setName(String name) {
         this.name = name;
     }
-
-    public long getRecurrentTime() {
-        return this.recurrentTime;
+    @Override
+    public long getRecurrentDuration() {
+        return this.recurrentDuration;
     }
 
-    public void setRecurrentTime(long recurrentTime) {
-        this.recurrentTime = recurrentTime;
+    public void setRecurrentDuration(long recurrentDuration) {
+        this.recurrentDuration = recurrentDuration;
     }
-
+    @Override
     public long getRecurrentCash() {
         return this.recurrentCash;
     }

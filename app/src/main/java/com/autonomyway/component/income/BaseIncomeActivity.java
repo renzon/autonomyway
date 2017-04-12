@@ -39,7 +39,7 @@ public abstract class BaseIncomeActivity extends BaseFormActivity {
 
     protected void populateForm(Income income) {
         setName(income.getName());
-        durationInput.setDuration(income.getRecurrentTime());
+        durationInput.setDuration(income.getRecurrentDuration());
         cashInput.setCash(income.getRecurrentCash());
         setIncomeType(income.getType());
     }

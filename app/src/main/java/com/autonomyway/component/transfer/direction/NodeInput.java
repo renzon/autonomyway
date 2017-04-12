@@ -18,7 +18,7 @@ public class NodeInput extends LinearLayout {
 
     private final TextView label;
     private NodeMediator nodeMediator;
-    private NodeRow.OnNodeSelectionListener listener;
+    private OnNodeSelectionListener listener;
 
     public NodeInput(Context context) {
         this(context, null);
@@ -36,7 +36,7 @@ public class NodeInput extends LinearLayout {
         this(context, attrs, defStyleAttr,0);
     }
 
-    public void setOnNodeSelectionListener(NodeRow.OnNodeSelectionListener listener){
+    public void setOnNodeSelectionListener(OnNodeSelectionListener listener){
         this.listener = listener;
     }
 
@@ -50,7 +50,7 @@ public class NodeInput extends LinearLayout {
         findViewById(R.id.button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new NodeDialogFragment(buildAvailableNodes(), new NodeRow.OnNodeSelectionListener() {
+                new NodeDialogFragment(buildAvailableNodes(), new OnNodeSelectionListener() {
                     @Override
                     public void selected(Node node) {
                         if (node==null){

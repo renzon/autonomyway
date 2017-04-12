@@ -21,7 +21,7 @@ public class EditIncomeActivity extends BaseIncomeActivity {
     @Override
     protected void saveIncome(View v, String name, long duration, Long cash, Income.Type incomeType) {
         incomeToEdit.setName(name);
-        incomeToEdit.setRecurrentTime(duration);
+        incomeToEdit.setRecurrentDuration(duration);
         incomeToEdit.setRecurrentCash(cash);
         incomeToEdit.setType(incomeType);
         autonomy.editIncome(incomeToEdit);

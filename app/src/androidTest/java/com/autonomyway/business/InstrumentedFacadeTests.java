@@ -37,7 +37,7 @@ public class InstrumentedFacadeTests {
     public void testCreateIncome() throws Exception {
         Income income = facade.createIncome("Salary", 1, 2, Income.Type.WORK);
         assertEquals("Salary", income.getName());
-        assertEquals(1, income.getRecurrentTime());
+        assertEquals(1, income.getRecurrentDuration());
         assertEquals(2, income.getRecurrentCash());
         assertEquals(Income.Type.WORK, income.getType());
         assertTrue(income.getId() > 0);
@@ -54,7 +54,7 @@ public class InstrumentedFacadeTests {
     public void testEditIncome() throws Exception {
         Income income = facade.createIncome("Salary", 1, 2, Income.Type.WORK);
         income.setName("Stocks");
-        income.setRecurrentTime(2);
+        income.setRecurrentDuration(2);
         income.setRecurrentCash(3);
         income.setType(Income.Type.BUSINESS);
         facade.editIncome(income);

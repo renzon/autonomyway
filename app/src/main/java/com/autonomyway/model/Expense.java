@@ -64,7 +64,7 @@ public class Expense implements Node {
     public void setId(Long id) {
         this.id = id;
     }
-
+    @Override
     public String getName() {
         return this.name;
     }
@@ -72,9 +72,14 @@ public class Expense implements Node {
     public void setName(String name) {
         this.name = name;
     }
-
+    @Override
     public long getRecurrentCash() {
         return this.recurrentCash;
+    }
+
+    @Override
+    public long getRecurrentDuration() {
+        return 0;
     }
 
     public void setRecurrentCash(long recurrentCash) {
@@ -88,6 +93,11 @@ public class Expense implements Node {
     @Override
     public void handleTransferCreationAsDestination(Transfer transfer) {
 
+    }
+
+    @Override
+    public boolean hasRecurrentValues() {
+        return true;
     }
 
 }

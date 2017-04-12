@@ -22,13 +22,13 @@ public class NodeDialogFragment extends DialogFragment {
     private static final String NODE_SELECTION = "nodeSelection";
 
     private List<Node> nodeList;
-    private NodeRow.OnNodeSelectionListener listener;
+    private OnNodeSelectionListener listener;
 
     public NodeDialogFragment() {
     }
 
     @SuppressLint("ValidFragment")
-    public NodeDialogFragment(List<Node> nodeList, NodeRow.OnNodeSelectionListener listener) {
+    public NodeDialogFragment(List<Node> nodeList, OnNodeSelectionListener listener) {
         this.nodeList = nodeList;
         this.listener = listener;
     }
@@ -56,7 +56,7 @@ public class NodeDialogFragment extends DialogFragment {
         RecyclerView rv = (RecyclerView) v.findViewById(R.id.recycle_view);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new NodeAdapter(nodeList, new NodeRow.OnNodeSelectionListener() {
+        rv.setAdapter(new NodeAdapter(nodeList, new OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
                 if (listener != null) {

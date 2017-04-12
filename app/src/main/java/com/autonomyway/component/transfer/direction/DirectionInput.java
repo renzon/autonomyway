@@ -14,7 +14,8 @@ import com.autonomyway.model.Node;
 
 public class DirectionInput extends LinearLayout {
     private NodeMediator nodeMediator;
-    private NodeMediator.OnOriginSelectionListener listener;
+    private OnNodeSelectionListener originSelectionListener;
+    private OnNodeSelectionListener destinationSelectionListener;
     private NodeInput originInput;
     private NodeInput destinationInput;
 
@@ -43,14 +44,15 @@ public class DirectionInput extends LinearLayout {
         originInput = (NodeInput) findViewById(R.id.origin_input);
          destinationInput = (NodeInput) findViewById(R.id.destination_input);
         nodeMediator = new NodeMediator(autonomyFacade, originInput, destinationInput, resources);
-        nodeMediator.setOnOriginSelectionListener(listener);
-        originInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
+        nodeMediator.setOriginSelectionListener(originSelectionListener);
+        nodeMediator.setDestinationSelectionListener(destinationSelectionListener);
+        originInput.setOnNodeSelectionListener(new OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
                 nodeMediator.setOrigin(node);
             }
         });
-        destinationInput.setOnNodeSelectionListener(new NodeRow.OnNodeSelectionListener() {
+        destinationInput.setOnNodeSelectionListener(new OnNodeSelectionListener() {
             @Override
             public void selected(Node node) {
                 nodeMediator.setDestination(node);
@@ -61,9 +63,11 @@ public class DirectionInput extends LinearLayout {
     }
 
 
-    public void setOriginSelectionListener(NodeMediator.OnOriginSelectionListener listener) {
-        this.listener = listener;
+    public void setOriginSelectionListener(OnNodeSelectionListener listener) {
+        this.originSelectionListener = listener;
     }
+
+
 
     public Node getOrigin() {
         return nodeMediator.getOrigin();
@@ -95,5 +99,10 @@ public class DirectionInput extends LinearLayout {
         }
         destinationInput.removeErrorState();
         return true;
+    }
+
+
+    public void setDestinationSelectionListener(OnNodeSelectionListener destinationSelectionListener) {
+        this.destinationSelectionListener = destinationSelectionListener;
     }
 }

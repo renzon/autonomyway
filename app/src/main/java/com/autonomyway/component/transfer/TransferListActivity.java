@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.autonomyway.R;
 import com.autonomyway.component.base.BaseListActivity;
-import com.autonomyway.component.transfer.NewTransferActivity;
 import com.autonomyway.model.Transfer;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class TransferListActivity extends BaseListActivity<Transfer, TransferRow
 
     @Override
     protected int getContentViewId() {
-        return R.layout.wealth_activity_list;
+        return R.layout.transfer_activity_list;
     }
 
 

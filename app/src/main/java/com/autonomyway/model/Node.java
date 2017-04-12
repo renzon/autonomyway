@@ -9,4 +9,10 @@ public interface Node extends Identifiable, Serializable {
     void handleTransferCreationAsOrigin(Transfer transfer);
 
     void handleTransferCreationAsDestination(Transfer transfer);
+
+    boolean hasRecurrentValues();
+
+    long getRecurrentCash();
+
+    long getRecurrentDuration();
 }

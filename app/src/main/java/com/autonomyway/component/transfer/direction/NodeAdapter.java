@@ -12,9 +12,9 @@ import java.util.List;
 
 public class NodeAdapter extends RecyclerView.Adapter<NodeViewHolder> {
     private List<Node> nodeList;
-    private NodeRow.OnNodeSelectionListener listener;
+    private OnNodeSelectionListener listener;
 
-    public NodeAdapter(List<Node> nodeList, NodeRow.OnNodeSelectionListener listener) {
+    public NodeAdapter(List<Node> nodeList, OnNodeSelectionListener listener) {
         this.nodeList = nodeList;
         this.listener = listener;
     }

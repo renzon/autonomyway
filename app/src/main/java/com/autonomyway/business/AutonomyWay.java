@@ -112,7 +112,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake7.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake8.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
         nodeByIdCache = new HashMap<>();
