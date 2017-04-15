@@ -8,7 +8,7 @@ import com.autonomyway.business.transfer.BusinessRateVisitor;
 import com.autonomyway.business.transfer.ExpenseRateVisitor;
 import com.autonomyway.business.transfer.IncomeRateVisitor;
 import com.autonomyway.business.transfer.TransferVisitor;
-import com.autonomyway.business.transfer.WorkRateVisitor;
+import com.autonomyway.business.transfer.WorkByWorkedTimeRateVisitor;
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.Transfer;
@@ -24,7 +24,7 @@ public class MetricsImpl implements Metrics {
     private TransferVisitor expenseRateVisitor;
     private TransferVisitor businessRateVisitor;
     private TransferVisitor workRateVisitor;
-    private String totalWealth;
+    private long totalWealth;
     private final static long HOUR_IN_MILISECONDS = 1000 * 60 * 60;
 
 
@@ -32,11 +32,10 @@ public class MetricsImpl implements Metrics {
                        List<Expense> expenses, List<Transfer> transfersOrderedByDateAsc) {
         this.resources = resources;
 
-        long totalWealthLong = 0;
+        totalWealth = 0;
         for (Wealth w : wealthList) {
-            totalWealthLong += w.getBalance();
+            totalWealth += w.getBalance();
         }
-        this.totalWealth = Transformation.cashToCurrency(totalWealthLong);
         if (transfersOrderedByDateAsc.size() <= 1) {
             return;
         }
@@ -51,7 +50,7 @@ public class MetricsImpl implements Metrics {
         }
         expenseRateVisitor = new ExpenseRateVisitor(totalDuration, resources);
         businessRateVisitor = new BusinessRateVisitor(totalDuration, resources);
-        workRateVisitor = new WorkRateVisitor(totalDuration, resources);
+        workRateVisitor = new WorkByWorkedTimeRateVisitor(totalDuration, resources);
         incomeRateVisitor = new IncomeRateVisitor(totalDuration, resources);
         TransferVisitor[] visitors = {
                 expenseRateVisitor, businessRateVisitor, workRateVisitor, incomeRateVisitor};
@@ -63,11 +62,6 @@ public class MetricsImpl implements Metrics {
         }
     }
 
-
-    @Override
-    public String getRetirement() {
-        return resources.getString(R.string.metric_not_enough_data_available);
-    }
 
     private String extractMetric(TransferVisitor visitor) {
         if (visitor == null) {
@@ -87,7 +81,7 @@ public class MetricsImpl implements Metrics {
     }
 
     @Override
-    public String getWorkRate() {
+    public String getWorkByWorkedtTimeRate() {
         return extractMetric(workRateVisitor);
     }
 
@@ -98,6 +92,42 @@ public class MetricsImpl implements Metrics {
 
     @Override
     public String getTotalWealth() {
-        return totalWealth;
+        return Transformation.cashToCurrency(totalWealth);
+    }
+
+    @Override
+    public String getRequiredWorkTimePerMonth() {
+        if (expenseRateVisitor == null) {
+            return resources.getString(R.string.metric_not_enough_data_available);
+        }
+        long expenseRate = expenseRateVisitor.getMetricNumber();
+        long businessRate = businessRateVisitor.getMetricNumber();
+        if (expenseRate <= 0 || businessRate >= expenseRate) {
+            return resources.getString(R.string.metric_can_leave_forever_without_working);
+        }
+        long workRate = workRateVisitor.getMetricNumber();
+        if (workRate == 0) {
+            return resources.getString(R.string.metric_not_enough_data_available);
+        }
+        long burnRate = expenseRate - businessRate;
+        long amountNeedByMonth = burnRate * 30 * 24;
+        return Transformation.durationForHumans(amountNeedByMonth / workRate);
+    }
+
+    @Override
+    public String getTimeToLiveIfNotWorking() {
+        if (expenseRateVisitor == null) {
+            return resources.getString(R.string.metric_not_enough_data_available);
+        }
+        long expenseRate = expenseRateVisitor.getMetricNumber();
+        long businessRate = businessRateVisitor.getMetricNumber();
+        if (expenseRate <= 0 || businessRate >= expenseRate) {
+            return resources.getString(R.string.metric_can_leave_forever_without_working);
+        }
+
+        long burnRate = expenseRate - businessRate;
+        long hoursToLive = totalWealth / burnRate;
+        return Transformation.durationForHumans(hoursToLive);
+
     }
 }

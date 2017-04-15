@@ -13,4 +13,5 @@ public interface TransferVisitor {
     void visitAsDestination(Wealth wealth, long transferCash, long transferDuration);
 
     String getMetric();
+    long getMetricNumber();
 }

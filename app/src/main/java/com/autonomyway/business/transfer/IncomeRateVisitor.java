@@ -29,8 +29,11 @@ public class IncomeRateVisitor extends TransferVisitorAdapter {
         if (getTotalDuration() == 0) {
             return getString(R.string.metric_not_enough_data_available);
         }
-        long rate = totalCash / getTotalDuration();
-        return Transformation.cashRate(rate, getResources());
+        return Transformation.cashRate(getMetricNumber(), getResources());
+    }
+    @Override
+    public long getMetricNumber() {
+        return totalCash / getTotalDuration();
     }
 
 }

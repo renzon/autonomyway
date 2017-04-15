@@ -74,4 +74,8 @@ public class Transformation {
         builder.append(resources.getString(R.string.hour));
         return builder.toString();
     }
+
+    public static String durationForHumans(long hoursToLive) {
+        return hoursToLive+" hours";
+    }
 }

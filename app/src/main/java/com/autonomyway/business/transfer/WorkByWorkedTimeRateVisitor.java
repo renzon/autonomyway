@@ -6,11 +6,11 @@ import com.autonomyway.R;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.Transformation;
 
-public class WorkRateVisitor extends TransferVisitorAdapter {
+public class WorkByWorkedTimeRateVisitor extends TransferVisitorAdapter {
     long totalCash = 0;
     long totalWorkMinutes = 0;
 
-    public WorkRateVisitor(long duration, Resources resources) {
+    public WorkByWorkedTimeRateVisitor(long duration, Resources resources) {
         super(duration, resources);
     }
 
@@ -36,9 +36,14 @@ public class WorkRateVisitor extends TransferVisitorAdapter {
         if (totalWorkMinutes == 0) {
             return getString(R.string.metric_not_enough_data_available);
         }
-        int hour_in_minutes = 60;
-        long rate = totalCash* hour_in_minutes / totalWorkMinutes;
-        return Transformation.cashRate(rate, getResources());
+        return Transformation.cashRate(getMetricNumber(), getResources());
     }
+
+    @Override
+    public long getMetricNumber() {
+        int hour_in_minutes = 60;
+        return totalCash * hour_in_minutes / totalWorkMinutes;
+    }
+
 
 }

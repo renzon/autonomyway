@@ -58,6 +58,8 @@
         work</string>
     <string name="expense_rate">Rate:</string>
     <string name="metric_not_enough_data_available">Not enough data available</string>
+    <string name="metric_can_leave_forever_without_working">You are rich, can live forever without
+        working</string>
     <string name="hour">hour</string>
     <string name="hour_plural">ours</string>
     <!-- Inital values when user first enter the app -->
