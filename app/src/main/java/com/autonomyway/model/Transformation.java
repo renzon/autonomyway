@@ -1,5 +1,9 @@
 package com.autonomyway.model;
 
+import android.content.res.Resources;
+
+import com.autonomyway.R;
+
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -62,5 +66,12 @@ public class Transformation {
             minutesStr = "0" + minutesStr;
         }
         return hour + ":" + minutesStr;
+    }
+
+    public static String cashRate(long rate, Resources resources) {
+        StringBuilder builder=new StringBuilder(cashToCurrency(rate));
+        builder.append("/");
+        builder.append(resources.getString(R.string.hour));
+        return builder.toString();
     }
 }

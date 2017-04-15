@@ -4,6 +4,7 @@ package com.autonomyway.model;
 import android.content.res.Resources;
 
 import com.autonomyway.R;
+import com.autonomyway.business.transfer.TransferVisitor;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
@@ -189,4 +190,13 @@ public class Income implements Node {
         this.type = type;
     }
 
+    @Override
+    public void acceptAsOrigin(TransferVisitor visitor, long transferCash, long transferDuration) {
+        visitor.visitAsOrigin(this, transferCash, transferDuration);
+    }
+
+    @Override
+    public void acceptAsDestination(TransferVisitor visitor, long transferCash, long transferDuration) {
+        visitor.visitAsDestination(this, transferCash, transferDuration);
+    }
 }

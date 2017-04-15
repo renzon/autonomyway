@@ -1,5 +1,7 @@
 package com.autonomyway.model;
 
+import com.autonomyway.business.transfer.TransferVisitor;
+
 import java.io.Serializable;
 
 public interface Node extends Identifiable, Serializable {
@@ -15,5 +17,8 @@ public interface Node extends Identifiable, Serializable {
     long getRecurrentCash();
 
     long getRecurrentDuration();
+
+    void acceptAsOrigin(TransferVisitor visitor, long transferCash, long transferDuration);
+    void acceptAsDestination(TransferVisitor visitor, long transferCash, long transferDuration);
 
 }

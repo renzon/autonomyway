@@ -1,8 +1,10 @@
 package com.autonomyway.business;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.autonomyway.AutonomyWayFacade;
+import com.autonomyway.Metrics;
 import com.autonomyway.R;
 import com.autonomyway.model.DaoMaster;
 import com.autonomyway.model.DaoSession;
@@ -18,7 +20,9 @@ import com.autonomyway.model.WealthDao;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
+import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -115,6 +119,22 @@ public class AutonomyWay implements AutonomyWayFacade {
         return transfer;
     }
 
+    private List<Transfer> getLastTransfers(int daysAgo) {
+        Calendar calendar=Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow=calendar.getTime();
+        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo-1);
+        Date dateDaysAgo=calendar.getTime();
+        QueryBuilder<Transfer> query = session.getTransferDao().queryBuilder();
+        query.where(TransferDao.Properties.Date.between(dateDaysAgo,tomorrow));
+        List<Transfer> list = query.orderAsc(TransferDao.Properties.Date).list();
+        for (Transfer t : list) {
+            injectNodes(t);
+        }
+        session.clear();
+        return list;
+    }
+
     @Override
     public List<Transfer> getTransferList() {
         List<Transfer> list = session.getTransferDao().queryBuilder().orderDesc(TransferDao.Properties.Date)
@@ -130,6 +150,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         session.clear();
         return list;
     }
+
 
     private void injectNodes(Transfer transfer) {
         Class<? extends Node> originClass = transfer.getOriginClassHolder().getNodeClass();
@@ -147,7 +168,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         transfer.setDestination(destination);
 
     }
-
 
     private AbstractDao getDao(Node node) {
         return getDao(node.getClass());
@@ -174,6 +194,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         cleanAllCache();
     }
 
+
     void cleanAllCache() {
         Class[] nodeClasses = new Class[]{Income.class, Expense.class, Wealth.class};
         for (Class cls : nodeClasses) {
@@ -181,7 +202,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         }
         session.clear();
     }
-
 
     private void cleanCache(Class cls) {
         nodeListCache.put(cls, null);
@@ -192,6 +212,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         return (List<N>) nodeListCache.get(nodeClass);
     }
 
+
     private <N extends Node> N getFromCache(Class<N> nodeClass, Long nodeId) {
         Map<Long, N> nodeMap = (Map<Long, N>) nodeByIdCache.get(nodeClass);
         if (nodeMap != null && nodeMap.containsKey(nodeId)) {
@@ -199,7 +220,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         }
         return null;
     }
-
 
     @Override
     public Wealth getWealth(Long id) {
@@ -337,6 +357,12 @@ public class AutonomyWay implements AutonomyWayFacade {
     }
 
     @Override
+    public Metrics calculateMetrics(Resources resources) {
+        return new MetricsImpl(resources, getIncomeList(), getWealthList(), getExpenseList(),
+                getLastTransfers(365));
+    }
+
+    @Override
     public void createInitialData() {
         cleanAllCache();
         if (getIncomeList().size() == 0) {
@@ -363,13 +389,13 @@ public class AutonomyWay implements AutonomyWayFacade {
                     new Expense(ctx.getString(R.string.expense_init_leisure), 0),
                     new Expense(ctx.getString(R.string.expense_init_taxes), 0),
             };
+
             session.runInTx(new Runnable() {
                 @Override
                 public void run() {
                     session.getIncomeDao().insertInTx(incomes);
                     session.getWealthDao().insertInTx(wealth);
                     session.getExpenseDao().insertInTx(expenses);
-
                 }
             });
             session.clear();

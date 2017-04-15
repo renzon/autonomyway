@@ -1,9 +1,11 @@
 package com.autonomyway.model;
 
+import com.autonomyway.business.transfer.TransferVisitor;
+
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class Expense implements Node {
@@ -104,6 +106,16 @@ public class Expense implements Node {
     @Override
     public boolean hasRecurrentValues() {
         return true;
+    }
+
+    @Override
+    public void acceptAsOrigin(TransferVisitor visitor, long transferCash, long transferDuration) {
+        visitor.visitAsOrigin(this, transferCash, transferDuration);
+    }
+
+    @Override
+    public void acceptAsDestination(TransferVisitor visitor, long transferCash, long transferDuration) {
+        visitor.visitAsDestination(this, transferCash, transferDuration);
     }
 
 }

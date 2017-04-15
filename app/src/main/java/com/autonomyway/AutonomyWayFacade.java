@@ -1,5 +1,7 @@
 package com.autonomyway;
 
+import android.content.res.Resources;
+
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.Node;
@@ -43,4 +45,6 @@ public interface AutonomyWayFacade {
     Transfer getTransfer(long id);
 
     List<Transfer> getTransferList();
+
+    Metrics calculateMetrics(Resources resources);
 }

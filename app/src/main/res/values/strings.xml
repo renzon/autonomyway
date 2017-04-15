@@ -11,6 +11,7 @@
     <string name="title_activity_expense_list">Expenses</string>
     <string name="income_rate">Rate:</string>
 
+
     <string name="income_type_business">Business</string>
     <string name="income_type_work">Work</string>
     <string name="cash_error">Invalid Number</string>
@@ -56,6 +57,9 @@
         for this
         work</string>
     <string name="expense_rate">Rate:</string>
+    <string name="metric_not_enough_data_available">Not enough data available</string>
+    <string name="hour">hour</string>
+    <string name="hour_plural">ours</string>
     <!-- Inital values when user first enter the app -->
     <!-- Income -->
     <string name="income_init_salary">Salary</string>
