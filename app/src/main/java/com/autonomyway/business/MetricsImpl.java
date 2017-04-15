@@ -81,7 +81,7 @@ public class MetricsImpl implements Metrics {
     }
 
     @Override
-    public String getWorkByWorkedtTimeRate() {
+    public String getWorkByWorkedTimeRate() {
         return extractMetric(workRateVisitor);
     }
 
@@ -96,7 +96,7 @@ public class MetricsImpl implements Metrics {
     }
 
     @Override
-    public String getRequiredWorkTimePerMonth() {
+    public String getMandatoryWorkTimePerMonth() {
         if (expenseRateVisitor == null) {
             return resources.getString(R.string.metric_not_enough_data_available);
         }
@@ -115,7 +115,7 @@ public class MetricsImpl implements Metrics {
     }
 
     @Override
-    public String getTimeToLiveIfNotWorking() {
+    public String getWorkFreeTime() {
         if (expenseRateVisitor == null) {
             return resources.getString(R.string.metric_not_enough_data_available);
         }

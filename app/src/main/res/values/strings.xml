@@ -92,5 +92,6 @@
     <string name="date_input_label">Date *</string>
     <string name="transfer_cash">Cash</string>
     <string name="transfer_duration">Duration</string>
+    <string name="work_free_time">Work-free time</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

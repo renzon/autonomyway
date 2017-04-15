@@ -1,17 +1,17 @@
 package com.autonomyway;
 
 public interface Metrics {
-    String getTimeToLiveIfNotWorking();
+    String getWorkFreeTime();
 
     String getExpenseRate();
 
     String getBusinessRate();
 
-    String getWorkByWorkedtTimeRate();
+    String getWorkByWorkedTimeRate();
 
     String getIncomeRate();
 
     String getTotalWealth();
 
-    String getRequiredWorkTimePerMonth();
+    String getMandatoryWorkTimePerMonth();
 }
