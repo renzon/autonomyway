@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">Autonomy Way</string>
+    <string name="navigation_drawer_open">Abre o menu de navegação</string>
+    <string name="navigation_drawer_close">Fecha o menu de navegação</string>
+    <string name="nav_transfers">Transferências</string>
+    <string name="nav_incomes">Entradas</string>
+    <string name="nav_expenses">Despesas</string>
+    <string name="nav_wealth">Patrimônio</string>
+    <string name="title_activity_income_list">Entradas</string>
+    <string name="title_activity_wealth_list">Patrimônio</string>
+    <string name="title_activity_expense_list">Despesas</string>
+    <string name="rate">Taxa:</string>
+    <string name="income_rate">Taxa de Entrada</string>
+
+
+    <string name="income_type_business">Negócio</string>
+    <string name="income_type_work">Trabalho</string>
+    <string name="cash_error">Número Inválido</string>
+
+    <string name="title_new_income_activity">Nova Entrada</string>
+    <string name="title_edit_income_activity">Edição de Entrada</string>
+    <string name="income_input_name">Nome *</string>
+    <string name="income_name_error">Nome é obrigatório</string>
+    <string name="income_input_cash">Valor recorrente: Preencha se sempre recebe o mesmo
+        valor por esse trabalho</string>
+    <string name="label_time">Tempo Recorrente</string>
+    <string name="label_income_type">Tipo de Entrada</string>
+
+    <string name="work_explanation">Trabalho - Necessário gastar tempo para ganhar dinheiro. Ex:
+        emprego em empresa,
+        gestão de negócio em pessoa.</string>
+    <string name="business_explanation">Negócio - Tempo desprezível para ganhar dinheiro. Ex:
+        Investimento, casa própria alugadada, negócio gerido por terceiros</string>
+    <string name="button_save">Salvar</string>
+    <string name="income_save_msg">Entrada salva. Crie outra ou pressione voltar para
+        voltar á lista de entradas.</string>
+
+
+    <string name="title_new_wealth_activity">Novo Patrimônio</string>
+    <string name="title_edit_wealth_activity">Editar Patrimônio</string>
+    <string name="wealth_input_name">Nome *</string>
+    <string name="wealth_name_error">Nome é obrigatório</string>
+    <string name="wealth_initial_balance_input">Balanço inicial</string>
+    <string name="form_error_msg">Existem erros, cheque campos vermelhos</string>
+    <string name="wealth_balance">Balanço</string>
+    <string name="wealth_save_msg">Patrimônio salvo. Crie outro ou pressione voltar para
+        retonar à lista de patrimônio</string>
+    <string name="transfer_save_msg">Transferência salva. Crie outra ou pressione voltar para
+        retonar à lista de tranferências.</string>
+
+    <string name="title_new_expense_activity">Nova Despesa</string>
+    <string name="title_new_transfer_activity">Nova Transferência</string>
+    <string name="title_activity_transfer_list">Transferências</string>
+    <string name="title_edit_transfer_activity">Edit Transfer Form</string>
+    <string name="title_edit_expense_activity">Edição de Transferência</string>
+    <string name="positive_amount_err_msg">Precisa ser um valor positivo</string>
+
+    <string name="expense_save_msg">Despesa salva. Crie outra ou pressione voltar para
+        retonar à lista de despesas.</string>
+    <string name="expense_name_error">Nome obrigatório</string>
+    <string name="expense_input_name">Nome *</string>
+    <string name="transfer_cash_input">Quantia de Dinheiro *</string>
+    <string name="transfer_input_detail">Detablhe. Ex: Salário mensal, Supermercado </string>
+    <string name="expense_recurrent_cash_input">Despesa Recorrente: Preenche se você sempre gast
+        o mesmo valor nessa depesa</string>
+    <string name="expense_rate">Taxa de Despesa</string>
+    <string name="metric_not_enough_data_available">Dados Insuficientes</string>
+    <string name="metric_can_leave_forever_without_working">Você está rico, pode viver sem
+        trabalhar</string>
+    <string name="hour">hora</string>
+    <string name="hour_plural">horas</string>
+    <!-- Inital values when user first enter the app -->
+    <!-- Income -->
+    <string name="income_init_salary">Salário</string>
+    <string name="income_init_stocks">Rendimento de Investimento</string>
+
+    <!-- Wealth -->
+    <string name="wealth_init_bank_account">Conta Bancária</string>
+    <string name="wealth_init_car">Carro</string>
+    <string name="wealth_init_credit_card">Cartão de Crédito</string>
+    <string name="wealth_init_house">Casa</string>
+    <string name="wealth_init_stocks">Investimento</string>
+    <string name="wealth_init_wallet">Carteira</string>
+    <!--<string name="wealth_"></string>-->
+
+    <!-- Expenses -->
+    <string name="expense_init_car_expenses">Carro</string>
+    <string name="expense_init_children">Filhos</string>
+    <string name="expense_init_depreciation">Depreciação</string>
+    <string name="expense_init_health">Saúde</string>
+    <string name="expense_init_house_expenses">Casa</string>
+    <string name="expense_init_leisure">Lazer</string>
+    <string name="expense_init_taxes">Impostos</string>
+    <string name="time_spent_to_get_income">Tempo gasto para entrada</string>
+    <string name="transfer_origin">Origem *</string>
+    <string name="transfer_destination">Destino *</string>
+    <string name="select_origin">Selecione origem</string>
+    <string name="select_destination">Selecione destino</string>
+    <string name="date_input_label">Data *</string>
+    <string name="transfer_cash">Quantia (R$)</string>
+    <string name="transfer_duration">Duração:</string>
+    <string name="work_free_time">Tempo Sem Trabalhar</string>
+    <string name="duration_input_hours">Houras</string>
+    <string name="duration_input_minutes">Minutos</string>
+    <string name="total_wealth">Patrimônio Total</string>
+    <string name="work_rate">Valor hora de Trabalho</string>
+    <string name="business_rate">Valor hora de Negócio</string>
+    <string name="mandatory_work_time">Trabalho obrigatório</string>
+    <!--<string name="expense_init_"></string>-->
+</resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AutonomyWay</string>
+    <string name="app_name">Autonomy Way</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_transfers">Transfers</string>
@@ -28,7 +28,8 @@
     <string name="work_explanation">Work - Need to spent time to make money. Ex: working in a company, running a business in person.</string>
     <string name="business_explanation">Business - Little or no work to make money. Ex: stocks, rent from real state, business ran by managers</string>
     <string name="button_save">Save</string>
-    <string name="income_save_msg">Income saved. Create another or press back to return to expense list</string>
+    <string name="income_save_msg">Income saved. Create another or press back to return to income
+        list</string>
 
 
     <string name="title_new_wealth_activity">New Wealth Form</string>
@@ -55,14 +56,13 @@
     <string name="transfer_cash_input">Cash Amount *</string>
     <string name="transfer_input_detail">Detail. Ex: Month Salary, Groceries </string>
     <string name="expense_recurrent_cash_input">Recurrent Expense: Fill if you expend same value
-        for this
-        work</string>
+        on this expense</string>
     <string name="expense_rate">Expense Rate</string>
     <string name="metric_not_enough_data_available">Not enough data available</string>
     <string name="metric_can_leave_forever_without_working">You are rich, can live forever without
         working</string>
     <string name="hour">hour</string>
-    <string name="hour_plural">ours</string>
+    <string name="hour_plural">hours</string>
     <!-- Inital values when user first enter the app -->
     <!-- Income -->
     <string name="income_init_salary">Salary</string>
@@ -85,7 +85,7 @@
     <string name="expense_init_house_expenses">House Expenses</string>
     <string name="expense_init_leisure">Leisure</string>
     <string name="expense_init_taxes">Taxes</string>
-    <string name="time_spent_to_get_income">Time spent to get expense</string>
+    <string name="time_spent_to_get_income">Time spent to get income</string>
     <string name="transfer_origin">Origin *</string>
     <string name="transfer_destination">Destination *</string>
     <string name="select_origin">Select origin</string>

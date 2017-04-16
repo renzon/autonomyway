@@ -1,7 +1,6 @@
 package com.autonomyway.business;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.Metrics;
@@ -187,7 +186,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "fake8.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "autonomy_way.db");
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
         nodeByIdCache = new HashMap<>();
