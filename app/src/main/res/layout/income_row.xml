@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.autonomyway.component.expense.IncomeRow xmlns:android="http://schemas.android.com/apk/res/android"
+<com.autonomyway.component.income.IncomeRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ListCardView">
 
     <LinearLayout style="@style/ListRow">
@@ -18,4 +19,4 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-</com.autonomyway.component.expense.IncomeRow>
+</com.autonomyway.component.income.IncomeRow>

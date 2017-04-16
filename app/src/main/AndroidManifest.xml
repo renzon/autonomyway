@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".component.expense.IncomeListActivity"
+            android:name=".component.income.IncomeListActivity"
             android:label="@string/title_activity_income_list"
             android:parentActivityName=".DashboardActivity"
             android:theme="@style/AppTheme">
@@ -29,22 +29,22 @@
                 android:value="com.autonomyway.DashboardActivity" />
         </activity>
         <activity
-            android:name=".component.expense.NewIncomeActivity"
+            android:name=".component.income.NewIncomeActivity"
             android:label="@string/title_new_income_activity"
-            android:parentActivityName=".component.expense.IncomeListActivity"
+            android:parentActivityName=".component.income.IncomeListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.autonomyway.component.expense.IncomeListActivity" />
+                android:value="com.autonomyway.component.income.IncomeListActivity" />
         </activity>
         <activity
-            android:name=".component.expense.EditIncomeActivity"
+            android:name=".component.income.EditIncomeActivity"
             android:label="@string/title_edit_income_activity"
-            android:parentActivityName=".component.expense.IncomeListActivity"
+            android:parentActivityName=".component.income.IncomeListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.autonomyway.component.expense.IncomeListActivity" />
+                android:value="com.autonomyway.component.income.IncomeListActivity" />
         </activity>
         <activity
             android:name=".component.wealth.WealthListActivity"
@@ -107,7 +107,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DashboardActivity" />
+                android:value="com.autonomyway.DashboardActivity" />
         </activity>
         <activity
             android:name=".component.transfer.TransferListActivity"
