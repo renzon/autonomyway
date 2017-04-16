@@ -93,5 +93,7 @@
     <string name="transfer_cash">Cash</string>
     <string name="transfer_duration">Duration</string>
     <string name="work_free_time">Work-free time</string>
+    <string name="duration_input_hours">Hours</string>
+    <string name="duration_input_minutes">Minutes</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

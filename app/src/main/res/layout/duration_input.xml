@@ -3,21 +3,50 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-
-    <EditText
-        android:id="@+id/hour_input"
-        android:layout_width="50sp"
-        android:layout_height="wrap_content"
-        android:inputType="number" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=":" />
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duration_input_hours" />
+        <EditText
+            android:id="@+id/hour_input"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
 
-    <EditText
-        android:id="@+id/minute_input"
-        android:layout_width="50sp"
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number" />
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:layout_gravity="bottom">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:text=":" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duration_input_minutes" />
+        <EditText
+            android:id="@+id/minute_input"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </LinearLayout>
 </merge>

@@ -13,6 +13,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/income_name_layout"
         style="@style/FormLabel"
+
         app:errorEnabled="true">
 
         <EditText
