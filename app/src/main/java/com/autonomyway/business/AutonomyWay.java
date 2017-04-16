@@ -364,12 +364,15 @@ public class AutonomyWay implements AutonomyWayFacade {
     }
 
     @Override
-    public Metrics calculateMetrics(Resources resources) {
+    public Metrics calculateMetrics() {
         if (metrics == null) {
+            // Warming up cache
             getIncomeList();
-            metrics = new MetricsImpl(resources, getMapFromCache(Income.class),
+            getExpenseList();
+            // Warming up finished
+            metrics = new MetricsImpl(ctx.getResources(), getMapFromCache(Income.class),
                     getWealthList(),
-                    getExpenseList(),
+                    getMapFromCache(Expense.class),
                     getLastTransfers(365));
         }
         return metrics;

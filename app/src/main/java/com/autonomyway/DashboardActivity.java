@@ -74,7 +74,7 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     @Override
     protected void onResume() {
         super.onResume();
-        Metrics metrics=autonomy.calculateMetrics(getResources());
+        Metrics metrics=autonomy.calculateMetrics();
         expenseRateTextView.setText(metrics.getExpenseRate());
         incomeRateTextView.setText(metrics.getIncomeRate());
         workRateTextView.setText(metrics.getWorkByWorkedTimeRate());

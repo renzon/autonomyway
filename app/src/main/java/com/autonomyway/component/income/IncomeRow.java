@@ -34,7 +34,7 @@ public class IncomeRow extends BaseRow<Income> {
         TextView incomeRateTextView = (TextView) findViewById(R.id.income_rate);
         titleTextView.setText(income.getNameDashType(resources));
         AutonomyWayFacade facade = AutonomyWay.getInstance(getContext());
-        incomeRateTextView.setText(facade.calculateMetrics(resources).getIncomeRate(income));
+        incomeRateTextView.setText(facade.calculateMetrics().getIncomeRate(income));
     }
 
 

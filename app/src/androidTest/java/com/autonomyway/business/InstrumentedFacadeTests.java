@@ -240,8 +240,8 @@ public class InstrumentedFacadeTests {
                 salary, account, new Date(), 12, 3, "Second salary");
         transferList = facade.getTransferList();
         // Ordered by date Desc
-        assertEquals(secondSalary,transferList.get(0));
-        assertEquals(firstSalary,transferList.get(1));
+        assertEquals(secondSalary, transferList.get(0));
+        assertEquals(firstSalary, transferList.get(1));
 
     }
 
@@ -317,28 +317,28 @@ public class InstrumentedFacadeTests {
         Expense rent = facade.createExpense("Rent", 0);
         Income salary = facade.createIncome("Salary", 0, 0, Income.Type.WORK);
         final int TWENTY = 20;
-        Transfer transfer=facade.createTransfer(salary,account,dt, TWENTY,10, "");
+        Transfer transfer = facade.createTransfer(salary, account, dt, TWENTY, 10, "");
         assertEquals(transfer.getCash(), account.getBalance());
         // Edit destination to other wealth
         transfer.setDestination(house);
         facade.editTransfer(transfer);
-        account=facade.getWealth(account.getId());
+        account = facade.getWealth(account.getId());
         assertEquals(TWENTY, house.getBalance());
         assertEquals(0, account.getBalance());
         // Destination become origin
         transfer.setOrigin(house);
         transfer.setDestination(account);
         facade.editTransfer(transfer);
-        account=facade.getWealth(account.getId());
-        house=facade.getWealth(house.getId());
+        account = facade.getWealth(account.getId());
+        house = facade.getWealth(house.getId());
         assertEquals(TWENTY, account.getBalance());
         assertEquals(-TWENTY, house.getBalance());
         // destination become origin and vice versa
         transfer.setOrigin(account);
         transfer.setDestination(house);
         facade.editTransfer(transfer);
-        account=facade.getWealth(account.getId());
-        house=facade.getWealth(house.getId());
+        account = facade.getWealth(account.getId());
+        house = facade.getWealth(house.getId());
         assertEquals(-TWENTY, account.getBalance());
         assertEquals(TWENTY, house.getBalance());
         // destination become origin and vice versa, cash changed by half
@@ -347,8 +347,8 @@ public class InstrumentedFacadeTests {
         final int TWENTY_FIVE = TWENTY + 5;
         transfer.setCash(TWENTY_FIVE);
         facade.editTransfer(transfer);
-        account=facade.getWealth(account.getId());
-        house=facade.getWealth(house.getId());
+        account = facade.getWealth(account.getId());
+        house = facade.getWealth(house.getId());
         assertEquals(TWENTY_FIVE, account.getBalance());
         assertEquals(-TWENTY_FIVE, house.getBalance());
 
@@ -422,10 +422,11 @@ public class InstrumentedFacadeTests {
         assertEquals("Nothing must happen after first call", init_expense_names.length, expenseList.size());
 
     }
+
     @Test
-    public void testMetrics(){
+    public void testMetrics() {
         Locale.setDefault(Locale.US);
-        Metrics metrics=facade.calculateMetrics(ctx.getResources());
+        Metrics metrics = facade.calculateMetrics();
         assertEquals("Not enough data available", metrics.getWorkFreeTime());
         assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
         assertEquals("Not enough data available", metrics.getExpenseRate());
@@ -437,7 +438,7 @@ public class InstrumentedFacadeTests {
         // Testing wealth init
         Wealth account = facade.createWealth("Bank Account", 200);
         facade.createWealth("House", 300);
-        metrics=facade.calculateMetrics(ctx.getResources());
+        metrics = facade.calculateMetrics();
         assertEquals("Not enough data available", metrics.getWorkFreeTime());
         assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
         assertEquals("Not enough data available", metrics.getExpenseRate());
@@ -447,11 +448,11 @@ public class InstrumentedFacadeTests {
         assertEquals("$5.00", metrics.getTotalWealth());
         // Testing first transfer
         Income salary = facade.createIncome("Salary", 0, 0, Income.Type.WORK);
-        Date now=new Date();
-        metrics=facade.calculateMetrics(ctx.getResources());
+        Date now = new Date();
+        metrics = facade.calculateMetrics();
         assertEquals("Not enough data available", metrics.getIncomeRate(salary));
-        facade.createTransfer(salary, account,now, 500,5,"");
-        metrics=facade.calculateMetrics(ctx.getResources());
+        facade.createTransfer(salary, account, now, 500, 5, "");
+        metrics = facade.calculateMetrics();
         assertEquals("Not enough data available", metrics.getWorkFreeTime());
         assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
         assertEquals("Not enough data available", metrics.getExpenseRate());
@@ -461,9 +462,9 @@ public class InstrumentedFacadeTests {
         assertEquals("$60.00/hour", metrics.getIncomeRate(salary));
         assertEquals("$10.00", metrics.getTotalWealth());
         // Testing second transfer in last than one hour
-        Date thirdMinutesEarlier=new Date(now.getTime()-1000*60*30);
-        facade.createTransfer(salary, account,thirdMinutesEarlier, 500,5,"");
-        metrics=facade.calculateMetrics(ctx.getResources());
+        Date thirdMinutesEarlier = new Date(now.getTime() - 1000 * 60 * 30);
+        facade.createTransfer(salary, account, thirdMinutesEarlier, 500, 5, "");
+        metrics = facade.calculateMetrics();
         assertEquals("Not enough data available", metrics.getWorkFreeTime());
         assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
         assertEquals("Not enough data available", metrics.getExpenseRate());
@@ -473,10 +474,10 @@ public class InstrumentedFacadeTests {
         assertEquals("$60.00/hour", metrics.getIncomeRate(salary));
         assertEquals("$15.00", metrics.getTotalWealth());
         // Testing third transfer made yesterday
-        long DAY_IN_MILISECONDS=1000*60*60*24;
-        Date yesterday=new Date(now.getTime()-DAY_IN_MILISECONDS);
-        facade.createTransfer(salary, account,yesterday, 500,5,"");
-        metrics=facade.calculateMetrics(ctx.getResources());
+        long DAY_IN_MILISECONDS = 1000 * 60 * 60 * 24;
+        Date yesterday = new Date(now.getTime() - DAY_IN_MILISECONDS);
+        facade.createTransfer(salary, account, yesterday, 500, 5, "");
+        metrics = facade.calculateMetrics();
         // expense rate <= business rate
         String rich_msg = "You are rich, can live forever without working";
         assertEquals(rich_msg, metrics.getWorkFreeTime());
@@ -489,12 +490,17 @@ public class InstrumentedFacadeTests {
         assertEquals("$20.00", metrics.getTotalWealth());
 
         // Testing expense
-        account=facade.getWealth(account.getId());
+        account = facade.getWealth(account.getId());
         Expense rent = facade.createExpense("Rent", 0);
-        facade.createTransfer(account, rent,yesterday, 500,0,"");
-        metrics=facade.calculateMetrics(ctx.getResources());
+        Expense houseExpenses = facade.createExpense("Houser Expenses", 0);
+        metrics = facade.calculateMetrics();
+        assertEquals("$0.00/hour", metrics.getExpenseRate(rent));
+        assertEquals("$0.00/hour", metrics.getExpenseRate(houseExpenses));
+        facade.createTransfer(account, rent, yesterday, 500, 0, "");
+        metrics = facade.calculateMetrics();
 
-
+        assertEquals("$0.00/hour", metrics.getExpenseRate(houseExpenses)); // 0
+        assertEquals("$0.20/hour", metrics.getExpenseRate(rent)); // 500/24 hours
         assertEquals("$0.20/hour", metrics.getExpenseRate()); //500 /24 hours
         assertEquals("$0.00/hour", metrics.getBusinessRate());
         assertEquals("$60.00/hour", metrics.getWorkByWorkedTimeRate()); // 500*3/((5/60)*3)
@@ -508,10 +514,11 @@ public class InstrumentedFacadeTests {
         assertEquals("75 hours", metrics.getWorkFreeTime());
         // Testing  business
         Income stocks = facade.createIncome("Stocks Interest", 0, 0, Income.Type.BUSINESS);
-        account=facade.getWealth(account.getId());
-        facade.createTransfer(stocks, account,yesterday, 250, 0,"");
-        metrics=facade.calculateMetrics(ctx.getResources());
-
+        account = facade.getWealth(account.getId());
+        facade.createTransfer(stocks, account, yesterday, 250, 0, "");
+        metrics = facade.calculateMetrics();
+        assertEquals("$0.00/hour", metrics.getExpenseRate(houseExpenses)); // 0
+        assertEquals("$0.20/hour", metrics.getExpenseRate(rent)); // 500/24 hours
         assertEquals("$0.20/hour", metrics.getExpenseRate()); //500 /24 hours
         assertEquals("$0.10/hour", metrics.getBusinessRate());
         assertEquals("$60.00/hour", metrics.getWorkByWorkedTimeRate()); // 500*3/((5/60)*3)
@@ -524,11 +531,7 @@ public class InstrumentedFacadeTests {
         assertEquals("1 hours", metrics.getMandatoryWorkTimePerMonth());
         // 17.50 /0.1
         assertEquals("175 hours", metrics.getWorkFreeTime());
-
-
     }
-
-
 
 
     @After

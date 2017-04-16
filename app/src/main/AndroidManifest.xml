@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".component.income.IncomeListActivity"
+            android:name=".component.expense.IncomeListActivity"
             android:label="@string/title_activity_income_list"
             android:parentActivityName=".DashboardActivity"
             android:theme="@style/AppTheme">
@@ -29,22 +29,22 @@
                 android:value="com.autonomyway.DashboardActivity" />
         </activity>
         <activity
-            android:name=".component.income.NewIncomeActivity"
+            android:name=".component.expense.NewIncomeActivity"
             android:label="@string/title_new_income_activity"
-            android:parentActivityName=".component.income.IncomeListActivity"
+            android:parentActivityName=".component.expense.IncomeListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.autonomyway.component.income.IncomeListActivity" />
+                android:value="com.autonomyway.component.expense.IncomeListActivity" />
         </activity>
         <activity
-            android:name=".component.income.EditIncomeActivity"
+            android:name=".component.expense.EditIncomeActivity"
             android:label="@string/title_edit_income_activity"
-            android:parentActivityName=".component.income.IncomeListActivity"
+            android:parentActivityName=".component.expense.IncomeListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.autonomyway.component.income.IncomeListActivity" />
+                android:value="com.autonomyway.component.expense.IncomeListActivity" />
         </activity>
         <activity
             android:name=".component.wealth.WealthListActivity"

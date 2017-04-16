@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.R;
+import com.autonomyway.business.AutonomyWay;
 import com.autonomyway.component.base.BaseRow;
 import com.autonomyway.model.Expense;
 
@@ -29,7 +31,8 @@ public class ExpenseRow extends BaseRow<Expense> {
         TextView titleTextView = (TextView) findViewById(R.id.expense_row_title);
         TextView expenseRateTextView = (TextView) findViewById(R.id.expense_rate);
         titleTextView.setText(expense.getName());
-        expenseRateTextView.setText("R$13,43/hora");
+        AutonomyWayFacade facade= AutonomyWay.getInstance(getContext());
+        expenseRateTextView.setText(facade.calculateMetrics().getExpenseRate(expense));
     }
 
     @NonNull

@@ -7,6 +7,7 @@ import com.autonomyway.R;
 import com.autonomyway.business.transfer.BusinessRateVisitor;
 import com.autonomyway.business.transfer.ExpenseRateVisitor;
 import com.autonomyway.business.transfer.IncomeRateVisitor;
+import com.autonomyway.business.transfer.SingleExpenseRateVisitor;
 import com.autonomyway.business.transfer.SingleIncomeRateVisitor;
 import com.autonomyway.business.transfer.TransferVisitor;
 import com.autonomyway.business.transfer.WorkByWorkedTimeRateVisitor;
@@ -29,12 +30,13 @@ public class MetricsImpl implements Metrics {
     final private TransferVisitor businessRateVisitor;
     final private TransferVisitor workRateVisitor;
     final private Map<Long, TransferVisitor> singleIncomeVisitors;
+    final private Map<Long, TransferVisitor> singleExpenseVisitors;
     final private long totalWealth;
     private final static long HOUR_IN_MILISECONDS = 1000 * 60 * 60;
 
 
     public MetricsImpl(Resources resources, Map<Long, Income> incomeMap, List<Wealth> wealthList,
-                       List<Expense> expenses, List<Transfer> transfersOrderedByDateAsc) {
+                       Map<Long, Expense> expenseMap, List<Transfer> transfersOrderedByDateAsc) {
         this.resources = resources;
 
 
@@ -43,7 +45,7 @@ public class MetricsImpl implements Metrics {
             totalWealth += w.getBalance();
         }
         this.totalWealth = totalWealth;
-        long totalDuration=0;
+        long totalDuration = 0;
         if (!transfersOrderedByDateAsc.isEmpty()) {
             long begin = transfersOrderedByDateAsc.get(0).getDate().getTime();
             long end = transfersOrderedByDateAsc.get(transfersOrderedByDateAsc.size() - 1).getDate()
@@ -54,13 +56,20 @@ public class MetricsImpl implements Metrics {
         businessRateVisitor = new BusinessRateVisitor(totalDuration, resources);
         workRateVisitor = new WorkByWorkedTimeRateVisitor(totalDuration, resources);
         incomeRateVisitor = new IncomeRateVisitor(totalDuration, resources);
-        singleIncomeVisitors=new HashMap<>();
-        for(Map.Entry<Long, Income> entry: incomeMap.entrySet()){
+        singleIncomeVisitors = new HashMap<>();
+        for (Map.Entry<Long, Income> entry : incomeMap.entrySet()) {
             singleIncomeVisitors.put(
                     entry.getKey(),
-                    new SingleIncomeRateVisitor(entry.getValue(), totalDuration,resources));
+                    new SingleIncomeRateVisitor(entry.getValue(), totalDuration, resources));
+        }
+        singleExpenseVisitors = new HashMap<>();
+        for (Map.Entry<Long, Expense> entry : expenseMap.entrySet()) {
+            singleExpenseVisitors.put(
+                    entry.getKey(),
+                    new SingleExpenseRateVisitor(entry.getValue(), totalDuration, resources));
         }
         List<TransferVisitor> visitors = new ArrayList<>(singleIncomeVisitors.values());
+        visitors.addAll(singleExpenseVisitors.values());
         visitors.add(expenseRateVisitor);
         visitors.add(businessRateVisitor);
         visitors.add(workRateVisitor);
@@ -108,12 +117,12 @@ public class MetricsImpl implements Metrics {
 
     @Override
     public String getMandatoryWorkTimePerMonth() {
-        long expenseRate=0;
-        long businessRate=0;
+        long expenseRate = 0;
+        long businessRate = 0;
         try {
             expenseRate = expenseRateVisitor.getMetricNumber();
             businessRate = businessRateVisitor.getMetricNumber();
-        }catch (ArithmeticException _){
+        } catch (ArithmeticException e) {
             return resources.getString(R.string.metric_not_enough_data_available);
         }
         if (expenseRate <= 0 || businessRate >= expenseRate) {
@@ -130,12 +139,12 @@ public class MetricsImpl implements Metrics {
 
     @Override
     public String getWorkFreeTime() {
-        long expenseRate=0;
-        long businessRate=0;
+        long expenseRate = 0;
+        long businessRate = 0;
         try {
-             expenseRate = expenseRateVisitor.getMetricNumber();
-             businessRate = businessRateVisitor.getMetricNumber();
-        }catch (ArithmeticException _){
+            expenseRate = expenseRateVisitor.getMetricNumber();
+            businessRate = businessRateVisitor.getMetricNumber();
+        } catch (ArithmeticException e) {
             return resources.getString(R.string.metric_not_enough_data_available);
         }
         if (expenseRate <= 0 || businessRate >= expenseRate) {
@@ -150,9 +159,11 @@ public class MetricsImpl implements Metrics {
 
     @Override
     public String getIncomeRate(Income income) {
-        if (singleIncomeVisitors == null) {
-            return resources.getString(R.string.metric_not_enough_data_available);
-        }
         return singleIncomeVisitors.get(income.getId()).getMetric();
+    }
+
+    @Override
+    public String getExpenseRate(Expense expense) {
+        return singleExpenseVisitors.get(expense.getId()).getMetric();
     }
 }

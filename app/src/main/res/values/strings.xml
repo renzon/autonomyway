@@ -28,7 +28,7 @@
     <string name="work_explanation">Work - Need to spent time to make money. Ex: working in a company, running a business in person.</string>
     <string name="business_explanation">Business - Little or no work to make money. Ex: stocks, rent from real state, business ran by managers</string>
     <string name="button_save">Save</string>
-    <string name="income_save_msg">Income saved. Create another or press back to return to income list</string>
+    <string name="income_save_msg">Income saved. Create another or press back to return to expense list</string>
 
 
     <string name="title_new_wealth_activity">New Wealth Form</string>
@@ -85,7 +85,7 @@
     <string name="expense_init_house_expenses">House Expenses</string>
     <string name="expense_init_leisure">Leisure</string>
     <string name="expense_init_taxes">Taxes</string>
-    <string name="time_spent_to_get_income">Time spent to get income</string>
+    <string name="time_spent_to_get_income">Time spent to get expense</string>
     <string name="transfer_origin">Origin *</string>
     <string name="transfer_destination">Destination *</string>
     <string name="select_origin">Select origin</string>

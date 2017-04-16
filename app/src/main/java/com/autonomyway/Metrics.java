@@ -1,5 +1,6 @@
 package com.autonomyway;
 
+import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 
 public interface Metrics {
@@ -18,4 +19,6 @@ public interface Metrics {
     String getMandatoryWorkTimePerMonth();
 
     String getIncomeRate(Income salary);
+
+    String getExpenseRate(Expense expense);
 }
