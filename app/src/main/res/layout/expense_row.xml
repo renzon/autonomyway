@@ -10,7 +10,7 @@
 
         <LinearLayout style="@style/ListRowDetail">
             <TextView
-                android:text="@string/expense_rate"
+                android:text="@string/rate"
                 style="@style/ListRowDetailTitle" />
             <TextView
                 android:id="@+id/expense_rate"

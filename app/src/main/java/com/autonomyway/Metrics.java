@@ -1,5 +1,7 @@
 package com.autonomyway;
 
+import com.autonomyway.model.Income;
+
 public interface Metrics {
     String getWorkFreeTime();
 
@@ -14,4 +16,6 @@ public interface Metrics {
     String getTotalWealth();
 
     String getMandatoryWorkTimePerMonth();
+
+    String getIncomeRate(Income salary);
 }

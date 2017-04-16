@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.R;
+import com.autonomyway.business.AutonomyWay;
 import com.autonomyway.component.base.BaseRow;
 import com.autonomyway.model.Income;
 
@@ -31,7 +33,8 @@ public class IncomeRow extends BaseRow<Income> {
         TextView titleTextView = (TextView) findViewById(R.id.income_row_title);
         TextView incomeRateTextView = (TextView) findViewById(R.id.income_rate);
         titleTextView.setText(income.getNameDashType(resources));
-        incomeRateTextView.setText("R$13,43/hora");
+        AutonomyWayFacade facade = AutonomyWay.getInstance(getContext());
+        incomeRateTextView.setText(facade.calculateMetrics(resources).getIncomeRate(income));
     }
 
 

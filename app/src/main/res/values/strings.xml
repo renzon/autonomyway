@@ -9,7 +9,8 @@
     <string name="title_activity_income_list">Incomes</string>
     <string name="title_activity_wealth_list">Wealth</string>
     <string name="title_activity_expense_list">Expenses</string>
-    <string name="income_rate">Rate:</string>
+    <string name="rate">Rate:</string>
+    <string name="income_rate">Income Rate</string>
 
 
     <string name="income_type_business">Business</string>
@@ -56,7 +57,7 @@
     <string name="expense_recurrent_cash_input">Recurrent Expense: Fill if you expend same value
         for this
         work</string>
-    <string name="expense_rate">Rate:</string>
+    <string name="expense_rate">Expense Rate</string>
     <string name="metric_not_enough_data_available">Not enough data available</string>
     <string name="metric_can_leave_forever_without_working">You are rich, can live forever without
         working</string>
@@ -95,5 +96,9 @@
     <string name="work_free_time">Work-free time</string>
     <string name="duration_input_hours">Hours</string>
     <string name="duration_input_minutes">Minutes</string>
+    <string name="total_wealth">Total wealth</string>
+    <string name="work_rate">Work Rate</string>
+    <string name="business_rate">Business Rate</string>
+    <string name="mandatory_work_time">Mandatory Work Time</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

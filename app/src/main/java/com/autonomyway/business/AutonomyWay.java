@@ -155,13 +155,13 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private void injectNodes(Transfer transfer) {
         Class<? extends Node> originClass = transfer.getOriginClassHolder().getNodeClass();
-        Node origin = getFromCache(originClass, transfer.getOriginId());
+        Node origin = getNodeFromCache(originClass, transfer.getOriginId());
         if (origin == null) {
             origin = (Node) getDao(originClass).load(transfer.getOriginId());
         }
 
         Class<? extends Node> destinationClass = transfer.getDestinationClassHolder().getNodeClass();
-        Node destination = getFromCache(destinationClass, transfer.getDestinationId());
+        Node destination = getNodeFromCache(destinationClass, transfer.getDestinationId());
         if (destination == null) {
             destination = (Node) getDao(destinationClass).load(transfer.getDestinationId());
         }
@@ -207,16 +207,20 @@ public class AutonomyWay implements AutonomyWayFacade {
     private void cleanCache(Class cls) {
         nodeListCache.put(cls, null);
         nodeByIdCache.put(cls, null);
-        metrics=null;
+        metrics = null;
     }
 
-    private <N extends Node> List<N> getFromCache(Class<N> nodeClass) {
+    private <N extends Node> List<N> getListFromCache(Class<N> nodeClass) {
         return (List<N>) nodeListCache.get(nodeClass);
     }
 
+    private <N extends Node> Map<Long, N> getMapFromCache(Class<N> nodeClass) {
+        return (Map<Long, N>) nodeByIdCache.get(nodeClass);
+    }
 
-    private <N extends Node> N getFromCache(Class<N> nodeClass, Long nodeId) {
-        Map<Long, N> nodeMap = (Map<Long, N>) nodeByIdCache.get(nodeClass);
+
+    private <N extends Node> N getNodeFromCache(Class<N> nodeClass, Long nodeId) {
+        Map<Long, N> nodeMap = getMapFromCache(nodeClass);
         if (nodeMap != null && nodeMap.containsKey(nodeId)) {
             return nodeMap.get(nodeId);
         }
@@ -225,7 +229,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public Wealth getWealth(Long id) {
-        Wealth wealth = getFromCache(Wealth.class, id);
+        Wealth wealth = getNodeFromCache(Wealth.class, id);
         if (wealth != null) {
             return wealth;
         }
@@ -235,7 +239,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public List<Wealth> getWealthList() {
-        List<Wealth> list = getFromCache(Wealth.class);
+        List<Wealth> list = getListFromCache(Wealth.class);
         if (list != null) {
             return list;
         }
@@ -251,6 +255,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         for (N node : list) {
             nodeIdMap.put(node.getId(), node);
         }
+        nodeByIdCache.put(nodeClass, nodeIdMap);
     }
 
     @Override
@@ -290,7 +295,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public Income getIncome(long id) {
-        Income income = getFromCache(Income.class, id);
+        Income income = getNodeFromCache(Income.class, id);
         if (income != null) {
             return income;
         }
@@ -310,7 +315,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public List<Income> getIncomeList() {
-        List<Income> list = getFromCache(Income.class);
+        List<Income> list = getListFromCache(Income.class);
         if (list != null) {
             return list;
         }
@@ -331,7 +336,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public Expense getExpense(Long id) {
-        Expense expense = getFromCache(Expense.class, id);
+        Expense expense = getNodeFromCache(Expense.class, id);
         if (expense != null) {
             return expense;
         }
@@ -348,7 +353,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public List<Expense> getExpenseList() {
-        List<Expense> list = getFromCache(Expense.class);
+        List<Expense> list = getListFromCache(Expense.class);
         if (list != null) {
             return list;
         }
@@ -361,7 +366,10 @@ public class AutonomyWay implements AutonomyWayFacade {
     @Override
     public Metrics calculateMetrics(Resources resources) {
         if (metrics == null) {
-            metrics = new MetricsImpl(resources, getIncomeList(), getWealthList(), getExpenseList(),
+            getIncomeList();
+            metrics = new MetricsImpl(resources, getMapFromCache(Income.class),
+                    getWealthList(),
+                    getExpenseList(),
                     getLastTransfers(365));
         }
         return metrics;

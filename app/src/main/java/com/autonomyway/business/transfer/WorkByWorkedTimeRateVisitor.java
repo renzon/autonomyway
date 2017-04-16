@@ -41,6 +41,9 @@ public class WorkByWorkedTimeRateVisitor extends TransferVisitorAdapter {
 
     @Override
     public long getMetricNumber() {
+        if (totalWorkMinutes==0){
+            return 0;
+        }
         int hour_in_minutes = 60;
         return totalCash * hour_in_minutes / totalWorkMinutes;
     }
