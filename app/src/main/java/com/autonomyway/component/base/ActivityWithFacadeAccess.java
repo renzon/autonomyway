@@ -14,6 +14,4 @@ public abstract class ActivityWithFacadeAccess extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         autonomy = AutonomyWay.getInstance(getApplicationContext());
     }
-
-
 }

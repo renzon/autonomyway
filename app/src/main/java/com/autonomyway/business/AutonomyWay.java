@@ -38,6 +38,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     DaoSession session;
     private Context ctx;
+    private MetricsImpl metrics;
 
 
     @Override
@@ -120,13 +121,13 @@ public class AutonomyWay implements AutonomyWayFacade {
     }
 
     private List<Transfer> getLastTransfers(int daysAgo) {
-        Calendar calendar=Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        Date tomorrow=calendar.getTime();
-        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo-1);
-        Date dateDaysAgo=calendar.getTime();
+        Date tomorrow = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo - 1);
+        Date dateDaysAgo = calendar.getTime();
         QueryBuilder<Transfer> query = session.getTransferDao().queryBuilder();
-        query.where(TransferDao.Properties.Date.between(dateDaysAgo,tomorrow));
+        query.where(TransferDao.Properties.Date.between(dateDaysAgo, tomorrow));
         List<Transfer> list = query.orderAsc(TransferDao.Properties.Date).list();
         for (Transfer t : list) {
             injectNodes(t);
@@ -206,6 +207,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     private void cleanCache(Class cls) {
         nodeListCache.put(cls, null);
         nodeByIdCache.put(cls, null);
+        metrics=null;
     }
 
     private <N extends Node> List<N> getFromCache(Class<N> nodeClass) {
@@ -358,8 +360,11 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     @Override
     public Metrics calculateMetrics(Resources resources) {
-        return new MetricsImpl(resources, getIncomeList(), getWealthList(), getExpenseList(),
-                getLastTransfers(365));
+        if (metrics == null) {
+            metrics = new MetricsImpl(resources, getIncomeList(), getWealthList(), getExpenseList(),
+                    getLastTransfers(365));
+        }
+        return metrics;
     }
 
     @Override
