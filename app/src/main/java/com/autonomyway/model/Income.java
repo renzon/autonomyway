@@ -199,4 +199,9 @@ public class Income implements Node {
     public void acceptAsDestination(TransferVisitor visitor, long transferCash, long transferDuration) {
         visitor.visitAsDestination(this, transferCash, transferDuration);
     }
+
+    @Override
+    public int getColorId() {
+        return R.color.colorIncome;
+    }
 }

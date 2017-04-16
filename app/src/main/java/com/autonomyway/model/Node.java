@@ -20,5 +20,6 @@ public interface Node extends Identifiable, Serializable {
 
     void acceptAsOrigin(TransferVisitor visitor, long transferCash, long transferDuration);
     void acceptAsDestination(TransferVisitor visitor, long transferCash, long transferDuration);
+    int getColorId();
 
 }

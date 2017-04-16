@@ -1,5 +1,6 @@
 package com.autonomyway.model;
 
+import com.autonomyway.R;
 import com.autonomyway.business.transfer.TransferVisitor;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -118,4 +119,8 @@ public class Expense implements Node {
         visitor.visitAsDestination(this, transferCash, transferDuration);
     }
 
+    @Override
+    public int getColorId() {
+        return R.color.colorExpense;
+    }
 }

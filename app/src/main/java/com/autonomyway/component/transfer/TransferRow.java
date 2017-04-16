@@ -2,11 +2,13 @@ package com.autonomyway.component.transfer;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.autonomyway.R;
 import com.autonomyway.component.base.BaseRow;
+import com.autonomyway.model.Node;
 import com.autonomyway.model.Transformation;
 import com.autonomyway.model.Transfer;
 
@@ -32,8 +34,12 @@ public class TransferRow extends BaseRow<Transfer> {
         TextView dateTextView = (TextView) findViewById(R.id.transfer_date);
         TextView durationTextView = (TextView) findViewById(R.id.transfer_duration);
         TextView cashTextView = (TextView) findViewById(R.id.transfer_cash);
-        originTextView.setText(transfer.getOrigin().getName());
-        destinationTextView.setText(transfer.getDestination().getName());
+        Node origin = transfer.getOrigin();
+        originTextView.setText(origin.getName());
+        originTextView.setTextColor(ContextCompat.getColor(getContext(), origin.getColorId()));
+        Node destination = transfer.getDestination();
+        destinationTextView.setText(destination.getName());
+        destinationTextView.setTextColor(ContextCompat.getColor(getContext(), destination.getColorId()));
         cashTextView.setText(Transformation.cashToCurrency(transfer.getCash()));
         dateTextView.setText(Transformation.dateToString(transfer.getDate()));
         durationTextView.setText(Transformation.durationToString(transfer.getDuration()));

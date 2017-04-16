@@ -1,5 +1,6 @@
 package com.autonomyway.model;
 
+import com.autonomyway.R;
 import com.autonomyway.business.transfer.TransferVisitor;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -95,10 +96,6 @@ public class Wealth implements Node {
     }
 
 
-    public void setBalance(long balance) {
-        this.balance = balance;
-    }
-
     @Override
     public void handleTransferCreationAsOrigin(Transfer transfer) {
         decreaseBalance(transfer.getCash());
@@ -124,7 +121,7 @@ public class Wealth implements Node {
         return 0;
     }
 
-    public void decreaseBalance(long cash) {
+    private void decreaseBalance(long cash) {
         increaseBalance(-cash);
     }
 
@@ -138,5 +135,13 @@ public class Wealth implements Node {
         visitor.visitAsDestination(this, transferCash, transferDuration);
     }
 
+    @Override
+    public int getColorId() {
+        return R.color.colorWealth;
+    }
+
+    void setBalance(long balance) {
+        this.balance = balance;
+    }
 
 }
