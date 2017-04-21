@@ -121,7 +121,7 @@ public class Wealth implements Node {
         return 0;
     }
 
-    private void decreaseBalance(long cash) {
+    public void decreaseBalance(long cash) {
         increaseBalance(-cash);
     }
 
@@ -140,7 +140,7 @@ public class Wealth implements Node {
         return R.color.colorWealth;
     }
 
-    void setBalance(long balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
