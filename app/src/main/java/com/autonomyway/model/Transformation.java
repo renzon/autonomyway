@@ -35,15 +35,14 @@ public class Transformation {
         }
         Number n = null;
         try {
-            NumberFormat fmt = NumberFormat.getInstance();
-            n = fmt.parse(number);
-        } catch (ParseException e) {
-//  workaround https://code.google.com/p/android/issues/detail?id=2626
+            //  workaround https://code.google.com/p/android/issues/detail?id=2626
             n = NumberFormat.getInstance(Locale.US).parse(number);
+        } catch (ParseException e) {
+
         }
         double value = n.doubleValue();
         value *= CENTS_MULTIPLIER;
-        return (long) value;
+        return Math.round(value);
 
 
     }
