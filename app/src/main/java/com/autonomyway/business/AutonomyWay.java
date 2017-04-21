@@ -116,6 +116,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     public Transfer getTransfer(long id) {
         Transfer transfer = session.getTransferDao().load(id);
         injectNodes(transfer);
+        session.clear();
         return transfer;
     }
 

@@ -297,16 +297,17 @@ public class InstrumentedFacadeTests {
         Transfer secondPayment = facade.createTransfer(account, house, dt, secondHouseAmount, 3,
                 "Second Mortgage");
         int expectedBankBalance = initialBankAmount - firstHouseAmount - secondHouseAmount;
-        assertEquals(expectedBankBalance, account.getBalance());
+        assertEquals(expectedBankBalance, facade.getWealth(account.getId()).getBalance());
         int expectedHouseBalance = initialHouseAmount + firstHouseAmount + secondHouseAmount;
-        assertEquals(expectedHouseBalance, house.getBalance());
+        assertEquals(expectedHouseBalance, facade.getWealth(house.getId()).getBalance());
         int editedSecondHouseAmount = 4;
+        secondPayment=facade.getTransfer(secondPayment.getId());
         secondPayment.setCash(editedSecondHouseAmount);
         facade.editTransfer(secondPayment);
         expectedBankBalance = initialBankAmount - firstHouseAmount - editedSecondHouseAmount;
-        assertEquals(expectedBankBalance, account.getBalance());
+        assertEquals(expectedBankBalance, facade.getWealth(account.getId()).getBalance());
         expectedHouseBalance = initialHouseAmount + firstHouseAmount + editedSecondHouseAmount;
-        assertEquals(expectedHouseBalance, house.getBalance());
+        assertEquals(expectedHouseBalance, facade.getWealth(house.getId()).getBalance());
     }
 
     @Test
