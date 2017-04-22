@@ -1,10 +1,12 @@
 package com.autonomyway;
 
+import android.content.res.Resources;
+
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 
 public interface Metrics {
-    String getWorkFreeTime();
+    String getWorkFreeTime(Resources resources);
 
     String getExpenseRate();
 
@@ -16,7 +18,7 @@ public interface Metrics {
 
     String getTotalWealth();
 
-    String getMandatoryWorkTimePerMonth();
+    String getMandatoryWorkTimePerMonth(Resources resources);
 
     String getIncomeRate(Income salary);
 

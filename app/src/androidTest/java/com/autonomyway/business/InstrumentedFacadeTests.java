@@ -428,8 +428,8 @@ public class InstrumentedFacadeTests {
     public void testMetrics() {
         Locale.setDefault(Locale.US);
         Metrics metrics = facade.calculateMetrics();
-        assertEquals("Not enough data available", metrics.getWorkFreeTime());
-        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
+        assertEquals("Not enough data available", metrics.getWorkFreeTime(ctx.getResources()));
+        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         assertEquals("Not enough data available", metrics.getExpenseRate());
         assertEquals("Not enough data available", metrics.getBusinessRate());
         assertEquals("Not enough data available", metrics.getWorkByWorkedTimeRate());
@@ -440,8 +440,8 @@ public class InstrumentedFacadeTests {
         Wealth account = facade.createWealth("Bank Account", 200);
         facade.createWealth("House", 300);
         metrics = facade.calculateMetrics();
-        assertEquals("Not enough data available", metrics.getWorkFreeTime());
-        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
+        assertEquals("Not enough data available", metrics.getWorkFreeTime(ctx.getResources()));
+        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         assertEquals("Not enough data available", metrics.getExpenseRate());
         assertEquals("Not enough data available", metrics.getBusinessRate());
         assertEquals("Not enough data available", metrics.getWorkByWorkedTimeRate());
@@ -454,8 +454,8 @@ public class InstrumentedFacadeTests {
         assertEquals("Not enough data available", metrics.getIncomeRate(salary));
         facade.createTransfer(salary, account, now, 500, 5, "");
         metrics = facade.calculateMetrics();
-        assertEquals("Not enough data available", metrics.getWorkFreeTime());
-        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
+        assertEquals("Not enough data available", metrics.getWorkFreeTime(ctx.getResources()));
+        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         assertEquals("Not enough data available", metrics.getExpenseRate());
         assertEquals("Not enough data available", metrics.getBusinessRate());
         assertEquals("$60.00/hour", metrics.getWorkByWorkedTimeRate());
@@ -466,8 +466,8 @@ public class InstrumentedFacadeTests {
         Date thirdMinutesEarlier = new Date(now.getTime() - 1000 * 60 * 30);
         facade.createTransfer(salary, account, thirdMinutesEarlier, 500, 5, "");
         metrics = facade.calculateMetrics();
-        assertEquals("Not enough data available", metrics.getWorkFreeTime());
-        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth());
+        assertEquals("Not enough data available", metrics.getWorkFreeTime(ctx.getResources()));
+        assertEquals("Not enough data available", metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         assertEquals("Not enough data available", metrics.getExpenseRate());
         assertEquals("Not enough data available", metrics.getBusinessRate());
         assertEquals("$60.00/hour", metrics.getWorkByWorkedTimeRate());
@@ -480,9 +480,9 @@ public class InstrumentedFacadeTests {
         facade.createTransfer(salary, account, yesterday, 500, 5, "");
         metrics = facade.calculateMetrics();
         // expense rate <= business rate
-        String rich_msg = "You are rich, can live forever without working";
-        assertEquals(rich_msg, metrics.getWorkFreeTime());
-        assertEquals(rich_msg, metrics.getMandatoryWorkTimePerMonth());
+        String rich_msg = "Autonomy reached, can live without working with current expense rate";
+        assertEquals(rich_msg, metrics.getWorkFreeTime(ctx.getResources()));
+        assertEquals(rich_msg, metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         assertEquals("$0.00/hour", metrics.getExpenseRate());
         assertEquals("$0.00/hour", metrics.getBusinessRate());
         assertEquals("$60.00/hour", metrics.getWorkByWorkedTimeRate()); // 500*3/((5/60)*3)
@@ -510,9 +510,9 @@ public class InstrumentedFacadeTests {
         assertEquals("$60.00/hour", metrics.getIncomeRate(salary));
         // MONTH_IN_HOURS=30*24
         // Bellow value: 0.02 * MONTH_IN_HOURS / 60.00/hour
-        assertEquals("2 hours", metrics.getMandatoryWorkTimePerMonth());
+        assertEquals("2 hours/month", metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         // 15.00 /0.2
-        assertEquals("75 hours", metrics.getWorkFreeTime());
+        assertEquals("75 hours", metrics.getWorkFreeTime(ctx.getResources()));
         // Testing  business
         Income stocks = facade.createIncome("Stocks Interest", 0, 0, Income.Type.BUSINESS);
         account = facade.getWealth(account.getId());
@@ -529,9 +529,9 @@ public class InstrumentedFacadeTests {
         assertEquals("$0.10/hour", metrics.getIncomeRate(stocks));// 250// 24 hours
         // MONTH_IN_HOURS=30*24
         // Bellow value: (0.02-0.01) * MONTH_IN_HOURS / 60.00/hour
-        assertEquals("1 hours", metrics.getMandatoryWorkTimePerMonth());
+        assertEquals("1 hour/month", metrics.getMandatoryWorkTimePerMonth(ctx.getResources()));
         // 17.50 /0.1
-        assertEquals("175 hours", metrics.getWorkFreeTime());
+        assertEquals("175 hours", metrics.getWorkFreeTime(ctx.getResources()));
     }
 
 

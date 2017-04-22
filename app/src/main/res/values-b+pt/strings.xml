@@ -65,8 +65,7 @@
         o mesmo valor nessa depesa</string>
     <string name="expense_rate">Taxa de Despesa</string>
     <string name="metric_not_enough_data_available">Dados Insuficientes</string>
-    <string name="metric_can_leave_forever_without_working">Você está rico, pode viver sem
-        trabalhar</string>
+    <string name="metric_autonomy_reached">Autonomia atingida. Não precisa trabalhar com a atual taxa de despesas</string>
     <string name="hour">hora</string>
     <string name="hour_plural">horas</string>
     <!-- Inital values when user first enter the app -->

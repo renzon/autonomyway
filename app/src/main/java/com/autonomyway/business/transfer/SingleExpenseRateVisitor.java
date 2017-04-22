@@ -35,7 +35,7 @@ public class SingleExpenseRateVisitor extends TransferVisitorAdapter {
     public String getMetric() {
         try {
             return Transformation.cashRate(getMetricNumber(), getResources());
-        } catch (ArithmeticException _) {
+        } catch (ArithmeticException e) {
         }
         return getString(R.string.metric_not_enough_data_available);
     }

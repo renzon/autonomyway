@@ -81,8 +81,8 @@ public class DashboardActivity extends ActivityWithFacadeAccess
         businessRateTextView.setText(metrics.getBusinessRate());
         totalWealthTextView.setText(metrics.getTotalWealth());
 
-        workFreeTimeTextView.setText(metrics.getWorkFreeTime());
-        mandatoryWorkTimeTextView.setText(metrics.getMandatoryWorkTimePerMonth());
+        workFreeTimeTextView.setText(metrics.getWorkFreeTime(getApplicationContext().getResources()));
+        mandatoryWorkTimeTextView.setText(metrics.getMandatoryWorkTimePerMonth(getApplicationContext().getResources()));
     }
 
     @Override

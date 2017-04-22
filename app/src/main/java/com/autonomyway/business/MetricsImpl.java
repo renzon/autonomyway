@@ -116,44 +116,45 @@ public class MetricsImpl implements Metrics {
     }
 
     @Override
-    public String getMandatoryWorkTimePerMonth() {
+    public String getMandatoryWorkTimePerMonth(Resources resources) {
         long expenseRate = 0;
         long businessRate = 0;
         try {
             expenseRate = expenseRateVisitor.getMetricNumber();
             businessRate = businessRateVisitor.getMetricNumber();
         } catch (ArithmeticException e) {
-            return resources.getString(R.string.metric_not_enough_data_available);
+            return this.resources.getString(R.string.metric_not_enough_data_available);
         }
         if (expenseRate <= 0 || businessRate >= expenseRate) {
-            return resources.getString(R.string.metric_can_leave_forever_without_working);
+            return this.resources.getString(R.string.metric_autonomy_reached);
         }
         long workRate = workRateVisitor.getMetricNumber();
         if (workRate == 0) {
-            return resources.getString(R.string.metric_not_enough_data_available);
+            return this.resources.getString(R.string.metric_not_enough_data_available);
         }
         long burnRate = expenseRate - businessRate;
         long amountNeedByMonth = burnRate * 30 * 24;
-        return Transformation.durationForHumans(amountNeedByMonth / workRate);
+        return Transformation.durationForHumans(amountNeedByMonth / workRate, resources) + '/' +
+                resources.getString(R.string.month);
     }
 
     @Override
-    public String getWorkFreeTime() {
+    public String getWorkFreeTime(Resources resources) {
         long expenseRate = 0;
         long businessRate = 0;
         try {
             expenseRate = expenseRateVisitor.getMetricNumber();
             businessRate = businessRateVisitor.getMetricNumber();
         } catch (ArithmeticException e) {
-            return resources.getString(R.string.metric_not_enough_data_available);
+            return this.resources.getString(R.string.metric_not_enough_data_available);
         }
         if (expenseRate <= 0 || businessRate >= expenseRate) {
-            return resources.getString(R.string.metric_can_leave_forever_without_working);
+            return this.resources.getString(R.string.metric_autonomy_reached);
         }
 
         long burnRate = expenseRate - businessRate;
         long hoursToLive = totalWealth / burnRate;
-        return Transformation.durationForHumans(hoursToLive);
+        return Transformation.durationForHumans(hoursToLive, resources);
 
     }
 
