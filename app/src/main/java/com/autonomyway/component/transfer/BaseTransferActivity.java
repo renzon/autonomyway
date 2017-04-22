@@ -141,7 +141,7 @@ public abstract class BaseTransferActivity extends BaseFormActivity {
     }
 
     protected void fillDefaultValues(Node node) {
-        if(node.hasRecurrentValues()){
+        if(node!=null && node.hasRecurrentValues()){
             cashInput.setCash(node.getRecurrentCash());
             durationInput.setDuration(node.getRecurrentDuration());
         }
