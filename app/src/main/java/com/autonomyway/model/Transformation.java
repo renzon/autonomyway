@@ -13,7 +13,7 @@ import java.util.Locale;
 public class Transformation {
     private static final int HOURS_IN_DAY = 24;
     private static final int HOURS_IN_MONTH = HOURS_IN_DAY * 30;
-    private static final int HOURS_IN_YEAR = HOURS_IN_MONTH * 30;
+    private static final int HOURS_IN_YEAR = HOURS_IN_MONTH * 12;
     private static final int CENTS_MULTIPLIER = 100;
 
     public static String cashToCurrency(long cashInCents) {
