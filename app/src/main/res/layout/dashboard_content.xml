@@ -2,101 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
+
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_gravity="center"
               android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
               tools:context="com.autonomyway.DashboardActivity"
+              android:animateLayoutChanges="true"
               tools:showIn="@layout/dashboard_app_bar">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity=""
-        android:text="Dashboard"/>
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:orientation="horizontal"
-        android:useDefaultMargins="true">
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/work_free_time"
+        style="@style/MetricView"
+        app:metric_title="@string/work_free_time"
+        app:metric_help="@string/work_free_time_help"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/work_free_time"/>
-
-        <TextView
-            android:id="@+id/work_free_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mandatory_work_time"/>
-
-        <TextView
-            android:id="@+id/mandatory_work_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/expense_rate"/>
-
-        <TextView
-            android:id="@+id/expense_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/business_rate"/>
-
-        <TextView
-            android:id="@+id/business_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/work_rate"/>
-
-        <TextView
-            android:id="@+id/work_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/income_rate"/>
-
-        <TextView
-            android:id="@+id/income_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_wealth"/>
-
-        <TextView
-            android:id="@+id/total_wealth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </GridLayout>
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/mandatory_work_time"
+        style="@style/MetricView.Even"
+        app:metric_title="@string/mandatory_work_time"
+        app:metric_help="@string/mandatory_work_time_help"/>
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/expense_rate"
+        style="@style/MetricView"
+        app:metric_title="@string/expense_rate"
+        app:metric_help="@string/expense_rate_help"/>
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/business_rate"
+        style="@style/MetricView.Even"
+        app:metric_title="@string/business_rate"
+        app:metric_help="@string/business_rate_help"/>
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/work_rate"
+        style="@style/MetricView"
+        app:metric_title="@string/work_rate"
+        app:metric_help="@string/work_rate_help"/>
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/income_rate"
+        style="@style/MetricView.Even"
+        app:metric_title="@string/income_rate"
+        app:metric_help="@string/income_rate_help"/>
+    <com.autonomyway.component.base.MetricView
+        android:id="@+id/total_wealth"
+        style="@style/MetricView"
+        app:metric_title="@string/total_wealth"
+        app:metric_help="@string/total_wealth_help"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rates based on last 365 days tranfers"/>
+        android:text="@string/touch_each_metric_to_check_its_explanation"/>
 
 </LinearLayout>

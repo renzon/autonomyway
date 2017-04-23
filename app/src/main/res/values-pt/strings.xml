@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="month">mês</string>
-    <string name="month_plural">meses</string>
-    <string name="year">ano</string>
-    <string name="year_plural">anos</string>
-</resources>

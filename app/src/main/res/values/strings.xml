@@ -103,5 +103,13 @@
     <string name="work_rate">Work Rate</string>
     <string name="business_rate">Business Rate</string>
     <string name="mandatory_work_time">Mandatory Work Time</string>
+    <string name="touch_each_metric_to_check_its_explanation">Touch each metric to check its explanation</string>
+    <string name="work_free_time_help">Time you would survive without working. E.g., if your work rate is 0 and you count only on business rate and expending all your wealth to pay your current expense rate</string>
+    <string name="mandatory_work_time_help">Time you need work each month to cover current expense rate without expending wealth.</string>
+    <string name="expense_rate_help">Average of your expenses on last 364 days</string>
+    <string name="business_rate_help">Average of your businesses on last 364 days</string>
+    <string name="income_rate_help">Average of all your income (business + work) on last 364 days</string>
+    <string name="total_wealth_help">Sum of all your wealth balances</string>
+    <string name="work_rate_help">Average of your work cash divided by worked time, on last 364 days</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

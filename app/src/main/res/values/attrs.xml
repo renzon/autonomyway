@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MetricView">
+        <attr name="metric_title" format="string"/>
+        <attr name="metric_value" format="string"/>
+        <attr name="metric_help" format="string"/>
+    </declare-styleable>
+</resources>

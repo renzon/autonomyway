@@ -60,7 +60,7 @@
     <string name="expense_name_error">Nome obrigatório</string>
     <string name="expense_input_name">Nome *</string>
     <string name="transfer_cash_input">Quantia de Dinheiro *</string>
-    <string name="transfer_input_detail">Detablhe. Ex: Salário mensal, Supermercado </string>
+    <string name="transfer_input_detail">Detalhe. Ex: Salário mensal, Supermercado </string>
     <string name="expense_recurrent_cash_input">Despesa Recorrente: Preenche se você sempre gast
         o mesmo valor nessa depesa</string>
     <string name="expense_rate">Taxa de Despesa</string>
@@ -105,5 +105,16 @@
     <string name="work_rate">Valor hora de Trabalho</string>
     <string name="business_rate">Valor hora de Negócio</string>
     <string name="mandatory_work_time">Trabalho obrigatório</string>
-    <!--<string name="expense_init_"></string>-->
+    <string name="month">mês</string>
+    <string name="month_plural">meses</string>
+    <string name="year">ano</string>
+    <string name="year_plural">anos</string>
+    <string name="business_rate_help">Média do dinheiro de seus negócios nos últimos 364 dias</string>
+    <string name="expense_rate_help">Média de suas despesas nos últimos 364 dias</string>
+    <string name="income_rate_help">Média de todas suas entradas (trabalho + negócio) nos últimos 364 dias</string>
+    <string name="mandatory_work_time_help">Tempo que você precisa trabalhar todos mês para cobrir sua taxa atual de despesas sem ter que gastar seu patrimônio</string>
+    <string name="total_wealth_help">Soma do balanço de todo seu patrimônio</string>
+    <string name="touch_each_metric_to_check_its_explanation">Clique em cada mérica para acessar explicação detalhada</string>
+    <string name="work_free_time_help">Tempo que você sobreveveria sem trabalhar. Ou seja, considerando apenas os rendimentos de sua taxa de negócio e possível gasto de todo seu patrimônio para pagar sua atual taxa de despesas.</string>
+    <string name="work_rate_help">Média da suma de todo dinheiro devido a seu trabalho dividido pela soma das durações do trabalho, considerando os últimos 364 dias.</string>
 </resources>

@@ -12,9 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.autonomyway.component.base.ActivityWithFacadeAccess;
+import com.autonomyway.component.base.MetricView;
 import com.autonomyway.component.expense.ExpenseListActivity;
 import com.autonomyway.component.income.IncomeListActivity;
 import com.autonomyway.component.transfer.NewTransferActivity;
@@ -27,13 +27,13 @@ import java.util.Map;
 public class DashboardActivity extends ActivityWithFacadeAccess
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView workFreeTimeTextView;
-    private TextView mandatoryWorkTimeTextView;
-    private TextView expenseRateTextView;
-    private TextView workRateTextView;
-    private TextView businessRateTextView;
-    private TextView incomeRateTextView;
-    private TextView totalWealthTextView;
+    private MetricView workFreeTimeMetricView;
+    private MetricView mandatoryWorkTimeMetricView;
+    private MetricView expenseRateMetricView;
+    private MetricView workRateMetricView;
+    private MetricView businessRateMetricView;
+    private MetricView incomeRateMetricView;
+    private MetricView totalWealthMetricView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,27 +62,28 @@ public class DashboardActivity extends ActivityWithFacadeAccess
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        workFreeTimeTextView=(TextView)findViewById(R.id.work_free_time);
-        mandatoryWorkTimeTextView=(TextView)findViewById(R.id.mandatory_work_time);
-        expenseRateTextView=(TextView)findViewById(R.id.expense_rate);
-        workRateTextView=(TextView)findViewById(R.id.work_rate);
-        businessRateTextView=(TextView)findViewById(R.id.business_rate);
-        incomeRateTextView=(TextView)findViewById(R.id.income_rate);
-        totalWealthTextView=(TextView)findViewById(R.id.total_wealth);
+        workFreeTimeMetricView = (MetricView) findViewById(R.id.work_free_time);
+        mandatoryWorkTimeMetricView = (MetricView) findViewById(R.id.mandatory_work_time);
+        expenseRateMetricView = (MetricView) findViewById(R.id.expense_rate);
+        workRateMetricView = (MetricView) findViewById(R.id.work_rate);
+        businessRateMetricView = (MetricView) findViewById(R.id.business_rate);
+        incomeRateMetricView = (MetricView) findViewById(R.id.income_rate);
+        totalWealthMetricView = (MetricView) findViewById(R.id.total_wealth);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Metrics metrics=autonomy.calculateMetrics();
-        expenseRateTextView.setText(metrics.getExpenseRate());
-        incomeRateTextView.setText(metrics.getIncomeRate());
-        workRateTextView.setText(metrics.getWorkByWorkedTimeRate());
-        businessRateTextView.setText(metrics.getBusinessRate());
-        totalWealthTextView.setText(metrics.getTotalWealth());
-
-        workFreeTimeTextView.setText(metrics.getWorkFreeTime(getApplicationContext().getResources()));
-        mandatoryWorkTimeTextView.setText(metrics.getMandatoryWorkTimePerMonth(getApplicationContext().getResources()));
+        Metrics metrics = autonomy.calculateMetrics();
+        expenseRateMetricView.setValue(metrics.getExpenseRate());
+        incomeRateMetricView.setValue(metrics.getIncomeRate());
+        workRateMetricView.setValue(metrics.getWorkByWorkedTimeRate());
+        businessRateMetricView.setValue(metrics.getBusinessRate());
+        totalWealthMetricView.setValue(metrics.getTotalWealth());
+        workFreeTimeMetricView.setValue(
+                metrics.getWorkFreeTime(getApplicationContext().getResources()));
+        mandatoryWorkTimeMetricView.setValue(
+                metrics.getMandatoryWorkTimePerMonth(getApplicationContext().getResources()));
     }
 
     @Override
