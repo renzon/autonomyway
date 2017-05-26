@@ -104,13 +104,22 @@ public class InstrumentedFacadeTests {
 
     @Test
     public void testEditWealth() throws Exception {
-        Wealth wealth = facade.createWealth("Bank Account", 1);
-        wealth.setName("House");
-        wealth.setInitialBalance(2);
-        facade.editWealth(wealth);
-        Wealth dbWealth = facade.getWealth(wealth.getId());
-        assertEquals(wealth, dbWealth);
-        assertEquals("Wealth initial balance must reflect on current balance", 2, wealth.getBalance());
+        Wealth account = facade.createWealth("Bank Account", 1);
+        account.setName("House");
+        account.setInitialBalance(2);
+        facade.editWealth(account);
+        Wealth dbWealth = facade.getWealth(account.getId());
+        assertEquals(account, dbWealth);
+        assertEquals("Wealth initial balance must reflect on current balance", 2, account.getBalance());
+        Wealth house = facade.createWealth("House", 1);
+        facade.createTransfer(account,house, new Date(),1,0, "");
+        assertEquals("Wealth initial balance must reflect on current balance", 1, account
+                .getBalance());
+        account.setInitialBalance(3);
+        facade.editWealth(account);
+        dbWealth = facade.getWealth(account.getId());
+        assertEquals("Wealth initial balance must reflect on current balance", 2, dbWealth
+                .getBalance());
     }
 
 
@@ -533,6 +542,10 @@ public class InstrumentedFacadeTests {
         // 17.50 /0.1
         assertEquals("175 hours", metrics.getWorkFreeTime(ctx.getResources()));
     }
+
+
+
+
 
 
     @After

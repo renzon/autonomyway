@@ -262,7 +262,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     public void editWealth(Wealth wealth) {
         WealthDao dao = session.getWealthDao();
         Wealth dbWealth = dao.load(wealth.getId());
-        long delta = wealth.getInitialBalance() - dbWealth.getBalance();
+        long delta = wealth.getInitialBalance() - dbWealth.getInitialBalance();
         wealth.increaseBalance(delta);
         dao.update(wealth);
         session.clear();
