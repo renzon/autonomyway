@@ -41,7 +41,7 @@ public class DatabaseUpgradeHelper extends DaoMaster.OpenHelper {
 
     private List<Migration> getMigrations() {
         List<Migration> migrations = new ArrayList<>();
-        migrations.add(new FixWealthBalanceV2());
+        migrations.add(new FixWealthBalance());
         Set<Migration> unique_version_migrations=new HashSet<>(migrations);
         if (migrations.size()!=unique_version_migrations.size()){
             throw new RuntimeException("There are Migrations with same version");
@@ -53,11 +53,11 @@ public class DatabaseUpgradeHelper extends DaoMaster.OpenHelper {
         return migrations;
     }
 
-     static class FixWealthBalanceV2 extends ComparableMigration {
+     static class FixWealthBalance extends ComparableMigration {
 
         @Override
         public Integer getVersion() {
-            return 2;
+            return 3;
         }
 
         @Override

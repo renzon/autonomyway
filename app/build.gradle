@@ -8,8 +8,8 @@ android {
         applicationId "com.autonomyway"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 6
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,7 +21,7 @@ android {
 }
 
 greendao {
-    schemaVersion 2
+    schemaVersion 3
 }
 
 dependencies {
