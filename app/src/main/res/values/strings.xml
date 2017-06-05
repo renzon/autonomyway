@@ -111,5 +111,6 @@
     <string name="income_rate_help">Average of all your income (business + work) on last 364 days</string>
     <string name="total_wealth_help">Sum of all your wealth balances</string>
     <string name="work_rate_help">Average of your work cash divided by worked time, on last 364 days</string>
+    <string name="git_link">https://github.com/renzon/autonomyway</string>
     <!--<string name="expense_init_"></string>-->
 </resources>
