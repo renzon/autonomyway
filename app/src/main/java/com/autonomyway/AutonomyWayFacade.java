@@ -6,6 +6,8 @@ import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public interface AutonomyWayFacade {
 
     List<Income> getIncomeList();
 
+    JSONObject exportDataAsJson();
     void createInitialData();
 
     Income getIncome(long id);

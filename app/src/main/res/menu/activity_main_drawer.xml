@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/nav_group_nodes" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_transfers"
             android:icon="@drawable/ic_transfers"
@@ -17,5 +17,16 @@
             android:id="@+id/nav_wealth"
             android:icon="@drawable/ic_wealth"
             android:title="@string/nav_wealth" />
+    </group >
+    <group android:id="@+id/nav_group_database"
+           android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_export"
+            android:icon="@android:drawable/stat_sys_upload"
+            android:title="@string/nav_export"/>
+        <item
+            android:id="@+id/nav_import"
+            android:icon="@android:drawable/stat_sys_download"
+            android:title="@string/nav_import"/>
     </group>
 </menu>

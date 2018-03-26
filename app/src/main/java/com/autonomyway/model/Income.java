@@ -12,6 +12,8 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.converter.PropertyConverter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +38,7 @@ public class Income implements Node {
 
     public String getNameDashType(Resources resources) {
         String typeString = resources.getString(typeToResourceId.get(type));
-        return name+" - "+typeString;
+        return name + " - " + typeString;
     }
 
     public enum Type {
@@ -101,12 +103,12 @@ public class Income implements Node {
 
         @Override
         public Type convertToEntityProperty(String databaseValue) {
-            for (Type t:Type.values()){
-                if(t.getDbValue().equals(databaseValue)){
+            for (Type t : Type.values()) {
+                if (t.getDbValue().equals(databaseValue)) {
                     return t;
                 }
             }
-            throw new RuntimeException("NameableClass not found for "+databaseValue);
+            throw new RuntimeException("NameableClass not found for " + databaseValue);
 
         }
     }
@@ -163,16 +165,17 @@ public class Income implements Node {
     public void setName(String name) {
         this.name = name;
     }
+
     @Override
     public long getRecurrentDuration() {
         return this.recurrentDuration;
     }
 
 
-
     public void setRecurrentDuration(long recurrentDuration) {
         this.recurrentDuration = recurrentDuration;
     }
+
     @Override
     public long getRecurrentCash() {
         return this.recurrentCash;
@@ -203,5 +206,22 @@ public class Income implements Node {
     @Override
     public int getColorId() {
         return R.color.colorIncome;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("id", this.getId());
+            js.put("name", this.getName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
+    }
+
+    @Override
+    public JSONObject toSummaryJson() {
+        return toJson();
     }
 }

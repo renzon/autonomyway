@@ -9,6 +9,8 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.converter.PropertyConverter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -88,8 +90,6 @@ public class Transfer implements Identifiable {
         this.destinationClassHolder = NodeClassHolder.toEnum(destination.getClass());
         this.destination = destination;
     }
-
-
 
 
     public enum NodeClassHolder {
@@ -244,5 +244,31 @@ public class Transfer implements Identifiable {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject js = toSummaryJson();
+        try {
+            js.put("detail", getDetail());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
+    }
+
+    @Override
+    public JSONObject toSummaryJson() {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("id", this.getId());
+            js.put("origin", this.getOrigin().toSummaryJson());
+            js.put("destination", this.getDestination().toSummaryJson());
+            js.put("cash", this.getCash());
+            js.put("duration", this.getDuration());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
     }
 }

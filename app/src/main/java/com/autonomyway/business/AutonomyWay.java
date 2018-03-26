@@ -9,6 +9,7 @@ import com.autonomyway.model.DaoMaster;
 import com.autonomyway.model.DaoSession;
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.ExpenseDao;
+import com.autonomyway.model.Identifiable;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.IncomeDao;
 import com.autonomyway.model.Node;
@@ -20,6 +21,9 @@ import com.autonomyway.model.WealthDao;
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -323,6 +327,44 @@ public class AutonomyWay implements AutonomyWayFacade {
         setCache(Income.class, list);
         session.clear();
         return list;
+    }
+
+    @Override
+    public JSONObject exportDataAsJson() {
+        JSONObject result = new JSONObject();
+        fill_with_array(result, getIncomeList(), "incomes");
+        fill_with_array(result, getExpenseList(), "expenses");
+        fill_with_array(result, getWealthList(), "wealth");
+        fill_with_array(result, getAllTransferList(), "transfers");
+        return result;
+    }
+
+    private List<Transfer> getAllTransferList() {
+        List<Transfer> list = session.getTransferDao().queryBuilder().orderDesc(TransferDao.Properties.Date)
+                .list();
+
+        // Warming cache
+        getIncomeList();
+        getExpenseList();
+        getWealthList();
+        for (Transfer t : list) {
+            injectNodes(t);
+        }
+        session.clear();
+        return list;
+    }
+
+    private void fill_with_array(JSONObject result, List<? extends Identifiable> nodeList, String
+            property_name) {
+        JSONArray array = new JSONArray();
+        for (Identifiable identifiable : nodeList) {
+            array.put(identifiable.toJson());
+        }
+        try {
+            result.put(property_name, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

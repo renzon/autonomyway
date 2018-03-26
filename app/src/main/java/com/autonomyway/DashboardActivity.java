@@ -38,6 +38,9 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+
+
         autonomy.createInitialData();
         setContentView(R.layout.dashboard_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -122,12 +125,26 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Map<Integer, Class<? extends Activity>> activityMap = new HashMap<>();
-        activityMap.put(R.id.nav_incomes, IncomeListActivity.class);
-        activityMap.put(R.id.nav_wealth, WealthListActivity.class);
-        activityMap.put(R.id.nav_expenses, ExpenseListActivity.class);
-        activityMap.put(R.id.nav_transfers, TransferListActivity.class);
-        Intent intent = new Intent(this, activityMap.get(id));
+        Intent intent = null;
+        if (id == R.id.nav_export) {
+            Intent export = new Intent();
+            export.setAction(Intent.ACTION_SEND);
+            export.putExtra(Intent.EXTRA_TEXT, autonomy.exportDataAsJson().toString());
+            export.putExtra(Intent.EXTRA_SUBJECT, "database.autonomyway");
+            export.setType("application/json");
+            intent = Intent.createChooser(export, getResources().getText(R.string.send_to));
+
+        } else if (id == R.id.nav_import) {
+
+
+        } else {
+            Map<Integer, Class<? extends Activity>> activityMap = new HashMap<>();
+            activityMap.put(R.id.nav_incomes, IncomeListActivity.class);
+            activityMap.put(R.id.nav_wealth, WealthListActivity.class);
+            activityMap.put(R.id.nav_expenses, ExpenseListActivity.class);
+            activityMap.put(R.id.nav_transfers, TransferListActivity.class);
+            intent = new Intent(this, activityMap.get(id));
+        }
         startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

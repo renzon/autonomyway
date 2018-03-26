@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @Entity
 public class Wealth implements Node {
@@ -142,6 +144,30 @@ public class Wealth implements Node {
 
     public void setBalance(long balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject js=toSummaryJson();
+        try {
+            js.put("initial_balance", this.getInitialBalance());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
+    }
+
+    @Override
+    public JSONObject toSummaryJson() {
+        JSONObject js=new JSONObject();
+        try {
+            js.put("id", this.getId());
+            js.put("name", this.getName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
+
     }
 
 }

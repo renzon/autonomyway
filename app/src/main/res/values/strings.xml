@@ -112,5 +112,8 @@
     <string name="total_wealth_help">Sum of all your wealth balances</string>
     <string name="work_rate_help">Average of your work cash divided by worked time, on last 364 days</string>
     <string name="git_link" translatable="false">https://github.com/renzon/autonomyway</string>
+    <string name="nav_import">Importar Dados</string>
+    <string name="nav_export">Exportar Dados</string>
+    <string name="send_to">Exportar Banco de Dados</string>
     <!--<string name="expense_init_"></string>-->
 </resources>
