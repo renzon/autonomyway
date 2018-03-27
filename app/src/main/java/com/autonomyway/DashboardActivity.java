@@ -139,9 +139,11 @@ public class DashboardActivity extends ActivityWithFacadeAccess
         if (id == R.id.nav_export) {
             Intent export = new Intent();
             export.setAction(Intent.ACTION_SEND);
-            export.putExtra(Intent.EXTRA_TEXT, autonomy.exportDataAsJson().toString());
-            export.putExtra(Intent.EXTRA_SUBJECT, "database.autonomyway");
-            export.setType("application/json");
+            Uri backupUri = autonomy.backupDb();
+            export.putExtra(Intent.EXTRA_STREAM, backupUri);
+            export.putExtra(Intent.EXTRA_SUBJECT, "autonomy_way.db");
+            export.setType("*/*");
+            export.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Intent intent = Intent.createChooser(export, getResources().getText(R.string
                     .export_to));
             startActivity(intent);

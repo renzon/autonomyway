@@ -114,7 +114,7 @@
     <string name="git_link" translatable="false">https://github.com/renzon/autonomyway</string>
     <string name="nav_import">Importar Dados</string>
     <string name="nav_export">Exportar Dados</string>
-    <string name="export_to">Exportar Banco de Dados</string>
-    <string name="import_database">Import .autonomyway file</string>
+    <string name="export_to">Export Database</string>
+    <string name="import_database">Import backup</string>
     <!--<string name="expense_init_"></string>-->
 </resources>

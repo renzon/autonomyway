@@ -1,5 +1,7 @@
 package com.autonomyway;
 
+import android.net.Uri;
+
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.InvalidData;
@@ -52,4 +54,6 @@ public interface AutonomyWayFacade {
 
 
     void restoreData(JSONObject json) throws InvalidData;
+
+    Uri backupDb();
 }

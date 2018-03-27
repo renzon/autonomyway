@@ -1,6 +1,8 @@
 package com.autonomyway.business;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.v4.content.FileProvider;
 
 import com.autonomyway.AutonomyWayFacade;
 import com.autonomyway.Metrics;
@@ -26,6 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +48,7 @@ public class AutonomyWay implements AutonomyWayFacade {
     public static final String EXPENSES_JSON_PROPERTY = "expenses";
     public static final String WEALTH_JSON_PROPERTY = "wealth";
     public static final String TRANSFERS_JSON_PROPERTY = "transfers";
+    public static final String AUTONOMY_WAY_DB = "autonomy_way.db";
     private static AutonomyWayFacade facade = null;
     private Map<Class<? extends Node>, List<? extends Node>> nodeListCache;
     private Map<Class<? extends Node>, Map<Long, ? extends Node>> nodeByIdCache;
@@ -198,7 +205,7 @@ public class AutonomyWay implements AutonomyWayFacade {
 
     private AutonomyWay(Context ctx) {
         this.ctx = ctx;
-        DaoMaster.OpenHelper helper = new DatabaseUpgradeHelper(ctx, "autonomy_way.db");
+        DaoMaster.OpenHelper helper = new DatabaseUpgradeHelper(ctx, AUTONOMY_WAY_DB);
         Database db = helper.getWritableDb();
         this.session = new DaoMaster(db).newSession();
         nodeByIdCache = new HashMap<>();
@@ -513,6 +520,22 @@ public class AutonomyWay implements AutonomyWayFacade {
             session.clear();
 
         }
+    }
+
+    @Override
+    public Uri backupDb() {
+        // Check manifest for provider
+        File backupFile = new File(ctx.getFilesDir(), "backups");
+        backupFile.mkdirs();
+        backupFile = new File(backupFile, AUTONOMY_WAY_DB);
+
+        File dbFile = ctx.getDatabasePath(AUTONOMY_WAY_DB);
+        try {
+            FileUtils.copyFile(new FileInputStream(dbFile), new FileOutputStream((backupFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return FileProvider.getUriForFile(ctx, "com.autonomyway.fileprovider", backupFile);
     }
 
 
