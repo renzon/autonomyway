@@ -2,14 +2,12 @@ package com.autonomyway;
 
 import android.net.Uri;
 
+import com.autonomyway.business.DatabaseRetoreException;
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
-import com.autonomyway.model.InvalidData;
 import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
-
-import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +17,6 @@ public interface AutonomyWayFacade {
 
     List<Income> getIncomeList();
 
-    JSONObject exportDataAsJson();
     void createInitialData();
 
     Income getIncome(long id);
@@ -52,8 +49,7 @@ public interface AutonomyWayFacade {
 
     Metrics calculateMetrics();
 
-
-    void restoreData(JSONObject json) throws InvalidData;
-
     Uri backupDb();
+
+    void restoreBackup(Uri backupUri) throws DatabaseRetoreException;
 }

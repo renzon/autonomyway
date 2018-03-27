@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="export_to">Exportar Banco de Dados</string>
+    <string name="database_restore_success">Banco de Dados restaurado</string>
+    <string name="nav_export">Exportar Banco de Dados</string>
 </resources>

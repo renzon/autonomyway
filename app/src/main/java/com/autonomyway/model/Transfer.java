@@ -10,10 +10,7 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.converter.PropertyConverter;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -254,51 +251,5 @@ public class Transfer implements Identifiable {
         return id != null ? id.hashCode() : 0;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject js = toSummaryJson();
-        try {
-            js.put("detail", getDetail());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-    }
 
-    @Override
-    public JSONObject toSummaryJson() {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("id", this.getId());
-            js.put("date", DATE_FORMAT.format(this.getDate()));
-            JSONObject originJson = this.getOrigin().toSummaryJson();
-            originJson.put("type", getOriginClassHolder().toString());
-            js.put("origin", originJson);
-            JSONObject destinationJson = this.getDestination().toSummaryJson();
-            destinationJson.put("type", getDestinationClassHolder().toString());
-            js.put("destination", destinationJson);
-            js.put("cash", this.getCash());
-            js.put("duration", this.getDuration());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-    }
-
-    public static Transfer fromJson(JSONObject jsonObject) throws JSONException, ParseException {
-        JSONObject originJson = jsonObject.getJSONObject("origin");
-        JSONObject destinationJson = jsonObject.getJSONObject("destination");
-        return new Transfer(
-                jsonObject.getLong("id"),
-                DATE_FORMAT.parse(jsonObject.getString("date")),
-                jsonObject.getString("detail"),
-                originJson.getLong("id"),
-                destinationJson.getLong("id"),
-                jsonObject.getLong("cash"),
-                jsonObject.getLong("duration"),
-                NodeClassHolder.valueOf(originJson.getString("type")),
-                NodeClassHolder.valueOf(destinationJson.getString("type"))
-
-        );
-    }
 }

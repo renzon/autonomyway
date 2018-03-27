@@ -119,7 +119,7 @@
         considerando apenas os rendimentos de sua taxa de negócio e possível gasto de todo seu patrimônio para pagar sua atual taxa de despesas.</string>
     <string name="work_rate_help">Média da soma de todo dinheiro devido a seu trabalho dividido
         pela soma das durações do trabalho, considerando os últimos 364 dias.</string>
-    <string name="nav_import">Import Database</string>
-    <string name="nav_export">Export Database</string>
-    <string name="import_database">"Importar banco de dados "</string>
+    <string name="nav_restore">Restaurar Banco de Dados</string>
+    <string name="restore_database">Restaurar Banco de Dados</string>
+    <string name="database_restore_error">Ocorreu um erro, restauração de banco de dados abortada</string>
 </resources>

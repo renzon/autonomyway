@@ -2,6 +2,7 @@ package com.autonomyway.business;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 
 import com.autonomyway.AutonomyWayFacade;
@@ -11,10 +12,8 @@ import com.autonomyway.model.DaoMaster;
 import com.autonomyway.model.DaoSession;
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.ExpenseDao;
-import com.autonomyway.model.Identifiable;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.IncomeDao;
-import com.autonomyway.model.InvalidData;
 import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.TransferDao;
@@ -24,16 +23,15 @@ import com.autonomyway.model.WealthDao;
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.QueryBuilder;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,6 +55,20 @@ public class AutonomyWay implements AutonomyWayFacade {
     private Context ctx;
     private MetricsImpl metrics;
 
+
+    private AutonomyWay(Context ctx) {
+        this.ctx = ctx;
+        setupDatabase(ctx);
+    }
+
+    private void setupDatabase(Context ctx) {
+        DaoMaster.OpenHelper helper = new DatabaseUpgradeHelper(ctx, AUTONOMY_WAY_DB);
+        Database db = helper.getWritableDb();
+        this.session = new DaoMaster(db).newSession();
+        nodeByIdCache = new HashMap<>();
+        nodeListCache = new HashMap<>();
+        cleanAllCache();
+    }
 
     @Override
     public Transfer createTransfer(final Node origin, final Node destination, Date date, long cash, long duration, String detail) {
@@ -154,6 +166,7 @@ public class AutonomyWay implements AutonomyWayFacade {
         return list;
     }
 
+
     @Override
     public List<Transfer> getTransferList() {
         List<Transfer> list = session.getTransferDao().queryBuilder().orderDesc(TransferDao.Properties.Date)
@@ -169,7 +182,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         session.clear();
         return list;
     }
-
 
     private void injectNodes(Transfer transfer) {
         Class<? extends Node> originClass = transfer.getOriginClassHolder().getNodeClass();
@@ -201,16 +213,6 @@ public class AutonomyWay implements AutonomyWayFacade {
             return session.getWealthDao();
         }
         throw new RuntimeException("No Dao found for " + nodeClass);
-    }
-
-    private AutonomyWay(Context ctx) {
-        this.ctx = ctx;
-        DaoMaster.OpenHelper helper = new DatabaseUpgradeHelper(ctx, AUTONOMY_WAY_DB);
-        Database db = helper.getWritableDb();
-        this.session = new DaoMaster(db).newSession();
-        nodeByIdCache = new HashMap<>();
-        nodeListCache = new HashMap<>();
-        cleanAllCache();
     }
 
 
@@ -343,15 +345,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         return list;
     }
 
-    @Override
-    public JSONObject exportDataAsJson() {
-        JSONObject result = new JSONObject();
-        fill_with_array(result, getIncomeList(), INCOMES_JSON_PROPERTY);
-        fill_with_array(result, getExpenseList(), EXPENSES_JSON_PROPERTY);
-        fill_with_array(result, getWealthList(), WEALTH_JSON_PROPERTY);
-        fill_with_array(result, getAllTransferList(), TRANSFERS_JSON_PROPERTY);
-        return result;
-    }
 
     private List<Transfer> getAllTransferList() {
         List<Transfer> list = session.getTransferDao().queryBuilder().orderDesc(TransferDao.Properties.Date)
@@ -368,18 +361,6 @@ public class AutonomyWay implements AutonomyWayFacade {
         return list;
     }
 
-    private void fill_with_array(JSONObject result, List<? extends Identifiable> nodeList, String
-            property_name) {
-        JSONArray array = new JSONArray();
-        for (Identifiable identifiable : nodeList) {
-            array.put(identifiable.toJson());
-        }
-        try {
-            result.put(property_name, array);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public Expense createExpense(String name, long recurrentCash) {
@@ -436,52 +417,6 @@ public class AutonomyWay implements AutonomyWayFacade {
 
 
     @Override
-    public void restoreData(JSONObject json) throws InvalidData {
-        try {
-            JSONArray incomeArray = json.getJSONArray(INCOMES_JSON_PROPERTY);
-            List<Income> incomes = new ArrayList<>();
-            for (int i = 0; i < incomeArray.length(); ++i) {
-                incomes.add(Income.fromJson(incomeArray.getJSONObject(i)));
-            }
-            JSONArray expenseArray = json.getJSONArray(EXPENSES_JSON_PROPERTY);
-            List<Expense> expenses = new ArrayList<>();
-            for (int i = 0; i < expenseArray.length(); ++i) {
-                expenses.add(Expense.fromJson(expenseArray.getJSONObject(i)));
-            }
-            JSONArray wealthArray = json.getJSONArray(WEALTH_JSON_PROPERTY);
-            List<Wealth> wealthList = new ArrayList<>();
-            for (int i = 0; i < wealthArray.length(); ++i) {
-                wealthList.add(Wealth.fromJson(wealthArray.getJSONObject(i)));
-            }
-            JSONArray transferArray = json.getJSONArray(TRANSFERS_JSON_PROPERTY);
-            List<Transfer> transfers = new ArrayList<>();
-            for (int i = 0; i < transferArray.length(); ++i) {
-                transfers.add(Transfer.fromJson(transferArray.getJSONObject(i)));
-            }
-            ExpenseDao expenseDao = session.getExpenseDao();
-            expenseDao.deleteAll();
-            IncomeDao incomeDao = session.getIncomeDao();
-            incomeDao.deleteAll();
-            WealthDao wealthDao = session.getWealthDao();
-            wealthDao.deleteAll();
-            TransferDao transferDao = session.getTransferDao();
-            transferDao.deleteAll();
-
-            expenseDao.insertInTx(expenses);
-            incomeDao.insertInTx(incomes);
-            wealthDao.insertInTx(wealthList);
-            transferDao.insertInTx(transfers);
-            cleanAllCache();
-
-
-        } catch (JSONException e) {
-            throw new InvalidData();
-        } catch (ParseException e) {
-            throw new InvalidData();
-        }
-    }
-
-    @Override
     public void createInitialData() {
         cleanAllCache();
         if (getIncomeList().size() == 0) {
@@ -522,21 +457,81 @@ public class AutonomyWay implements AutonomyWayFacade {
         }
     }
 
+    private File getDataBaseFile() {
+        return ctx.getDatabasePath(AUTONOMY_WAY_DB);
+    }
+
     @Override
     public Uri backupDb() {
+        File backupFile = backupDbToFile();
+        return FileProvider.getUriForFile(ctx, "com.autonomyway.fileprovider", backupFile);
+    }
+
+    @NonNull
+    private File backupDbToFile() {
         // Check manifest for provider
         File backupFile = new File(ctx.getFilesDir(), "backups");
         backupFile.mkdirs();
         backupFile = new File(backupFile, AUTONOMY_WAY_DB);
 
-        File dbFile = ctx.getDatabasePath(AUTONOMY_WAY_DB);
+        File dbFile = getDataBaseFile();
         try {
             FileUtils.copyFile(new FileInputStream(dbFile), new FileOutputStream((backupFile)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return FileProvider.getUriForFile(ctx, "com.autonomyway.fileprovider", backupFile);
+        return backupFile;
     }
 
+    @Override
+    public void restoreBackup(Uri backupUri) throws DatabaseRetoreException {
+        File oldDbBackup = backupDbToFile();
+        InputStream backupInput = getBackupInputStream(backupUri);
+        OutputStream out = null;
 
+        try {
+            out = new FileOutputStream(getDataBaseFile());
+        } catch (FileNotFoundException e) {
+            close(backupInput);
+            throw new DatabaseRetoreException("Invalid Database File", e);
+        }
+        try {
+            byte[] buf = new byte[1024];
+
+            for (int len; (len = backupInput.read(buf)) > 0; ) {
+                out.write(buf, 0, len);
+            }
+        } catch (IOException e) {
+            close(backupInput);
+            close(out);
+            try {
+                FileUtils.copyFile(new FileInputStream(oldDbBackup), new FileOutputStream(getDataBaseFile()));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            throw new DatabaseRetoreException("Error when writing backup", e);
+        }
+        close(backupInput);
+        close(out);
+        cleanAllCache();
+    }
+
+    private void close(Closeable closeable) {
+        try {
+            closeable.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private InputStream getBackupInputStream(Uri backupUri) throws DatabaseRetoreException {
+        InputStream backupInput = null;
+        try {
+            return ctx.getContentResolver().openInputStream(backupUri);
+        } catch (FileNotFoundException e) {
+            throw new DatabaseRetoreException("Invalid Backup Input", e);
+        }
+    }
 }
+
+

@@ -7,8 +7,6 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 @Entity
 public class Expense implements Node {
@@ -126,37 +124,6 @@ public class Expense implements Node {
         return R.color.colorExpense;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject js=toSummaryJson();
-        try {
-            js.put("recurrentCash", this.getRecurrentCash());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-
-    }
-
-    @Override
-    public JSONObject toSummaryJson() {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("id", this.getId());
-            js.put("name", this.getName());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-    }
 
 
-    public static Expense fromJson(JSONObject jsonObject) throws JSONException {
-        return new Expense(
-                jsonObject.getLong("id"),
-                jsonObject.getString("name"),
-                jsonObject.getLong("recurrentCash")
-        );
-
-    }
 }

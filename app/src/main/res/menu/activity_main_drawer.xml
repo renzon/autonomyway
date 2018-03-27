@@ -27,6 +27,6 @@
         <item
             android:id="@+id/nav_import"
             android:icon="@android:drawable/stat_sys_download"
-            android:title="@string/nav_import"/>
+            android:title="@string/nav_restore"/>
     </group>
 </menu>

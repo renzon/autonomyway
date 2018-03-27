@@ -12,8 +12,6 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.converter.PropertyConverter;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +54,7 @@ public class Income implements Node {
         }
 
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,6 +100,7 @@ public class Income implements Node {
         public String convertToDatabaseValue(Type entityProperty) {
             return entityProperty.getDbValue();
         }
+
         @Override
         public Type convertToEntityProperty(String databaseValue) {
             for (Type t : Type.values()) {
@@ -113,6 +113,7 @@ public class Income implements Node {
         }
 
     }
+
     public Income(String name, long recurrentDuration, long recurrentCash, Type type) {
         this.name = name;
         this.type = type;
@@ -208,39 +209,5 @@ public class Income implements Node {
         return R.color.colorIncome;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject js = toSummaryJson();
-        try {
-            js.put("recurrentCash", this.getRecurrentCash());
-            js.put("recurrentDuration", this.getRecurrentDuration());
-            js.put("type", this.getType().name());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-    }
 
-    @Override
-    public JSONObject toSummaryJson() {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("id", this.getId());
-            js.put("name", this.getName());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-    }
-
-    public static Income fromJson(JSONObject jsonObject) throws JSONException {
-
-        return new Income(
-                jsonObject.getLong("id"),
-                jsonObject.getString("name"),
-                jsonObject.getLong("recurrentDuration"),
-                jsonObject.getLong("recurrentCash"),
-                Type.valueOf(jsonObject.getString("type"))
-        );
-    }
 }

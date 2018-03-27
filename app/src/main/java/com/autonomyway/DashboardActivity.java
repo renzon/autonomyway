@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.autonomyway.business.DatabaseRetoreException;
 import com.autonomyway.component.base.ActivityWithFacadeAccess;
 import com.autonomyway.component.base.MetricView;
 import com.autonomyway.component.expense.ExpenseListActivity;
@@ -21,17 +23,7 @@ import com.autonomyway.component.income.IncomeListActivity;
 import com.autonomyway.component.transfer.NewTransferActivity;
 import com.autonomyway.component.transfer.TransferListActivity;
 import com.autonomyway.component.wealth.WealthListActivity;
-import com.autonomyway.model.InvalidData;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,6 +79,10 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     @Override
     protected void onResume() {
         super.onResume();
+        populateMetrics();
+    }
+
+    private void populateMetrics() {
         Metrics metrics = autonomy.calculateMetrics();
         expenseRateMetricView.setValue(metrics.getExpenseRate());
         incomeRateMetricView.setValue(metrics.getIncomeRate());
@@ -153,7 +149,7 @@ public class DashboardActivity extends ActivityWithFacadeAccess
             import_intent.setType("*/*");
             import_intent.addCategory(Intent.CATEGORY_OPENABLE);
             Intent intent = Intent.createChooser(import_intent, getResources().getText(R.string
-                    .import_database));
+                    .restore_database));
             startActivityForResult(intent, 0);
 
         } else {
@@ -174,27 +170,22 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         Uri uri = intent.getData();
+
+
         try {
-            InputStream stream = getContentResolver().openInputStream(uri);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-            String line = null;
-            StringBuilder builder = new StringBuilder();
-            while ((line = reader.readLine()) != null)
-                builder.append(line);
-            JSONObject json = new JSONObject(builder.toString());
-            autonomy.restoreData(json);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InvalidData invalidData) {
-            invalidData.printStackTrace();
+            autonomy.restoreBackup(uri);
+        } catch (DatabaseRetoreException e) {
+            showMsg(R.string.database_restore_error);
+            return;
         }
-        startActivity(new Intent(this, this.getClass()));
+        showMsg(R.string.database_restore_success);
+        populateMetrics();
+    }
+
+    private void showMsg(int msg_id) {
+        Snackbar.make(findViewById(R.id.dashboard_content)
+                , getResources().getText(msg_id),
+                Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 
 }
