@@ -7,4 +7,5 @@ public interface Identifiable {
     JSONObject toJson();
 
     JSONObject toSummaryJson();
+
 }

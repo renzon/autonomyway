@@ -121,5 +121,6 @@
         pela soma das durações do trabalho, considerando os últimos 364 dias.</string>
     <string name="nav_import">Import Database</string>
     <string name="nav_export">Export Database</string>
-    <string name="send_to">Export Database</string>
+    <string name="export_to">Export Database</string>
+    <string name="import_database">Importar arquivo .autonomyway </string>
 </resources>

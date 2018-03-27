@@ -1,5 +1,6 @@
 package com.autonomyway.model;
 
+
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -12,10 +13,13 @@ import org.greenrobot.greendao.converter.PropertyConverter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 public class Transfer implements Identifiable {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     @Id
     private Long id;
     @NotNull
@@ -91,11 +95,12 @@ public class Transfer implements Identifiable {
         this.destination = destination;
     }
 
-
     public enum NodeClassHolder {
         EXPENSE("Expense", Expense.class),
         INCOME("Income", Income.class),
         WEALTH("Wealth", Wealth.class);
+
+
         private final String dbValue;
 
         public Class<? extends Node> getNodeClass() {
@@ -104,11 +109,11 @@ public class Transfer implements Identifiable {
 
         private final Class<? extends Node> nodeClass;
 
-
         NodeClassHolder(String dbValue, Class<? extends Node> nameable) {
             this.nodeClass = nameable;
             this.dbValue = dbValue;
         }
+
 
         String getDbValue() {
             return dbValue;
@@ -122,10 +127,12 @@ public class Transfer implements Identifiable {
             }
             throw new RuntimeException("NameableClass not found for " + nameable);
         }
+
     }
 
-
     static class TypeConverter implements PropertyConverter<NodeClassHolder, String> {
+
+
         @Override
         public String convertToDatabaseValue(NodeClassHolder entityProperty) {
             return entityProperty.getDbValue();
@@ -141,8 +148,8 @@ public class Transfer implements Identifiable {
             throw new RuntimeException("NameableClass not found for " + databaseValue);
 
         }
-    }
 
+    }
 
     @Override
     public Long getId() {
@@ -168,6 +175,7 @@ public class Transfer implements Identifiable {
     public void setDetail(String detail) {
         this.detail = detail;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -262,13 +270,35 @@ public class Transfer implements Identifiable {
         JSONObject js = new JSONObject();
         try {
             js.put("id", this.getId());
-            js.put("origin", this.getOrigin().toSummaryJson());
-            js.put("destination", this.getDestination().toSummaryJson());
+            js.put("date", DATE_FORMAT.format(this.getDate()));
+            JSONObject originJson = this.getOrigin().toSummaryJson();
+            originJson.put("type", getOriginClassHolder().toString());
+            js.put("origin", originJson);
+            JSONObject destinationJson = this.getDestination().toSummaryJson();
+            destinationJson.put("type", getDestinationClassHolder().toString());
+            js.put("destination", destinationJson);
             js.put("cash", this.getCash());
             js.put("duration", this.getDuration());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return js;
+    }
+
+    public static Transfer fromJson(JSONObject jsonObject) throws JSONException, ParseException {
+        JSONObject originJson = jsonObject.getJSONObject("origin");
+        JSONObject destinationJson = jsonObject.getJSONObject("destination");
+        return new Transfer(
+                jsonObject.getLong("id"),
+                DATE_FORMAT.parse(jsonObject.getString("date")),
+                jsonObject.getString("detail"),
+                originJson.getLong("id"),
+                destinationJson.getLong("id"),
+                jsonObject.getLong("cash"),
+                jsonObject.getLong("duration"),
+                NodeClassHolder.valueOf(originJson.getString("type")),
+                NodeClassHolder.valueOf(destinationJson.getString("type"))
+
+        );
     }
 }

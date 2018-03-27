@@ -54,8 +54,8 @@ public class Income implements Node {
         String getDbValue() {
             return dbValue;
         }
-    }
 
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,11 +96,11 @@ public class Income implements Node {
     }
 
     static class TypeConverter implements PropertyConverter<Type, String> {
+
         @Override
         public String convertToDatabaseValue(Type entityProperty) {
             return entityProperty.getDbValue();
         }
-
         @Override
         public Type convertToEntityProperty(String databaseValue) {
             for (Type t : Type.values()) {
@@ -111,15 +111,15 @@ public class Income implements Node {
             throw new RuntimeException("NameableClass not found for " + databaseValue);
 
         }
+
     }
-
-
     public Income(String name, long recurrentDuration, long recurrentCash, Type type) {
         this.name = name;
         this.type = type;
         this.recurrentDuration = recurrentDuration;
         this.recurrentCash = recurrentCash;
     }
+
 
     @Keep
     public Income(Long id, String name, long recurrentCash, long recurrentDuration, Type type) {
@@ -161,20 +161,20 @@ public class Income implements Node {
         return true;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public long getRecurrentDuration() {
         return this.recurrentDuration;
     }
 
-
     public void setRecurrentDuration(long recurrentDuration) {
         this.recurrentDuration = recurrentDuration;
     }
+
 
     @Override
     public long getRecurrentCash() {
@@ -210,6 +210,19 @@ public class Income implements Node {
 
     @Override
     public JSONObject toJson() {
+        JSONObject js = toSummaryJson();
+        try {
+            js.put("recurrentCash", this.getRecurrentCash());
+            js.put("recurrentDuration", this.getRecurrentDuration());
+            js.put("type", this.getType().name());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
+    }
+
+    @Override
+    public JSONObject toSummaryJson() {
         JSONObject js = new JSONObject();
         try {
             js.put("id", this.getId());
@@ -220,8 +233,14 @@ public class Income implements Node {
         return js;
     }
 
-    @Override
-    public JSONObject toSummaryJson() {
-        return toJson();
+    public static Income fromJson(JSONObject jsonObject) throws JSONException {
+
+        return new Income(
+                jsonObject.getLong("id"),
+                jsonObject.getString("name"),
+                jsonObject.getLong("recurrentDuration"),
+                jsonObject.getLong("recurrentCash"),
+                Type.valueOf(jsonObject.getString("type"))
+        );
     }
 }

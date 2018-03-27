@@ -2,6 +2,7 @@ package com.autonomyway;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,7 +21,17 @@ import com.autonomyway.component.income.IncomeListActivity;
 import com.autonomyway.component.transfer.NewTransferActivity;
 import com.autonomyway.component.transfer.TransferListActivity;
 import com.autonomyway.component.wealth.WealthListActivity;
+import com.autonomyway.model.InvalidData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +49,6 @@ public class DashboardActivity extends ActivityWithFacadeAccess
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
 
 
         autonomy.createInitialData();
@@ -121,21 +131,28 @@ public class DashboardActivity extends ActivityWithFacadeAccess
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Intent intent = null;
         if (id == R.id.nav_export) {
             Intent export = new Intent();
             export.setAction(Intent.ACTION_SEND);
             export.putExtra(Intent.EXTRA_TEXT, autonomy.exportDataAsJson().toString());
             export.putExtra(Intent.EXTRA_SUBJECT, "database.autonomyway");
             export.setType("application/json");
-            intent = Intent.createChooser(export, getResources().getText(R.string.send_to));
+            Intent intent = Intent.createChooser(export, getResources().getText(R.string
+                    .export_to));
+            startActivity(intent);
 
         } else if (id == R.id.nav_import) {
-
+            Intent import_intent = new Intent(Intent.ACTION_GET_CONTENT);
+            import_intent.setType("*/*");
+            import_intent.addCategory(Intent.CATEGORY_OPENABLE);
+            Intent intent = Intent.createChooser(import_intent, getResources().getText(R.string
+                    .import_database));
+            startActivityForResult(intent, 0);
 
         } else {
             Map<Integer, Class<? extends Activity>> activityMap = new HashMap<>();
@@ -143,11 +160,39 @@ public class DashboardActivity extends ActivityWithFacadeAccess
             activityMap.put(R.id.nav_wealth, WealthListActivity.class);
             activityMap.put(R.id.nav_expenses, ExpenseListActivity.class);
             activityMap.put(R.id.nav_transfers, TransferListActivity.class);
-            intent = new Intent(this, activityMap.get(id));
+            Intent intent = new Intent(this, activityMap.get(id));
+            startActivity(intent);
         }
-        startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        Uri uri = intent.getData();
+        try {
+            InputStream stream = getContentResolver().openInputStream(uri);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+            String line = null;
+            StringBuilder builder = new StringBuilder();
+            while ((line = reader.readLine()) != null)
+                builder.append(line);
+            JSONObject json = new JSONObject(builder.toString());
+            autonomy.restoreData(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InvalidData invalidData) {
+            invalidData.printStackTrace();
+        }
+        startActivity(new Intent(this, this.getClass()));
+    }
+
 }

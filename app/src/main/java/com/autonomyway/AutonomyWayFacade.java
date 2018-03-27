@@ -2,6 +2,7 @@ package com.autonomyway;
 
 import com.autonomyway.model.Expense;
 import com.autonomyway.model.Income;
+import com.autonomyway.model.InvalidData;
 import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.Wealth;
@@ -48,4 +49,7 @@ public interface AutonomyWayFacade {
     List<Transfer> getTransferList();
 
     Metrics calculateMetrics();
+
+
+    void restoreData(JSONObject json) throws InvalidData;
 }

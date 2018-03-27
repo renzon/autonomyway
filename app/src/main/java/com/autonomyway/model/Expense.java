@@ -128,7 +128,19 @@ public class Expense implements Node {
 
     @Override
     public JSONObject toJson() {
-        JSONObject js=new JSONObject();
+        JSONObject js=toSummaryJson();
+        try {
+            js.put("recurrentCash", this.getRecurrentCash());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return js;
+
+    }
+
+    @Override
+    public JSONObject toSummaryJson() {
+        JSONObject js = new JSONObject();
         try {
             js.put("id", this.getId());
             js.put("name", this.getName());
@@ -138,10 +150,13 @@ public class Expense implements Node {
         return js;
     }
 
-    @Override
-    public JSONObject toSummaryJson() {
-        return toJson();
+
+    public static Expense fromJson(JSONObject jsonObject) throws JSONException {
+        return new Expense(
+                jsonObject.getLong("id"),
+                jsonObject.getString("name"),
+                jsonObject.getLong("recurrentCash")
+        );
+
     }
-
-
 }

@@ -12,6 +12,7 @@ import com.autonomyway.model.ExpenseDao;
 import com.autonomyway.model.Identifiable;
 import com.autonomyway.model.Income;
 import com.autonomyway.model.IncomeDao;
+import com.autonomyway.model.InvalidData;
 import com.autonomyway.model.Node;
 import com.autonomyway.model.Transfer;
 import com.autonomyway.model.TransferDao;
@@ -25,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,6 +38,10 @@ import java.util.Set;
 
 
 public class AutonomyWay implements AutonomyWayFacade {
+    public static final String INCOMES_JSON_PROPERTY = "incomes";
+    public static final String EXPENSES_JSON_PROPERTY = "expenses";
+    public static final String WEALTH_JSON_PROPERTY = "wealth";
+    public static final String TRANSFERS_JSON_PROPERTY = "transfers";
     private static AutonomyWayFacade facade = null;
     private Map<Class<? extends Node>, List<? extends Node>> nodeListCache;
     private Map<Class<? extends Node>, Map<Long, ? extends Node>> nodeByIdCache;
@@ -332,10 +339,10 @@ public class AutonomyWay implements AutonomyWayFacade {
     @Override
     public JSONObject exportDataAsJson() {
         JSONObject result = new JSONObject();
-        fill_with_array(result, getIncomeList(), "incomes");
-        fill_with_array(result, getExpenseList(), "expenses");
-        fill_with_array(result, getWealthList(), "wealth");
-        fill_with_array(result, getAllTransferList(), "transfers");
+        fill_with_array(result, getIncomeList(), INCOMES_JSON_PROPERTY);
+        fill_with_array(result, getExpenseList(), EXPENSES_JSON_PROPERTY);
+        fill_with_array(result, getWealthList(), WEALTH_JSON_PROPERTY);
+        fill_with_array(result, getAllTransferList(), TRANSFERS_JSON_PROPERTY);
         return result;
     }
 
@@ -418,6 +425,53 @@ public class AutonomyWay implements AutonomyWayFacade {
                     getLastTransfers(365));
         }
         return metrics;
+    }
+
+
+    @Override
+    public void restoreData(JSONObject json) throws InvalidData {
+        try {
+            JSONArray incomeArray = json.getJSONArray(INCOMES_JSON_PROPERTY);
+            List<Income> incomes = new ArrayList<>();
+            for (int i = 0; i < incomeArray.length(); ++i) {
+                incomes.add(Income.fromJson(incomeArray.getJSONObject(i)));
+            }
+            JSONArray expenseArray = json.getJSONArray(EXPENSES_JSON_PROPERTY);
+            List<Expense> expenses = new ArrayList<>();
+            for (int i = 0; i < expenseArray.length(); ++i) {
+                expenses.add(Expense.fromJson(expenseArray.getJSONObject(i)));
+            }
+            JSONArray wealthArray = json.getJSONArray(WEALTH_JSON_PROPERTY);
+            List<Wealth> wealthList = new ArrayList<>();
+            for (int i = 0; i < wealthArray.length(); ++i) {
+                wealthList.add(Wealth.fromJson(wealthArray.getJSONObject(i)));
+            }
+            JSONArray transferArray = json.getJSONArray(TRANSFERS_JSON_PROPERTY);
+            List<Transfer> transfers = new ArrayList<>();
+            for (int i = 0; i < transferArray.length(); ++i) {
+                transfers.add(Transfer.fromJson(transferArray.getJSONObject(i)));
+            }
+            ExpenseDao expenseDao = session.getExpenseDao();
+            expenseDao.deleteAll();
+            IncomeDao incomeDao = session.getIncomeDao();
+            incomeDao.deleteAll();
+            WealthDao wealthDao = session.getWealthDao();
+            wealthDao.deleteAll();
+            TransferDao transferDao = session.getTransferDao();
+            transferDao.deleteAll();
+
+            expenseDao.insertInTx(expenses);
+            incomeDao.insertInTx(incomes);
+            wealthDao.insertInTx(wealthList);
+            transferDao.insertInTx(transfers);
+            cleanAllCache();
+
+
+        } catch (JSONException e) {
+            throw new InvalidData();
+        } catch (ParseException e) {
+            throw new InvalidData();
+        }
     }
 
     @Override

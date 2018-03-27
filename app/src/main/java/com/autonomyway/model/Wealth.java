@@ -150,7 +150,8 @@ public class Wealth implements Node {
     public JSONObject toJson() {
         JSONObject js=toSummaryJson();
         try {
-            js.put("initial_balance", this.getInitialBalance());
+            js.put("initialBalance", this.getInitialBalance());
+            js.put("balance", this.getBalance());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -170,4 +171,13 @@ public class Wealth implements Node {
 
     }
 
+    public static Wealth fromJson(JSONObject jsonObject) throws JSONException {
+        return new Wealth(
+                jsonObject.getLong("id"),
+                jsonObject.getString("name"),
+                jsonObject.getLong("initialBalance"),
+                jsonObject.getLong("balance")
+
+        );
+    }
 }
